@@ -1,0 +1,137 @@
+\hypertarget{MolSim_8cpp}{\section{src/\+Mol\+Sim.cpp File Reference}
+\label{MolSim_8cpp}\index{src/\+Mol\+Sim.\+cpp@{src/\+Mol\+Sim.\+cpp}}
+}
+{\ttfamily \#include $<$forces/\+Force\+Handler.\+h$>$}\\*
+{\ttfamily \#include $<$forces/\+Gravitation.\+h$>$}\\*
+{\ttfamily \#include $<$forces/\+Lennard\+Jones.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Maxwell\+Boltzmann\+Distribution.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Particle\+Container.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Particle\+Generator.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}io/\+Particles\+Input.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}io/\+V\+T\+K\+Output.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}io/\+X\+Y\+Z\+Output.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}test/\+Runner.\+cpp\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}test/\+Lennard\+Jones\+Test.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}test/\+Particle\+Container\+Test.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}test/\+Particle\+Generator\+Test.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$log4cxx/logger.\+h$>$}\\*
+{\ttfamily \#include $<$log4cxx/basicconfigurator.\+h$>$}\\*
+{\ttfamily \#include $<$log4cxx/propertyconfigurator.\+h$>$}\\*
+{\ttfamily \#include $<$list$>$}\\*
+{\ttfamily \#include $<$cstring$>$}\\*
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Logger\+Ptr \hyperlink{MolSim_8cpp_a1998524739c005c9ecfea820244fe54b}{logger} (Logger\+::get\+Logger(\char`\"{}Mol\+Sim\char`\"{}))
+\item 
+Logger\+Ptr \hyperlink{MolSim_8cpp_a9ffa9b9c518e05762c486329d9a990e3}{particlelog} (Logger\+::get\+Logger(\char`\"{}Mol\+Sim.\+Particle\char`\"{}))
+\item 
+Logger\+Ptr \hyperlink{MolSim_8cpp_a081d177a0a6549a8d34ebe78d4989644}{testlog} (log4cxx\+::\+Logger\+::get\+Logger(\char`\"{}Mol\+Sim.\+test\char`\"{}))
+\item 
+void \hyperlink{MolSim_8cpp_a4e1f61f0b4eed51bc609912cb2cd4689}{calculate\+F} (\hyperlink{classForceHandler}{Force\+Handler} \&force)
+\item 
+void \hyperlink{MolSim_8cpp_a6c59c4c130c452e82f3992fd17166bed}{calculate\+X} ()
+\item 
+void \hyperlink{MolSim_8cpp_a85d9ef8b7091f5cdaffa0c575eebf661}{calculate\+V} ()
+\item 
+void \hyperlink{MolSim_8cpp_af4d25832793b65abf538fab0474a8e51}{plot\+Particles} (int iteration)
+\item 
+void \hyperlink{MolSim_8cpp_a7e15c8e2885871839fc2b820dfbdb4ce}{error} ()
+\item 
+int \hyperlink{MolSim_8cpp_a329c95e85f063f49b0daaed5c5b56335}{main} (int argc, char $\ast$argsv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{MolSim_8cpp_a00b0c9b1c3ea8bb73a7fc8b53a3961fd}{start\+\_\+time} = 0
+\item 
+double \hyperlink{MolSim_8cpp_a8c7ea5e69ce954c1d81db1732f9f426a}{end\+\_\+time} = 1000
+\item 
+double \hyperlink{MolSim_8cpp_a4cfc079302fe9a34fe24637c4e44303a}{delta\+\_\+t} = 0.\+014
+\item 
+\hyperlink{classParticleContainer}{Particle\+Container} \hyperlink{MolSim_8cpp_a2efa531c8bc46ae229a547c72af0af08}{particle\+Container}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{MolSim_8cpp_a4e1f61f0b4eed51bc609912cb2cd4689}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!calculate\+F@{calculate\+F}}
+\index{calculate\+F@{calculate\+F}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{calculate\+F}]{\setlength{\rightskip}{0pt plus 5cm}void calculate\+F (
+\begin{DoxyParamCaption}
+\item[{{\bf Force\+Handler} \&}]{force}
+\end{DoxyParamCaption}
+)}}\label{MolSim_8cpp_a4e1f61f0b4eed51bc609912cb2cd4689}
+calculate the force between particles \hypertarget{MolSim_8cpp_a85d9ef8b7091f5cdaffa0c575eebf661}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!calculate\+V@{calculate\+V}}
+\index{calculate\+V@{calculate\+V}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{calculate\+V}]{\setlength{\rightskip}{0pt plus 5cm}void calculate\+V (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{MolSim_8cpp_a85d9ef8b7091f5cdaffa0c575eebf661}
+calculate the position for all particles \hypertarget{MolSim_8cpp_a6c59c4c130c452e82f3992fd17166bed}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!calculate\+X@{calculate\+X}}
+\index{calculate\+X@{calculate\+X}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{calculate\+X}]{\setlength{\rightskip}{0pt plus 5cm}void calculate\+X (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{MolSim_8cpp_a6c59c4c130c452e82f3992fd17166bed}
+calculate the position for all particles \hypertarget{MolSim_8cpp_a7e15c8e2885871839fc2b820dfbdb4ce}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!error@{error}}
+\index{error@{error}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}void error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{MolSim_8cpp_a7e15c8e2885871839fc2b820dfbdb4ce}
+log parameter error \hypertarget{MolSim_8cpp_a1998524739c005c9ecfea820244fe54b}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!logger@{logger}}
+\index{logger@{logger}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{logger}]{\setlength{\rightskip}{0pt plus 5cm}Logger\+Ptr logger (
+\begin{DoxyParamCaption}
+\item[{Logger\+::}]{get\+Logger\char`\"{}\+Mol\+Sim\char`\"{}}
+\end{DoxyParamCaption}
+)}}\label{MolSim_8cpp_a1998524739c005c9ecfea820244fe54b}
+\hypertarget{MolSim_8cpp_a329c95e85f063f49b0daaed5c5b56335}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!main@{main}}
+\index{main@{main}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argsv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{MolSim_8cpp_a329c95e85f063f49b0daaed5c5b56335}
+\hypertarget{MolSim_8cpp_a9ffa9b9c518e05762c486329d9a990e3}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!particlelog@{particlelog}}
+\index{particlelog@{particlelog}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{particlelog}]{\setlength{\rightskip}{0pt plus 5cm}Logger\+Ptr particlelog (
+\begin{DoxyParamCaption}
+\item[{Logger\+::}]{get\+Logger\char`\"{}\+Mol\+Sim.\+Particle\char`\"{}}
+\end{DoxyParamCaption}
+)}}\label{MolSim_8cpp_a9ffa9b9c518e05762c486329d9a990e3}
+\hypertarget{MolSim_8cpp_af4d25832793b65abf538fab0474a8e51}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!plot\+Particles@{plot\+Particles}}
+\index{plot\+Particles@{plot\+Particles}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{plot\+Particles}]{\setlength{\rightskip}{0pt plus 5cm}void plot\+Particles (
+\begin{DoxyParamCaption}
+\item[{int}]{iteration}
+\end{DoxyParamCaption}
+)}}\label{MolSim_8cpp_af4d25832793b65abf538fab0474a8e51}
+plot the particles to a xyz-\/file \hypertarget{MolSim_8cpp_a081d177a0a6549a8d34ebe78d4989644}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!testlog@{testlog}}
+\index{testlog@{testlog}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{testlog}]{\setlength{\rightskip}{0pt plus 5cm}Logger\+Ptr testlog (
+\begin{DoxyParamCaption}
+\item[{log4cxx\+::\+Logger\+::}]{get\+Logger\char`\"{}\+Mol\+Sim.\+test\char`\"{}}
+\end{DoxyParamCaption}
+)}}\label{MolSim_8cpp_a081d177a0a6549a8d34ebe78d4989644}
+
+
+\subsection{Variable Documentation}
+\hypertarget{MolSim_8cpp_a4cfc079302fe9a34fe24637c4e44303a}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!delta\+\_\+t@{delta\+\_\+t}}
+\index{delta\+\_\+t@{delta\+\_\+t}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{delta\+\_\+t}]{\setlength{\rightskip}{0pt plus 5cm}double delta\+\_\+t = 0.\+014}}\label{MolSim_8cpp_a4cfc079302fe9a34fe24637c4e44303a}
+\hypertarget{MolSim_8cpp_a8c7ea5e69ce954c1d81db1732f9f426a}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!end\+\_\+time@{end\+\_\+time}}
+\index{end\+\_\+time@{end\+\_\+time}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{end\+\_\+time}]{\setlength{\rightskip}{0pt plus 5cm}double end\+\_\+time = 1000}}\label{MolSim_8cpp_a8c7ea5e69ce954c1d81db1732f9f426a}
+\hypertarget{MolSim_8cpp_a2efa531c8bc46ae229a547c72af0af08}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!particle\+Container@{particle\+Container}}
+\index{particle\+Container@{particle\+Container}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{particle\+Container}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Particle\+Container} particle\+Container}}\label{MolSim_8cpp_a2efa531c8bc46ae229a547c72af0af08}
+\hypertarget{MolSim_8cpp_a00b0c9b1c3ea8bb73a7fc8b53a3961fd}{\index{Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}!start\+\_\+time@{start\+\_\+time}}
+\index{start\+\_\+time@{start\+\_\+time}!Mol\+Sim.\+cpp@{Mol\+Sim.\+cpp}}
+\subsubsection[{start\+\_\+time}]{\setlength{\rightskip}{0pt plus 5cm}double start\+\_\+time = 0}}\label{MolSim_8cpp_a00b0c9b1c3ea8bb73a7fc8b53a3961fd}

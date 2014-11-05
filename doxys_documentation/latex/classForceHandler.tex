@@ -1,0 +1,56 @@
+\hypertarget{classForceHandler}{\section{Force\+Handler Class Reference}
+\label{classForceHandler}\index{Force\+Handler@{Force\+Handler}}
+}
+
+
+{\ttfamily \#include $<$Force\+Handler.\+h$>$}
+
+Inheritance diagram for Force\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classForceHandler}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{classForceHandler_ab373c2093bf7dbdf0bcfcc1c5e1c4967}{$\sim$\+Force\+Handler} ()
+\item 
+virtual void \hyperlink{classForceHandler_a8aba17d6565f6082c3e088d0abc46e0e}{calc} (\hyperlink{classParticle}{Particle} \&p1, \hyperlink{classParticle}{Particle} \&p2)=0
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classForceHandler_ab373c2093bf7dbdf0bcfcc1c5e1c4967}{\index{Force\+Handler@{Force\+Handler}!````~Force\+Handler@{$\sim$\+Force\+Handler}}
+\index{````~Force\+Handler@{$\sim$\+Force\+Handler}!Force\+Handler@{Force\+Handler}}
+\subsubsection[{$\sim$\+Force\+Handler}]{\setlength{\rightskip}{0pt plus 5cm}Force\+Handler\+::$\sim$\+Force\+Handler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classForceHandler_ab373c2093bf7dbdf0bcfcc1c5e1c4967}
+destructor 
+
+\subsection{Member Function Documentation}
+\hypertarget{classForceHandler_a8aba17d6565f6082c3e088d0abc46e0e}{\index{Force\+Handler@{Force\+Handler}!calc@{calc}}
+\index{calc@{calc}!Force\+Handler@{Force\+Handler}}
+\subsubsection[{calc}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Force\+Handler\+::calc (
+\begin{DoxyParamCaption}
+\item[{{\bf Particle} \&}]{p1, }
+\item[{{\bf Particle} \&}]{p2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classForceHandler_a8aba17d6565f6082c3e088d0abc46e0e}
+calls previously set force calculation 
+\begin{DoxyParams}{Parameters}
+{\em p1,p2} & Particles to calculate the force \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classGravitation_a890173040cfee7055f43b20c4012027c}{Gravitation}, and \hyperlink{classLennardJones_afea581125d54b69b58c41382314fd95e}{Lennard\+Jones}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/forces/\hyperlink{ForceHandler_8h}{Force\+Handler.\+h}\item 
+src/forces/\hyperlink{ForceHandler_8cpp}{Force\+Handler.\+cpp}\end{DoxyCompactItemize}
