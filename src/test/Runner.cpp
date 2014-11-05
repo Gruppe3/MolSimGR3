@@ -16,7 +16,7 @@ using namespace CppUnit;
 
 /** run given test
  * @param tc test case meant to be run */
-int run1 (Test* t) {
+int run (Test* t) {
 	TextUi::TestRunner runner;
 
 	cout << "Creating Test Suites:" << endl;
