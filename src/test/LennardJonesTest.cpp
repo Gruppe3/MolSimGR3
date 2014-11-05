@@ -36,5 +36,5 @@ void LennardJonesTest::testValue() {
 	LennardJones lj;
 	lj.calc(*p1, *p2);
 	utils::Vector<double, 3>& f = p1->getF();
-	CPPUNIT_ASSERT(abs(f.L2Norm() - f_man_norm) < 0.0005);
+	CPPUNIT_ASSERT(std::abs(f.L2Norm() - f_man_norm) < 0.0005);
 }
