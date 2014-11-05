@@ -1,0 +1,12 @@
+# cuboid data consists of 
+# * xyz-coordinates (3 double values)
+# * velocities (2 or 3 double values)
+# * number of particles (3 unsigned int values)
+# * mean velocity value of Brownian Motion (1 double value)
+# * mass (1 double value)
+# * distance of particles in the cuboid (1 double value)
+#
+# xyz-coord      velocity         number      mean_v   mass    distance
+2
+0.0 0.0 0.0      0.0 0.0 0.0      40 8 1      0.1      1.0     1.1225
+15.0 15.0 0.0    0.0 -10.0 0.0    8 8 1       0.1      1.0     1.1225
