@@ -14,10 +14,7 @@
 #include "test/ParticleContainerTest.h"
 #include "test/ParticleGeneratorTest.h"
 
-#include <log4cxx/logger.h>
-#include <log4cxx/basicconfigurator.h>
-#include <log4cxx/propertyconfigurator.h>
-//#include <log4cxx/helpers/exception.h>
+#include "Logger.h"
 
 #include <list>
 #include <cstring>
@@ -25,12 +22,6 @@
 #include <iostream>
 
 using namespace std;
-using namespace log4cxx;
-//using namespace log4cxx::helpers;
-
-LoggerPtr logger(Logger::getLogger("MolSim"));
-LoggerPtr particlelog(Logger::getLogger("MolSim.Particle"));
-LoggerPtr testlog(log4cxx::Logger::getLogger("MolSim.test"));
 
 /**** forward declaration of the calculation functions ****/
 
@@ -58,6 +49,8 @@ void plotParticles(int iteration);
  * log parameter error */
 void error();
 
+extern const LoggerPtr molsimlog;
+
 double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
@@ -67,11 +60,11 @@ ParticleContainer particleContainer;
 
 int main(int argc, char* argsv[]) {
 	PropertyConfigurator::configure("log4cxx.conf");
-	LOG4CXX_INFO(logger, "Hello from MolSim for PSE!");
+	LOG4CXX_INFO(molsimlog, "Hello from MolSim for PSE!");
 	switch (argc) {
 		case 2: 	// single file or test case
 			if (strcmp(argsv[1], "-test") == 0) {
-				run(ParticleGeneratorTest::suite());
+				run(LennardJonesTest::suite());
 				return 0;
 			}
 			else {
@@ -103,6 +96,7 @@ int main(int argc, char* argsv[]) {
 		return 1;
 	}
 
+	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 	// the forces are needed to calculate x, but are not given in the input file.
 	//Gravitation forceType;
 	LennardJones forceType;
@@ -126,14 +120,14 @@ int main(int argc, char* argsv[]) {
 		iteration++;
 		if (iteration % 10 == 0) {
 			plotParticles(iteration);
-			LOG4CXX_DEBUG(logger, "Iteration " << iteration << " finished.");
+			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " finished.");
 		}
 		//LOG4CXX_DEBUG(logger, "Iteration " << iteration << " finished.");
 
 		current_time += delta_t;
 	}
 
-	LOG4CXX_INFO(logger, "output written. Terminating...");
+	LOG4CXX_INFO(molsimlog, "output written. Terminating...");
 	return 0;
 }
 
@@ -194,6 +188,6 @@ void plotParticles(int iteration) {
 }
 
 void error() {
-	LOG4CXX_ERROR(logger, "Errounous programme call!");
-	LOG4CXX_ERROR(logger, "./MolSim (-c | -p) filename [delta_t end_time] | -test");
+	LOG4CXX_ERROR(molsimlog, "Errounous programme call!");
+	LOG4CXX_ERROR(molsimlog, "./MolSim (-c | -p) filename [delta_t end_time] | -test");
 }

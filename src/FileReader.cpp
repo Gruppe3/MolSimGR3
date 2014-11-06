@@ -12,10 +12,11 @@
 #include <sstream>
 #include <iostream>
 #include <cstdlib>
-#include <log4cxx/logger.h>
+#include "Logger.h"
 
 using namespace std;
-using namespace log4cxx;
+
+extern const LoggerPtr iolog;
 
 FileReader::FileReader() {
 }
@@ -33,22 +34,21 @@ void FileReader::readFile(ParticleContainer& particleContainer, char* filename) 
     std::ifstream input_file(filename);
     string tmp_string;
 
-    LoggerPtr io = Logger::getLogger("MolSim.io");
     if (input_file.is_open()) {
 
     	getline(input_file, tmp_string);
-    	LOG4CXX_DEBUG(io, "Read line: " << tmp_string);
+    	LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);
 
     	while (tmp_string.size() == 0 || tmp_string[0] == '#') {
     		getline(input_file, tmp_string);
-    		LOG4CXX_DEBUG(io, "Read line: " << tmp_string);
+    		LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);
     	}
 
     	istringstream numstream(tmp_string);
     	numstream >> num_particles;
-    	LOG4CXX_DEBUG(io, "Reading " << num_particles << ".");
+    	LOG4CXX_DEBUG(iolog, "Reading " << num_particles << ".");
     	getline(input_file, tmp_string);
-    	LOG4CXX_DEBUG(io, "Read line: " << tmp_string);
+    	LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);
 
     	for (int i = 0; i < num_particles; i++) {
     		istringstream datastream(tmp_string);
@@ -61,7 +61,7 @@ void FileReader::readFile(ParticleContainer& particleContainer, char* filename) 
     			datastream >> v[j];
     		}
     		if (datastream.eof()) {
-    			LOG4CXX_ERROR(io, "Error reading file: eof reached unexpectedly reading from line " << i);
+    			LOG4CXX_ERROR(iolog, "Error reading file: eof reached unexpectedly reading from line " << i);
     			exit(-1);
     		}
     		datastream >> m;
@@ -69,10 +69,10 @@ void FileReader::readFile(ParticleContainer& particleContainer, char* filename) 
     		particleContainer.add(p);
 
     		getline(input_file, tmp_string);
-    		LOG4CXX_DEBUG(io, "Read line: " << tmp_string);
+    		LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);
     	}
     } else {
-    	LOG4CXX_ERROR(io, "Error: could not open file " << filename);
+    	LOG4CXX_ERROR(iolog, "Error: could not open file " << filename);
     	exit(-1);
     }
 

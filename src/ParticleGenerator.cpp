@@ -7,11 +7,15 @@
 
 #include "ParticleGenerator.h"
 #include "MaxwellBoltzmannDistribution.h"
+#include "Logger.h"
 
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <cstdlib>
+
+extern const LoggerPtr iolog;
+extern const LoggerPtr particlelog;
 
 ParticleGenerator::ParticleGenerator() {
 
@@ -26,18 +30,18 @@ void ParticleGenerator::getFileInput(char* fileName, ParticleContainer& pc) {
 
 	if (input_file.is_open()) {
 		getline(input_file, tmp_string);
-		cout << "Read line: " << tmp_string << endl;
+		LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);
 
 		while (tmp_string.size() == 0 || tmp_string[0] == '#') {
 			getline(input_file, tmp_string);
-			cout << "Read line: " << tmp_string << endl;
+			LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);
 		}
 
 		istringstream numstream(tmp_string);
 		numstream >> num_cuboids;
-		cout << "Reading " << num_cuboids << "." << endl;
+		LOG4CXX_DEBUG(iolog, "Reading " << num_cuboids << ".");
 		getline(input_file, tmp_string);
-		cout << "Read line: " << tmp_string << endl;
+		LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);
 
 		for (int i = 0; i < num_cuboids; i++) {
 			istringstream datastream(tmp_string);
@@ -53,7 +57,7 @@ void ParticleGenerator::getFileInput(char* fileName, ParticleContainer& pc) {
 				datastream >> num[j];
 			}
 			if (datastream.eof()) {
-				cout << "Error reading file: eof reached unexpectedly reading from line " << i << endl;
+				LOG4CXX_ERROR(iolog, "Error reading file: eof reached unexpectedly reading from line " << i);
 				exit(-1);
 			}
 
@@ -62,12 +66,13 @@ void ParticleGenerator::getFileInput(char* fileName, ParticleContainer& pc) {
 			datastream >> H;
 
 			// create particles from cuboid data
+			LOG4CXX_ERROR(particlelog, "Generating Cuboid...");
 			createParticles(pc);
 
 			getline(input_file, tmp_string);
 		}
 	} else {
-		std::cout << "Error: could not open file " << fileName << std::endl;
+		LOG4CXX_ERROR(iolog, "Error: could not open file " << fileName);
 		exit(-1);
 	}
 
@@ -89,6 +94,8 @@ ParticleGenerator::~ParticleGenerator() {
 }
 
 void ParticleGenerator::createParticles(ParticleContainer& pc) {
+	int dim = num[2] <= 1 ? 2 : 3;
+
 	for (int i = 0; i < num[0]; i++) {	// X dimension
 		for (int j = 0; j < num[1]; j++) {	// Y dimension
 			for (int k = 0; k < num[2]; k++) {	// Z dimension
@@ -99,7 +106,7 @@ void ParticleGenerator::createParticles(ParticleContainer& pc) {
 				x[2] = X[2] + k * H;
 
 				Particle p(x, V, M, 0);
-				MaxwellBoltzmannDistribution(p, meanV, 3);
+				MaxwellBoltzmannDistribution(p, meanV, dim);
 				pc.add(p);
 			}
 		}

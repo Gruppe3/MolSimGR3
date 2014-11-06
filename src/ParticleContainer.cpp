@@ -9,9 +9,13 @@
 
 
 #include "ParticleContainer.h"
+#include "Logger.h"
+
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
+
+extern const LoggerPtr particlelog;
 
 ParticleContainer::ParticleContainer() {
 	particles = std::list<Particle>();
@@ -30,7 +34,7 @@ ParticleContainer::ParticleContainer(const ParticleContainer& pc) {
 }
 
 ParticleContainer::~ParticleContainer() {
-	LOG4CXX_TRACE(Logger::getLogger("MolSim.Particle"), "ParticleContainer destructed!");
+	LOG4CXX_TRACE(particlelog, "ParticleContainer destructed!");
 }
 
 void ParticleContainer::add(Particle& p) {

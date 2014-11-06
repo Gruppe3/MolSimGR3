@@ -6,7 +6,10 @@
  */
 
 #include "LennardJones.h"
+#include "Logger.h"
 #include <cmath>
+
+extern const LoggerPtr forcelog;
 
 LennardJones::LennardJones() {
 	sigma = 1.0;
@@ -25,7 +28,7 @@ void LennardJones::calc(Particle&p1, Particle& p2) {
 	utils::Vector<double, 3> diff = p2.getX() - p1.getX();
 	double norm_inverse = 1 / diff.L2Norm();
 	norm_inverse *= norm_inverse;	// square
-	double field_pow = pow(sigma, 6) * pow(norm_inverse, 4);	// (sigma / norm)^6
+	double field_pow = pow(sigma, 6) * pow(norm_inverse, 3);	// (sigma / norm)^6
 	utils::Vector<double, 3> f = coeff * norm_inverse * field_pow * (1 - 2*field_pow) * diff;
 
 	f1 = f1 + f;
