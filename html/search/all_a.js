@@ -9,6 +9,6 @@ var searchData=
   ['lennardjonestest_2ecpp',['LennardJonesTest.cpp',['../LennardJonesTest_8cpp.html',1,'']]],
   ['lennardjonestest_2eh',['LennardJonesTest.h',['../LennardJonesTest_8h.html',1,'']]],
   ['list_5fstream',['list_stream',['../namespacexml__schema.html#ab6c818ac91e70a25620375e0d000be83',1,'xml_schema']]],
-  ['logger',['logger',['../MolSim_8cpp.html#a1998524739c005c9ecfea820244fe54b',1,'MolSim.cpp']]],
+  ['logger_2eh',['Logger.h',['../Logger_8h.html',1,'']]],
   ['long_5f',['long_',['../namespacexml__schema.html#a1d78aacee49e26cb7a69d5aa97df1268',1,'xml_schema']]]
 ];

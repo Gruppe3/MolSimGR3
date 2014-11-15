@@ -1,0 +1,4 @@
+# following files will be ignored
+*.vtu
+*.[oa]
+.DS_Store

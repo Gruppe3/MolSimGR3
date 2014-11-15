@@ -104,9 +104,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;<a class="el" href="LennardJonesTest_8h_source.html">test/LennardJonesTest.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ParticleContainerTest_8h_source.html">test/ParticleContainerTest.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ParticleGeneratorTest_8h_source.html">test/ParticleGeneratorTest.h</a>&quot;</code><br />
-<code>#include &lt;log4cxx/logger.h&gt;</code><br />
-<code>#include &lt;log4cxx/basicconfigurator.h&gt;</code><br />
-<code>#include &lt;log4cxx/propertyconfigurator.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="Logger_8h_source.html">Logger.h</a>&quot;</code><br />
 <code>#include &lt;list&gt;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
@@ -114,12 +112,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1998524739c005c9ecfea820244fe54b"><td class="memItemLeft" align="right" valign="top">LoggerPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MolSim_8cpp.html#a1998524739c005c9ecfea820244fe54b">logger</a> (Logger::getLogger(&quot;MolSim&quot;))</td></tr>
-<tr class="separator:a1998524739c005c9ecfea820244fe54b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ffa9b9c518e05762c486329d9a990e3"><td class="memItemLeft" align="right" valign="top">LoggerPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MolSim_8cpp.html#a9ffa9b9c518e05762c486329d9a990e3">particlelog</a> (Logger::getLogger(&quot;MolSim.Particle&quot;))</td></tr>
-<tr class="separator:a9ffa9b9c518e05762c486329d9a990e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a081d177a0a6549a8d34ebe78d4989644"><td class="memItemLeft" align="right" valign="top">LoggerPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MolSim_8cpp.html#a081d177a0a6549a8d34ebe78d4989644">testlog</a> (log4cxx::Logger::getLogger(&quot;MolSim.test&quot;))</td></tr>
-<tr class="separator:a081d177a0a6549a8d34ebe78d4989644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e1f61f0b4eed51bc609912cb2cd4689"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MolSim_8cpp.html#a4e1f61f0b4eed51bc609912cb2cd4689">calculateF</a> (<a class="el" href="classForceHandler.html">ForceHandler</a> &amp;force)</td></tr>
 <tr class="separator:a4e1f61f0b4eed51bc609912cb2cd4689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c59c4c130c452e82f3992fd17166bed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MolSim_8cpp.html#a6c59c4c130c452e82f3992fd17166bed">calculateX</a> ()</td></tr>
@@ -135,6 +127,8 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a6a2b50c935061198664000ffd9d63d95"><td class="memItemLeft" align="right" valign="top">const LoggerPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MolSim_8cpp.html#a6a2b50c935061198664000ffd9d63d95">molsimlog</a></td></tr>
+<tr class="separator:a6a2b50c935061198664000ffd9d63d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00b0c9b1c3ea8bb73a7fc8b53a3961fd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MolSim_8cpp.html#a00b0c9b1c3ea8bb73a7fc8b53a3961fd">start_time</a> = 0</td></tr>
 <tr class="separator:a00b0c9b1c3ea8bb73a7fc8b53a3961fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c7ea5e69ce954c1d81db1732f9f426a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="MolSim_8cpp.html#a8c7ea5e69ce954c1d81db1732f9f426a">end_time</a> = 1000</td></tr>
@@ -210,22 +204,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1998524739c005c9ecfea820244fe54b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">LoggerPtr logger </td>
-          <td>(</td>
-          <td class="paramtype">Logger::&#160;</td>
-          <td class="paramname"><em>getLogger</em>&quot;MolSim&quot;</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a329c95e85f063f49b0daaed5c5b56335"></a>
 <div class="memitem">
 <div class="memproto">
@@ -252,22 +230,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9ffa9b9c518e05762c486329d9a990e3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">LoggerPtr particlelog </td>
-          <td>(</td>
-          <td class="paramtype">Logger::&#160;</td>
-          <td class="paramname"><em>getLogger</em>&quot;MolSim.Particle&quot;</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="af4d25832793b65abf538fab0474a8e51"></a>
 <div class="memitem">
 <div class="memproto">
@@ -282,22 +244,6 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>plot the particles to a xyz-file </p>
-
-</div>
-</div>
-<a class="anchor" id="a081d177a0a6549a8d34ebe78d4989644"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">LoggerPtr testlog </td>
-          <td>(</td>
-          <td class="paramtype">log4cxx::Logger::&#160;</td>
-          <td class="paramname"><em>getLogger</em>&quot;MolSim.test&quot;</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -320,6 +266,18 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">double end_time = 1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6a2b50c935061198664000ffd9d63d95"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const LoggerPtr molsimlog</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -353,7 +311,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 5 2014 19:07:23 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Nov 15 2014 01:48:33 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

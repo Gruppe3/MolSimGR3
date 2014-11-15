@@ -2,7 +2,7 @@ var searchData=
 [
   ['teardown',['tearDown',['../classLennardJonesTest.html#a95821752d5f0bcfb06ab78227a10444c',1,'LennardJonesTest::tearDown()'],['../classParticleContainerTest.html#a3109d4eb4afad3ff4c046fc47ad4fcc4',1,'ParticleContainerTest::tearDown()'],['../classParticleGeneratorTest.html#a69d4bc5f9c69e3c6f34e0c3af750aa94',1,'ParticleGeneratorTest::tearDown()']]],
   ['testh',['testH',['../classParticleGeneratorTest.html#afe1c677462a302e11d48fe3640887522',1,'ParticleGeneratorTest']]],
-  ['testlog',['testlog',['../MolSim_8cpp.html#a081d177a0a6549a8d34ebe78d4989644',1,'MolSim.cpp']]],
+  ['testlog',['testlog',['../Logger_8h.html#a360104171c03c4cb276a865a9551cd24',1,'Logger.h']]],
   ['testsize',['testSize',['../classParticleContainerTest.html#a51079ca20b39f6379629c6d34db08014',1,'ParticleContainerTest::testSize()'],['../classParticleGeneratorTest.html#a21a9be7b17877cd6ea72f035916b3006',1,'ParticleGeneratorTest::testSize()']]],
   ['testv',['testV',['../classParticleGeneratorTest.html#a3abb9ab7d29dcae6918715be309c8162',1,'ParticleGeneratorTest']]],
   ['testvalue',['testValue',['../classLennardJonesTest.html#aa73e875411b6fbd4ca69210c545016f6',1,'LennardJonesTest']]],
