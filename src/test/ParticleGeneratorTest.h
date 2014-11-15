@@ -21,6 +21,7 @@
 using namespace CppUnit;
 using namespace log4cxx;
 
+/** defines test suite for ParticleGenerator */
 class ParticleGeneratorTest : public TestCase {
 public:
 	ParticleGeneratorTest();

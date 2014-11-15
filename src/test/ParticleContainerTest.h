@@ -17,6 +17,7 @@
 
 using namespace CppUnit;
 
+/** Defines test suite for ParticleContainer */
 class ParticleContainerTest : public TestCase {
 public:
 	virtual ~ParticleContainerTest();

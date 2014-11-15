@@ -17,6 +17,7 @@
 
 using namespace CppUnit;
 
+/** Defines test suite for Lennard-Jones force calculation */
 class LennardJonesTest : public TestCase {
 public:
 	/** constructor */

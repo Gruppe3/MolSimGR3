@@ -13,6 +13,7 @@
 
 using namespace log4cxx;
 
+/** A single particle */
 class Particle {
 
 private:

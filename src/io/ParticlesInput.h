@@ -10,6 +10,7 @@
 
 #include "InputHandler.h"
 
+/** Reads particle data from an input file */
 class ParticlesInput : InputHandler {
 public:
 	virtual ~ParticlesInput();

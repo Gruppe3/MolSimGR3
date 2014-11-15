@@ -10,6 +10,7 @@
 
 #include "../ParticleContainer.h"
 
+/** An abstract class every input type (e.g.ParticlesInput) has to implement */
 class InputHandler {
 public:
 	/** destructor */

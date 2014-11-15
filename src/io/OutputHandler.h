@@ -10,6 +10,7 @@
 
 #include "../ParticleContainer.h"
 
+/** An abstract class every output type (e.g. VTKOutput)  has to implement */
 class OutputHandler {
 public:
 	virtual ~OutputHandler();

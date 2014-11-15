@@ -11,6 +11,7 @@
 #include "../Particle.h"
 
 /* based on strategy pattern */
+/** An abstract class every actual force calculator (e.g. Gravitation) has to implement */
 class ForceHandler {
 public:
 	/** destructor */

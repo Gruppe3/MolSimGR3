@@ -10,6 +10,7 @@
 
 #include "OutputHandler.h"
 
+/** Writes calculated data into an xyz file */
 class XYZOutput : OutputHandler {
 public:
 	/** destructor */

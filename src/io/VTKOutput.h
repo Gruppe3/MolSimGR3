@@ -10,6 +10,7 @@
 
 #include "OutputHandler.h"
 
+/** Writes calculated data into a vtk file */
 class VTKOutput : OutputHandler {
 public:
 	virtual ~VTKOutput();

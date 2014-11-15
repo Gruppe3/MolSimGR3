@@ -12,7 +12,7 @@
 #include "../Particle.h"
 #include "../utils/Vector.h"
 
-/* defines all methods of force calculation */
+/** A force calculator using the gravitational potential */
 class Gravitation : public ForceHandler {
 public:
 	/** constructor */

@@ -16,6 +16,7 @@ using namespace std;
 using namespace log4cxx;
 
 /* based on iterator pattern*/
+/** Stores an amount of particles and provides functions for iteration */
 class ParticleContainer {
 private:
 	/** list of particles */

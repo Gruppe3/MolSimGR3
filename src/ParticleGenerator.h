@@ -13,6 +13,7 @@
 #include "ParticleContainer.h"
 #include "io/InputHandler.h"
 
+/** Generates particle containers from cuboid data */
 class ParticleGenerator : InputHandler {
 public:
 	/** empty constructor */
