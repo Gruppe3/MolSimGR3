@@ -112,3 +112,30 @@ void ParticleGenerator::createParticles(ParticleContainer& pc) {
 		}
 	}
 }
+
+void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector<int, 3>& n,
+		utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer& pc) {
+	int dim = n[2] <= 1 ? 2 : 3;
+
+	for (int i = 0; i < n[0]; i++) {	// X dimension
+		for (int j = 0; j < n[1]; j++) {	// Y dimension
+			for (int k = 0; k < n[2]; k++) {	// Z dimension
+				utils::Vector<double, 3> x;
+				// calculate position
+				x[0] = xn[0] + i * h;
+				x[1] = xn[1] + j * h;
+				x[2] = xn[2] + k * h;
+
+				Particle p(x, v, m, 0);
+				MaxwellBoltzmannDistribution(p, meanv, dim);
+				pc.add(p);
+			}
+		}
+	}
+}
+
+void ParticleGenerator::createSphere(utils::Vector<double, 3>& x, int n,
+			utils::Vector<double, 3>& v, double h, ParticleContainer& pc) {
+	// todo
+
+}

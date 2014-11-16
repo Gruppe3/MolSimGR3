@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<molsimdata xmlns="http://www.example.org/input/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/input/ input.xsd">
+  <outputbasename>MD_vtk</outputbasename>
+  <writefreq>10</writefreq>
+  <timestep>0.0005</timestep>
+  <endtime>20</endtime>
+  <domain>
+  	<size x="180" y="90" z="0"/>
+  	<cutoff>3.0</cutoff>
+  </domain>
+  <objectlist>
+  	<cuboid>
+  		<location x="20" y="20" z="0"/>
+  		<velocity x="0.0" y="0.0" z="0.0"/>
+  		<numparticles x="100" y="20" z="1"/>
+  		<mass>1.0</mass>
+  		<meshwidth>1.1225</meshwidth>
+  		<brownian>0.1</brownian>
+  	</cuboid>
+  	<cuboid>
+  		<location x="70" y="60" z="0"/>
+  		<velocity x="0.0" y="-10.0" z="0.0"/>
+  		<numparticles x="20" y="20" z="1"/>
+  		<mass>1.0</mass>
+  		<meshwidth>1.1225</meshwidth>
+  		<brownian>0.1</brownian>
+  	</cuboid>
+  </objectlist>
+</molsimdata>

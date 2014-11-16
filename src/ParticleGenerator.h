@@ -34,6 +34,26 @@ public:
 	 * @param pc ParticleContainer storing created particles */
 	void createParticles(ParticleContainer& pc);
 
+	/** creates particles due to cuboid parameters
+	 * @param x 3 dimensional location vector of the cuboid
+	 * @param n 3 dimensional vector defining number of particles per dimension of the cuboid
+	 * @param v 3 dimensional velocity vector of the cuboid
+	 * @param h meshwidth/ distance between two particles
+	 * @param m mass of each particle
+	 * @param meanv mean value of Brownian Motion
+	 * @param pc ParticleContainer storing created particles */
+	void createCuboid(utils::Vector<double, 3>& x, utils::Vector<int, 3>& n,
+			utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer& pc);
+
+	/** creates particles due to sphere parameters
+	 * @param x 3 dimensional location vector of the sphere's center
+	 * @param n number of particles along the sphere's radius
+	 * @param v 3 dimensional velocity vector of the sphere
+	 * @param h meshwidth/ distance between two particles
+	 * @param pc ParticleContainer storing created particles */
+	void createSphere(utils::Vector<double, 3>& x, int n,
+			utils::Vector<double, 3>& v, double h, ParticleContainer& pc);
+
 private:
 	/** 3 dimensional position of the cuboid (lower left front-side corner) */
 	utils::Vector<double, 3> X;

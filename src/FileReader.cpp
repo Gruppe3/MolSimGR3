@@ -61,7 +61,7 @@ void FileReader::readFile(ParticleContainer& particleContainer, char* filename) 
     			datastream >> v[j];
     		}
     		if (datastream.eof()) {
-    			LOG4CXX_ERROR(iolog, "Error reading file: eof reached unexpectedly reading from line " << i);
+    			LOG4CXX_FATAL(iolog, "Error reading file: eof reached unexpectedly reading from line " << i);
     			exit(-1);
     		}
     		datastream >> m;
@@ -72,7 +72,7 @@ void FileReader::readFile(ParticleContainer& particleContainer, char* filename) 
     		LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);
     	}
     } else {
-    	LOG4CXX_ERROR(iolog, "Error: could not open file " << filename);
+    	LOG4CXX_FATAL(iolog, "Error: could not open file " << filename);
     	exit(-1);
     }
 

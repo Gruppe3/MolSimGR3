@@ -6,6 +6,7 @@
 #include "ParticleContainer.h"
 #include "ParticleGenerator.h"
 #include "io/ParticlesInput.h"
+#include "io/XMLInput.h"
 #include "io/VTKOutput.h"
 #include "io/XYZOutput.h"
 
@@ -54,6 +55,9 @@ extern const LoggerPtr molsimlog;
 double start_time = 0;
 double end_time = 1000;
 double delta_t = 0.014;
+string out_name("MD_vtk");
+int writeFreq = 10;
+
 
 ParticleContainer particleContainer;
 
@@ -71,7 +75,7 @@ int main(int argc, char* argsv[]) {
 				error();
 				return 1;
 			}
-		case 3:	// cuboid or particle data
+		case 3:	// xml, cuboid or particle file
 			break;
 		case 5:
 			delta_t = atof(argsv[3]);
@@ -83,18 +87,22 @@ int main(int argc, char* argsv[]) {
 	}
 
 	// get input data
+	InputHandler* inputhandler;
 	if (strcmp(argsv[1], "-c") == 0) {	// cuboids
-		ParticleGenerator pg;
-		pg.getFileInput(argsv[2], particleContainer);
+		inputhandler = new ParticleGenerator;
 	}
 	else if (strcmp(argsv[1], "-p") == 0) {	// particles
-		ParticlesInput pi;
-		pi.getFileInput(argsv[2], particleContainer);
+		inputhandler = new ParticlesInput;
+	}
+	else if (strcmp(argsv[1], "-xml") == 0) {	// xml file according to io/input.xsd
+		inputhandler = new XMLInput;
 	}
 	else {
 		error();
 		return 1;
 	}
+	inputhandler->getFileInput(argsv[2], particleContainer);
+	delete inputhandler;
 
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 	// the forces are needed to calculate x, but are not given in the input file.
@@ -118,7 +126,7 @@ int main(int argc, char* argsv[]) {
 		calculateV();
 
 		iteration++;
-		if (iteration % 10 == 0) {
+		if (iteration % writeFreq == 0) {
 			plotParticles(iteration);
 			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " finished.");
 		}
@@ -181,7 +189,7 @@ void calculateV() {
 
 
 void plotParticles(int iteration) {
-	string out_name("MD_vtk");
+	//string out_name("MD_vtk");
 
 	VTKOutput vtko;
 	vtko.setOutput(out_name, iteration, particleContainer);
@@ -189,5 +197,5 @@ void plotParticles(int iteration) {
 
 void error() {
 	LOG4CXX_ERROR(molsimlog, "Errounous programme call!");
-	LOG4CXX_ERROR(molsimlog, "./MolSim (-c | -p) filename [delta_t end_time] | -test");
+	LOG4CXX_ERROR(molsimlog, "./MolSim (-c | -p) filename [delta_t end_time] | -xml filename | -test");
 }
