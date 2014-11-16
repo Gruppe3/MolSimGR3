@@ -13,7 +13,7 @@ The Molecular Dynamics teaching code.
 The following parameter configurations are possible:
 
 1. **MolSim -test**	This runs a test suite defined in MolSim.cpp
-2. **MolSim -xml filename**	This runs the simulation based on data stored in the specified XML file (e.g. eingabe-two_bodies.xml). See src/io/molsim-input.xsd for valid XML definitions.
+2. **MolSim -xml filename**	This runs the simulation based on data stored in the specified XML file (e.g. eingabe-two_bodies.xml). See molsim-input.xsd for valid XML definitions. The XML file must include a correct reference path to the XSD file!
 3. **MolSim -c filename [delta_t end_time]**	This runs the simulation based on cuboids generated from data in the specified file (e.g. eingabe-cuboid.txt).
 4. **MolSim -p filename [delta_t end_time]**	This runs the simulation based on particles stored in the specified file (e.g. eingabe-sonne.txt).
 

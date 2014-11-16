@@ -5,8 +5,8 @@
  *      Author: christiansturm
  */
 
+#include <io/input.h>
 #include "XMLInput.h"
-#include "input.hxx"
 #include "../Logger.h"
 #include "../ParticleGenerator.h"
 
@@ -19,6 +19,8 @@ extern double delta_t;
 extern string out_name;
 extern int writeFreq;
 extern double delta_t;
+extern int domainX, domainY;
+extern double cutoff;
 extern const LoggerPtr iolog;
 
 XMLInput::~XMLInput() {
@@ -28,7 +30,8 @@ XMLInput::~XMLInput() {
 void XMLInput::getFileInput(char* fileName, ParticleContainer& pc) {
 	try {
 		// initialize xml object
-		auto_ptr<molsimdata> molsim (molsimdata (fileName));
+		string file(fileName);
+		auto_ptr<molsimdata> molsim (molsimdata_ (file));
 
 		// set simulation parameters
 		LOG4CXX_INFO(iolog, "reading simulation parameters...");
@@ -39,14 +42,16 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer& pc) {
 		end_time = molsim->endtime();
 		LOG4CXX_DEBUG(iolog, "out: " << out_name << ", wFq: " << writeFreq << ", delta t: " << delta_t << ", end: " << end_time);
 
-		pc(molsim->domain()->size().x(), molsim->domain()->size().y(), molsim->domain()->cutoff());
+		domainX = molsim->domain()->size().x();
+		domainY = molsim->domain()->size().y();
+		cutoff = molsim->domain()->cutoff();
 
 		LOG4CXX_INFO(iolog, "reading object data...");
-		auto_ptr<objectlist> objects = molsim->objectlist();
+		objectlist objects = molsim->objectlist();
 
 		// iterating over cuboids
-		for (objectlist::cuboid_const_iterator i (objects->cuboid().begin());
-	         i != objects->cuboid().end();
+		for (objectlist::cuboid_const_iterator i (objects.cuboid().begin());
+	         i != objects.cuboid().end();
 	         ++i) {
 			LOG4CXX_DEBUG(iolog, "generating cuboid...");
 			// set coordinates
@@ -72,8 +77,8 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer& pc) {
 	    }
 
 		// iterating over spheres
-		for (objectlist::sphere_const_iterator i (objects->sphere().begin());
-			 i != objects->sphere().end();
+		for (objectlist::sphere_const_iterator i (objects.sphere().begin());
+			 i != objects.sphere().end();
 			 ++i) {
 			LOG4CXX_DEBUG(iolog, "generating sphere...");
 			// set coordinates
@@ -93,8 +98,8 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer& pc) {
 		}
 
 		// iterating over particles
-		for (objectlist::particle_const_iterator i (objects->particle().begin());
-			 i != objects->particle().end();
+		for (objectlist::particle_const_iterator i (objects.particle().begin());
+			 i != objects.particle().end();
 			 ++i) {
 			LOG4CXX_DEBUG(iolog, "generating particle...");
 			// set coordinates

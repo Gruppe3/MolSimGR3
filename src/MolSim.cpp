@@ -57,6 +57,8 @@ double end_time = 1000;
 double delta_t = 0.014;
 string out_name("MD_vtk");
 int writeFreq = 10;
+int domainX, domainY;
+double cutoff;
 
 
 ParticleContainer particleContainer;

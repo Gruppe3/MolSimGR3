@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/input/" targetNamespace="http://www.example.org/input/">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.org/input" targetNamespace="http://www.example.org/input" elementFormDefault="qualified">
 	<xs:complexType name="decimalvector">
 		<xs:attribute name="x" type="xs:double" use="required"></xs:attribute>
 		<xs:attribute name="y" type="xs:double" use="required"></xs:attribute>

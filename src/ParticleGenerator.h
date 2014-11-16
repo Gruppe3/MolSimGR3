@@ -14,7 +14,7 @@
 #include "io/InputHandler.h"
 
 /** Generates particle containers from cuboid data */
-class ParticleGenerator : InputHandler {
+class ParticleGenerator : public InputHandler {
 public:
 	/** empty constructor */
 	ParticleGenerator();

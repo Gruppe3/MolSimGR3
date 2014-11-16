@@ -31,8 +31,8 @@
 // in the accompanying FLOSSE file.
 //
 
-#ifndef INPUT_HXX
-#define INPUT_HXX
+#ifndef MOLSIM_INPUT_HXX
+#define MOLSIM_INPUT_HXX
 
 #ifndef XSD_USE_CHAR
 #define XSD_USE_CHAR
@@ -1180,4 +1180,4 @@ namespace input
 //
 // End epilogue.
 
-#endif // INPUT_HXX
+#endif // MOLSIM_INPUT_HXX

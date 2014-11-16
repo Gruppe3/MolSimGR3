@@ -10,7 +10,7 @@
 
 #include "InputHandler.h"
 
-class XMLInput : InputHandler {
+class XMLInput : public InputHandler {
 public:
 	virtual ~XMLInput();
 

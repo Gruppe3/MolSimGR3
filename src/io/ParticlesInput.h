@@ -11,7 +11,7 @@
 #include "InputHandler.h"
 
 /** Reads particle data from an input file */
-class ParticlesInput : InputHandler {
+class ParticlesInput : public InputHandler {
 public:
 	virtual ~ParticlesInput();
 

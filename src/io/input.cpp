@@ -38,7 +38,7 @@
 
 #include <xsd/cxx/pre.hxx>
 
-#include "input.hxx"
+#include "input.h"
 
 namespace input
 {
@@ -1006,7 +1006,7 @@ namespace input
 
       // outputbasename
       //
-      if (n.name () == "outputbasename" && n.namespace_ ().empty ())
+      if (n.name () == "outputbasename" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< outputbasename_type > r (
           outputbasename_traits::create (i, f, this));
@@ -1020,7 +1020,7 @@ namespace input
 
       // writefreq
       //
-      if (n.name () == "writefreq" && n.namespace_ ().empty ())
+      if (n.name () == "writefreq" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!writefreq_.present ())
         {
@@ -1031,7 +1031,7 @@ namespace input
 
       // timestep
       //
-      if (n.name () == "timestep" && n.namespace_ ().empty ())
+      if (n.name () == "timestep" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!timestep_.present ())
         {
@@ -1042,7 +1042,7 @@ namespace input
 
       // endtime
       //
-      if (n.name () == "endtime" && n.namespace_ ().empty ())
+      if (n.name () == "endtime" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!endtime_.present ())
         {
@@ -1053,7 +1053,7 @@ namespace input
 
       // domain
       //
-      if (n.name () == "domain" && n.namespace_ ().empty ())
+      if (n.name () == "domain" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< domain_type > r (
           domain_traits::create (i, f, this));
@@ -1067,7 +1067,7 @@ namespace input
 
       // objectlist
       //
-      if (n.name () == "objectlist" && n.namespace_ ().empty ())
+      if (n.name () == "objectlist" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< objectlist_type > r (
           objectlist_traits::create (i, f, this));
@@ -1086,35 +1086,35 @@ namespace input
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "outputbasename",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!writefreq_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "writefreq",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!timestep_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "timestep",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!endtime_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "endtime",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!objectlist_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "objectlist",
-        "");
+        "http://www.example.org/input");
     }
   }
 
@@ -1205,7 +1205,7 @@ namespace input
 
       // size
       //
-      if (n.name () == "size" && n.namespace_ ().empty ())
+      if (n.name () == "size" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< size_type > r (
           size_traits::create (i, f, this));
@@ -1219,7 +1219,7 @@ namespace input
 
       // cutoff
       //
-      if (n.name () == "cutoff" && n.namespace_ ().empty ())
+      if (n.name () == "cutoff" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!cutoff_.present ())
         {
@@ -1235,14 +1235,14 @@ namespace input
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "size",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!cutoff_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "cutoff",
-        "");
+        "http://www.example.org/input");
     }
   }
 
@@ -1322,7 +1322,7 @@ namespace input
 
       // cuboid
       //
-      if (n.name () == "cuboid" && n.namespace_ ().empty ())
+      if (n.name () == "cuboid" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< cuboid_type > r (
           cuboid_traits::create (i, f, this));
@@ -1333,7 +1333,7 @@ namespace input
 
       // sphere
       //
-      if (n.name () == "sphere" && n.namespace_ ().empty ())
+      if (n.name () == "sphere" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< sphere_type > r (
           sphere_traits::create (i, f, this));
@@ -1344,7 +1344,7 @@ namespace input
 
       // particle
       //
-      if (n.name () == "particle" && n.namespace_ ().empty ())
+      if (n.name () == "particle" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< particle_type > r (
           particle_traits::create (i, f, this));
@@ -1465,7 +1465,7 @@ namespace input
 
       // location
       //
-      if (n.name () == "location" && n.namespace_ ().empty ())
+      if (n.name () == "location" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< location_type > r (
           location_traits::create (i, f, this));
@@ -1479,7 +1479,7 @@ namespace input
 
       // velocity
       //
-      if (n.name () == "velocity" && n.namespace_ ().empty ())
+      if (n.name () == "velocity" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< velocity_type > r (
           velocity_traits::create (i, f, this));
@@ -1493,7 +1493,7 @@ namespace input
 
       // numparticles
       //
-      if (n.name () == "numparticles" && n.namespace_ ().empty ())
+      if (n.name () == "numparticles" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< numparticles_type > r (
           numparticles_traits::create (i, f, this));
@@ -1507,7 +1507,7 @@ namespace input
 
       // meshwidth
       //
-      if (n.name () == "meshwidth" && n.namespace_ ().empty ())
+      if (n.name () == "meshwidth" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!meshwidth_.present ())
         {
@@ -1518,7 +1518,7 @@ namespace input
 
       // mass
       //
-      if (n.name () == "mass" && n.namespace_ ().empty ())
+      if (n.name () == "mass" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!mass_.present ())
         {
@@ -1529,7 +1529,7 @@ namespace input
 
       // brownian
       //
-      if (n.name () == "brownian" && n.namespace_ ().empty ())
+      if (n.name () == "brownian" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!brownian_.present ())
         {
@@ -1545,42 +1545,42 @@ namespace input
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "location",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!velocity_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "velocity",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!numparticles_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "numparticles",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!meshwidth_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "meshwidth",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!mass_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "mass",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!brownian_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "brownian",
-        "");
+        "http://www.example.org/input");
     }
   }
 
@@ -1683,7 +1683,7 @@ namespace input
 
       // location
       //
-      if (n.name () == "location" && n.namespace_ ().empty ())
+      if (n.name () == "location" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< location_type > r (
           location_traits::create (i, f, this));
@@ -1697,7 +1697,7 @@ namespace input
 
       // velocity
       //
-      if (n.name () == "velocity" && n.namespace_ ().empty ())
+      if (n.name () == "velocity" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< velocity_type > r (
           velocity_traits::create (i, f, this));
@@ -1711,7 +1711,7 @@ namespace input
 
       // numparticles
       //
-      if (n.name () == "numparticles" && n.namespace_ ().empty ())
+      if (n.name () == "numparticles" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!numparticles_.present ())
         {
@@ -1722,7 +1722,7 @@ namespace input
 
       // meshwidth
       //
-      if (n.name () == "meshwidth" && n.namespace_ ().empty ())
+      if (n.name () == "meshwidth" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!meshwidth_.present ())
         {
@@ -1738,28 +1738,28 @@ namespace input
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "location",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!velocity_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "velocity",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!numparticles_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "numparticles",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!meshwidth_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "meshwidth",
-        "");
+        "http://www.example.org/input");
     }
   }
 
@@ -1854,7 +1854,7 @@ namespace input
 
       // location
       //
-      if (n.name () == "location" && n.namespace_ ().empty ())
+      if (n.name () == "location" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< location_type > r (
           location_traits::create (i, f, this));
@@ -1868,7 +1868,7 @@ namespace input
 
       // velocity
       //
-      if (n.name () == "velocity" && n.namespace_ ().empty ())
+      if (n.name () == "velocity" && n.namespace_ () == "http://www.example.org/input")
       {
         ::std::auto_ptr< velocity_type > r (
           velocity_traits::create (i, f, this));
@@ -1882,7 +1882,7 @@ namespace input
 
       // mass
       //
-      if (n.name () == "mass" && n.namespace_ ().empty ())
+      if (n.name () == "mass" && n.namespace_ () == "http://www.example.org/input")
       {
         if (!mass_.present ())
         {
@@ -1898,21 +1898,21 @@ namespace input
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "location",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!velocity_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "velocity",
-        "");
+        "http://www.example.org/input");
     }
 
     if (!mass_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "mass",
-        "");
+        "http://www.example.org/input");
     }
   }
 
@@ -2162,7 +2162,7 @@ namespace input
       ::xsd::cxx::xml::dom::name< char > (e));
 
     if (n.name () == "molsimdata" &&
-        n.namespace_ () == "http://www.example.org/input/")
+        n.namespace_ () == "http://www.example.org/input")
     {
       ::std::auto_ptr< ::input::molsimdata > r (
         ::xsd::cxx::tree::traits< ::input::molsimdata, char >::create (
@@ -2174,7 +2174,7 @@ namespace input
       n.name (),
       n.namespace_ (),
       "molsimdata",
-      "http://www.example.org/input/");
+      "http://www.example.org/input");
   }
 
   ::std::auto_ptr< ::input::molsimdata >
@@ -2200,7 +2200,7 @@ namespace input
                        0);
 
     if (n.name () == "molsimdata" &&
-        n.namespace_ () == "http://www.example.org/input/")
+        n.namespace_ () == "http://www.example.org/input")
     {
       ::std::auto_ptr< ::input::molsimdata > r (
         ::xsd::cxx::tree::traits< ::input::molsimdata, char >::create (
@@ -2212,7 +2212,7 @@ namespace input
       n.name (),
       n.namespace_ (),
       "molsimdata",
-      "http://www.example.org/input/");
+      "http://www.example.org/input");
   }
 }
 

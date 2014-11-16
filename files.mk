@@ -4,10 +4,10 @@ src/MolSim.cpp\
 src/outputWriter/vtk-unstructured.cpp\
 src/outputWriter/VTKWriter.cpp\
 src/outputWriter/XYZWriter.cpp\
-src/io/input.cxx\
 src/io/InputHandler.cpp\
 src/io/OutputHandler.cpp\
 src/io/ParticlesInput.cpp\
+src/io/input.cpp\
 src/io/XMLInput.cpp\
 src/io/VTKOutput.cpp\
 src/io/XYZOutput.cpp\
