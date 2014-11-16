@@ -136,6 +136,23 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 
 void ParticleGenerator::createSphere(utils::Vector<double, 3>& x, int n,
 			utils::Vector<double, 3>& v, double h, ParticleContainer& pc) {
-	// todo
 
+	for (int i = -n; i <= n; i++) {	// X dimension
+		for (int j = -n; j <= n; j++) {	// Y dimension
+			for (int k = -n; k <= n; k++) {	// Z dimension
+				utils::Vector<double, 3> xn;
+
+				if (sqrt(i * i + j * j + k * k) <= n) {		//checks if proposed particle position is within the radius
+					// calculate position
+					xn[0] = x[0] + i * h;
+					xn[1] = x[1] + j * h;
+					xn[2] = x[2] + k * h;
+
+					Particle p(xn, v, M, 0);
+					MaxwellBoltzmannDistribution(p, meanV, 3);
+					pc.add(p);
+				}
+			}
+		}
+	}
 }
