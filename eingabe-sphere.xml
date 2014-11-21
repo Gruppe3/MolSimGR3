@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<molsimdata xmlns="http://www.example.org/input" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/input molsim-input.xsd">
+  <outputbasename>MD_vtk</outputbasename>
+  <writefreq>10</writefreq>
+  <timestep>0.00005</timestep>
+  <endtime>10</endtime>
+  <domain>
+  	<size x="120" y="50" z="0"/>
+  	<cutoff>3.0</cutoff>
+  </domain>
+  <objectlist>
+  	<sphere>
+  		<location x="60" z="0" y="25" />
+  		<velocity x="0.0" z="0.0" y="-10" ></velocity>
+  		<numparticles>15</numparticles>
+  		<meshwidth>1.1225</meshwidth>
+  	</sphere>
+  </objectlist>
+</molsimdata>
