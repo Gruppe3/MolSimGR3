@@ -19,7 +19,7 @@ public:
 	 * @param fileName Storage file
 	 * @param iteration Number of current time step
 	 * @param pc ParticleContainer */
-	virtual void setOutput(string fileName, int iteration, ParticleContainer& pc) = 0;
+	virtual void setOutput(string fileName, int iteration, ParticleContainer* pc) = 0;
 };
 
 #endif /* SRC_IO_OUTPUTHANDLER_H_ */

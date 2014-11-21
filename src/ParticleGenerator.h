@@ -21,7 +21,7 @@ public:
 	/** reads multiple cuboids from file
 	 * @param fileName file containing cuboid parameter lists
 	 * @param pc ParticleContainer to store created particles */
-	void getFileInput(char* fileName, ParticleContainer& pc);
+	void getFileInput(char* fileName, ParticleContainer* pc);
 
 	/** constructor for direct value input */
 	ParticleGenerator(utils::Vector<double, 3>& X, utils::Vector<int, 3>& n,
@@ -32,7 +32,7 @@ public:
 
 	/** creates particles due to cuboid parameters
 	 * @param pc ParticleContainer storing created particles */
-	void createParticles(ParticleContainer& pc);
+	void createParticles(ParticleContainer* pc);
 
 	/** creates particles due to cuboid parameters
 	 * @param x 3 dimensional location vector of the cuboid
@@ -43,16 +43,18 @@ public:
 	 * @param meanv mean value of Brownian Motion
 	 * @param pc ParticleContainer storing created particles */
 	void createCuboid(utils::Vector<double, 3>& x, utils::Vector<int, 3>& n,
-			utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer& pc);
+			utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc);
 
 	/** creates particles due to sphere parameters
 	 * @param x 3 dimensional location vector of the sphere's center
 	 * @param n number of particles along the sphere's radius
 	 * @param v 3 dimensional velocity vector of the sphere
 	 * @param h meshwidth/ distance between two particles
+	 * @param m mass of each particle
+	 * @param meanv mean value of Brownian Motion
 	 * @param pc ParticleContainer storing created particles */
 	void createSphere(utils::Vector<double, 3>& x, int n,
-			utils::Vector<double, 3>& v, double h, ParticleContainer& pc);
+			utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc);
 
 private:
 	/** 3 dimensional position of the cuboid (lower left front-side corner) */

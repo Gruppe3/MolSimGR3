@@ -12,6 +12,7 @@ src/io/XMLInput.cpp\
 src/io/VTKOutput.cpp\
 src/io/XYZOutput.cpp\
 src/ParticleContainer.cpp\
+src/ParticleContainerLC.cpp\
 src/Particle.cpp\
 src/forces/ForceHandler.cpp\
 src/forces/Gravitation.cpp\
@@ -21,3 +22,4 @@ src/ParticleGenerator.cpp\
 src/test/ParticleContainerTest.cpp\
 src/test/LennardJonesTest.cpp\
 src/test/ParticleGeneratorTest.cpp\
+src/test/XMLInputTest.cpp\

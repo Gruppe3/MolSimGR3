@@ -17,7 +17,7 @@ public:
 	virtual ~XYZOutput();
 
 	/** stores into xyz file; implementation of OutputHandler::setOutput */
-	void setOutput(string fileName, int iteration, ParticleContainer& pc);
+	void setOutput(string fileName, int iteration, ParticleContainer* pc);
 };
 
 #endif /* SRC_IO_XYZOUTPUT_H_ */

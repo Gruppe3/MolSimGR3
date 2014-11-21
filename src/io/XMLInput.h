@@ -18,7 +18,7 @@ public:
 	 * implementation of InputHandler::getFileInput
 	 * @param fileName File containing particle list
 	 * @param pc ParticleContainer to store particles*/
-	void getFileInput(char* fileName, ParticleContainer& pc);
+	void getFileInput(char* fileName, ParticleContainer* pc);
 };
 
 #endif /* SRC_IO_XMLINPUT_H_ */

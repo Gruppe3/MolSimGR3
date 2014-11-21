@@ -2,6 +2,7 @@
 #include <forces/ForceHandler.h>
 #include <forces/Gravitation.h>
 #include <forces/LennardJones.h>
+#include <ParticleContainerLC.h>
 #include "MaxwellBoltzmannDistribution.h"
 #include "ParticleContainer.h"
 #include "ParticleGenerator.h"
@@ -14,6 +15,7 @@
 #include "test/LennardJonesTest.h"
 #include "test/ParticleContainerTest.h"
 #include "test/ParticleGeneratorTest.h"
+#include "test/XMLInputTest.h"
 
 #include "Logger.h"
 
@@ -28,13 +30,15 @@ using namespace std;
 
 /**
  * calculate the force between particles
+ * @param force Type of force to calculate (Gravitation, LennardJones)
  */
 void calculateF(ForceHandler& force);
 
 /**
  * calculate the position for all particles
+ * @param LC Flag for usage of LC algorithm
  */
-void calculateX();
+void calculateX(bool LC);
 
 /**
  * calculate the position for all particles
@@ -57,11 +61,11 @@ double end_time = 1000;
 double delta_t = 0.014;
 string out_name("MD_vtk");
 int writeFreq = 10;
-int domainX, domainY;
+double domainSize[3];
 double cutoff;
 
 
-ParticleContainer particleContainer;
+ParticleContainer* particleContainer;
 
 
 int main(int argc, char* argsv[]) {
@@ -70,7 +74,7 @@ int main(int argc, char* argsv[]) {
 	switch (argc) {
 		case 2: 	// single file or test case
 			if (strcmp(argsv[1], "-test") == 0) {
-				run(LennardJonesTest::suite());
+				run(XMLInputTest::suite());
 				return 0;
 			}
 			else {
@@ -89,6 +93,10 @@ int main(int argc, char* argsv[]) {
 	}
 
 	// get input data
+	bool LC = false;
+	particleContainer = new ParticleContainer;
+	//Gravitation forceType;
+	ForceHandler* forceType = new LennardJones;
 	InputHandler* inputhandler;
 	if (strcmp(argsv[1], "-c") == 0) {	// cuboids
 		inputhandler = new ParticleGenerator;
@@ -98,19 +106,25 @@ int main(int argc, char* argsv[]) {
 	}
 	else if (strcmp(argsv[1], "-xml") == 0) {	// xml file according to io/input.xsd
 		inputhandler = new XMLInput;
+		forceType = new LennardJonesLC;
+		LC = true;
 	}
 	else {
 		error();
 		return 1;
 	}
+
 	inputhandler->getFileInput(argsv[2], particleContainer);
 	delete inputhandler;
 
+	if (strcmp(argsv[1], "-xml") == 0) {
+		particleContainer = new ParticleContainerLC(cutoff, domainSize, particleContainer);
+	}
+
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 	// the forces are needed to calculate x, but are not given in the input file.
-	//Gravitation forceType;
-	LennardJones forceType;
-	calculateF(forceType);
+
+	calculateF(*forceType);
 
 	double current_time = start_time;
 
@@ -119,10 +133,10 @@ int main(int argc, char* argsv[]) {
 	 // for this loop, we assume: current x, current f and current v are known
 	while (current_time < end_time) {
 		// calculate new x
-		calculateX();
+		calculateX(LC);
 
 		// calculate new f
-		calculateF(forceType);
+		calculateF(*forceType);
 
 		// calculate new v
 		calculateV();
@@ -143,45 +157,48 @@ int main(int argc, char* argsv[]) {
 
 void calculateF(ForceHandler& force) {
 	// initialize forces of all particles with 0 for this time step
-	particleContainer.resetIterator();
-	while (particleContainer.hasNext()) {
-		Particle& p = particleContainer.next();
+	particleContainer->resetIterator();
+	while (particleContainer->hasNext()) {
+		Particle& p = particleContainer->next();
 		utils::Vector<double, 3>& f = p.getF();
 		utils::Vector<double, 3>& f_old = p.getOldF();
 		f_old = f;
 		f = 0.0;
 	}
-	particleContainer.resetIterator();
+	particleContainer->resetIterator();
 
 	// calculate new forces
-	while (particleContainer.hasNext()) {
-		Particle& p1 = particleContainer.next();
-		while (particleContainer.hasNextOther()) {
-			Particle& p2 = particleContainer.nextOther();
+	while (particleContainer->hasNext()) {
+		Particle& p1 = particleContainer->next();
+		while (particleContainer->hasNextOther()) {
+			Particle& p2 = particleContainer->nextOther();
 			force.calc(p1, p2);
 		}
 	}
 }
 
 
-void calculateX() {
-	particleContainer.resetIterator();
+void calculateX(bool LC) {
+	particleContainer->resetIterator();
 
-	while (particleContainer.hasNext()) {
-		Particle& p = particleContainer.next();
+	while (particleContainer->hasNext()) {
+		Particle& p = particleContainer->next();
 
 		// insert calculation of X here!
 		utils::Vector<double, 3>& x = p.getX();
 		x = x + delta_t * (p.getV() + delta_t / (2 * p.getM()) * p.getF());
 	}
+	if (LC) {
+		((ParticleContainerLC*)particleContainer)->moveParticles();
+	}
 }
 
 
 void calculateV() {
-	particleContainer.resetIterator();
+	particleContainer->resetIterator();
 
-	while (particleContainer.hasNext()) {
-		Particle& p = particleContainer.next();
+	while (particleContainer->hasNext()) {
+		Particle& p = particleContainer->next();
 
 		// insert calculation of velocity here!
 		utils::Vector<double, 3>& v = p.getV();

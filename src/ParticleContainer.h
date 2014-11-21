@@ -18,7 +18,8 @@ using namespace log4cxx;
 /* based on iterator pattern*/
 /** Stores an amount of particles and provides functions for iteration */
 class ParticleContainer {
-private:
+public:
+//private:
 	/** list of particles */
 	list<Particle> particles;
 
@@ -28,7 +29,7 @@ private:
 	/** iterator pointing to next particle different from current particle */
 	list<Particle>::iterator othersIterator;
 
-public:
+//public:
 	/** constructs new empty container */
 	ParticleContainer();
 

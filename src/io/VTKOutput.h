@@ -16,7 +16,7 @@ public:
 	virtual ~VTKOutput();
 
 	/** stores into vtk file; implementation of OutputHanlder::setOutput */
-	void setOutput(string fileName, int iteration, ParticleContainer& pc);
+	void setOutput(string fileName, int iteration, ParticleContainer* pc);
 };
 
 #endif /* SRC_IO_VTKOUTPUT_H_ */

@@ -21,7 +21,7 @@ ParticleGenerator::ParticleGenerator() {
 
 }
 
-void ParticleGenerator::getFileInput(char* fileName, ParticleContainer& pc) {
+void ParticleGenerator::getFileInput(char* fileName, ParticleContainer* pc) {
 	double m = 1;
 	int num_cuboids = 0;
 
@@ -93,7 +93,7 @@ ParticleGenerator::~ParticleGenerator() {
 
 }
 
-void ParticleGenerator::createParticles(ParticleContainer& pc) {
+void ParticleGenerator::createParticles(ParticleContainer* pc) {
 	int dim = num[2] <= 1 ? 2 : 3;
 
 	for (int i = 0; i < num[0]; i++) {	// X dimension
@@ -107,14 +107,14 @@ void ParticleGenerator::createParticles(ParticleContainer& pc) {
 
 				Particle p(x, V, M, 0);
 				MaxwellBoltzmannDistribution(p, meanV, dim);
-				pc.add(p);
+				pc->add(p);
 			}
 		}
 	}
 }
 
 void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector<int, 3>& n,
-		utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer& pc) {
+		utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc) {
 	int dim = n[2] <= 1 ? 2 : 3;
 
 	for (int i = 0; i < n[0]; i++) {	// X dimension
@@ -128,14 +128,14 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 
 				Particle p(x, v, m, 0);
 				MaxwellBoltzmannDistribution(p, meanv, dim);
-				pc.add(p);
+				pc->add(p);
 			}
 		}
 	}
 }
 
 void ParticleGenerator::createSphere(utils::Vector<double, 3>& x, int n,
-			utils::Vector<double, 3>& v, double h, ParticleContainer& pc) {
+			utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc) {
 
 	for (int i = -n; i <= n; i++) {	// X dimension
 		for (int j = -n; j <= n; j++) {	// Y dimension
@@ -148,9 +148,9 @@ void ParticleGenerator::createSphere(utils::Vector<double, 3>& x, int n,
 					xn[1] = x[1] + j * h;
 					xn[2] = x[2] + k * h;
 
-					Particle p(xn, v, M, 0);
-					MaxwellBoltzmannDistribution(p, meanV, 3);
-					pc.add(p);
+					Particle p(xn, v, m, 0);
+					MaxwellBoltzmannDistribution(p, meanv, 3);
+					pc->add(p);
 				}
 			}
 		}

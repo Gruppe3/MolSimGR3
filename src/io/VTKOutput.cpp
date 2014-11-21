@@ -12,13 +12,13 @@ VTKOutput::~VTKOutput() {
 
 }
 
-void VTKOutput::setOutput(string fileName, int iteration, ParticleContainer& pc) {
+void VTKOutput::setOutput(string fileName, int iteration, ParticleContainer* pc) {
 	outputWriter::VTKWriter writer;
-	writer.initializeOutput(pc.size());
+	writer.initializeOutput(pc->size());
 
-	pc.resetIterator();
-	while (pc.hasNext()) {
-		writer.plotParticle(pc.next());
+	pc->resetIterator();
+	while (pc->hasNext()) {
+		writer.plotParticle(pc->next());
 	}
 	writer.writeFile(fileName, iteration);
 }

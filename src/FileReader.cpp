@@ -25,7 +25,7 @@ FileReader::~FileReader() {
 }
 
 
-void FileReader::readFile(ParticleContainer& particleContainer, char* filename) {
+void FileReader::readFile(ParticleContainer* particleContainer, char* filename) {
 	double x[] = {0,0,0};
 	double v[] = {1,1,1};
 	double m = 1;
@@ -66,7 +66,7 @@ void FileReader::readFile(ParticleContainer& particleContainer, char* filename) 
     		}
     		datastream >> m;
     		Particle p(x, v, m);
-    		particleContainer.add(p);
+    		particleContainer->add(p);
 
     		getline(input_file, tmp_string);
     		LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);

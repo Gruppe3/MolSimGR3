@@ -17,7 +17,7 @@ public:
 	virtual ~InputHandler();
 
 	/** abstract input method */
-	virtual void getFileInput(char* fileName, ParticleContainer& pc) = 0;
+	virtual void getFileInput(char* fileName, ParticleContainer* pc) = 0;
 };
 
 #endif /* SRC_IO_INPUTHANDLER_H_ */

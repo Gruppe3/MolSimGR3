@@ -12,7 +12,7 @@ XYZOutput::~XYZOutput() {
 
 }
 
-void XYZOutput::setOutput(string fileName, int iteration, ParticleContainer& pc) {
+void XYZOutput::setOutput(string fileName, int iteration, ParticleContainer* pc) {
 	outputWriter::XYZWriter writer;
-	writer.plotParticles(pc, fileName, iteration);
+	writer.plotParticles(*pc, fileName, iteration);
 }

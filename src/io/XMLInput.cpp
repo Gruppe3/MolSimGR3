@@ -19,7 +19,7 @@ extern double delta_t;
 extern string out_name;
 extern int writeFreq;
 extern double delta_t;
-extern int domainX, domainY;
+extern double domainSize[3];
 extern double cutoff;
 extern const LoggerPtr iolog;
 
@@ -27,7 +27,7 @@ XMLInput::~XMLInput() {
 	// TODO Auto-generated destructor stub
 }
 
-void XMLInput::getFileInput(char* fileName, ParticleContainer& pc) {
+void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 	try {
 		// initialize xml object
 		string file(fileName);
@@ -40,11 +40,13 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer& pc) {
 		writeFreq = molsim->writefreq();
 		delta_t = molsim->timestep();
 		end_time = molsim->endtime();
-		LOG4CXX_DEBUG(iolog, "out: " << out_name << ", wFq: " << writeFreq << ", delta t: " << delta_t << ", end: " << end_time);
-
-		domainX = molsim->domain()->size().x();
-		domainY = molsim->domain()->size().y();
+		domainSize[0] = molsim->domain()->size().x();
+		domainSize[1] = molsim->domain()->size().y();
+		domainSize[2] = molsim->domain()->size().z();
 		cutoff = molsim->domain()->cutoff();
+		LOG4CXX_DEBUG(iolog, "out: " << out_name << ", wFq: " << writeFreq << ", delta t: " <<
+				delta_t << ", end: " << end_time << ", cutoff: " << cutoff << ", domain: " <<
+				domainSize[0] << " x " << domainSize[1] << " x " << domainSize[2]);
 
 		LOG4CXX_INFO(iolog, "reading object data...");
 		objectlist objects = molsim->objectlist();
@@ -94,7 +96,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer& pc) {
 			v[2] = i->velocity().z();
 
 			ParticleGenerator pg;
-			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), pc);
+			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), 1.0, 0.1, pc);
 		}
 
 		// iterating over particles
@@ -115,7 +117,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer& pc) {
 			v[2] = i->velocity().z();
 
 			Particle p(x, v, i->mass(), 0);
-			pc.add(p);
+			pc->add(p);
 		}
 		LOG4CXX_INFO(iolog, "reading done...");
 	}

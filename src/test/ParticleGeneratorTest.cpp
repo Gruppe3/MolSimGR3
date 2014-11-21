@@ -24,7 +24,7 @@ void ParticleGeneratorTest::setUp() {
 	v = utils::Vector<double, 3>(0.0);
 	h = 1.0;
 	pg = new ParticleGenerator(x, n, v, h, 1.0, 0.1);
-	pg->createParticles(*pc);
+	pg->createParticles(pc);
 }
 
 void ParticleGeneratorTest::tearDown() {
