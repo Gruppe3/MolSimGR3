@@ -21,7 +21,7 @@ public:
 
 	/** calculates the LJ force between the particles and adds it to their total forces
 	 * @param p1,p2 Particles for LJ force */
-	void calc(Particle& p1, Particle& p2);
+	virtual void calc(Particle& p1, Particle& p2);
 private:
 	double sigma;
 	double epsilon;
@@ -38,7 +38,7 @@ public:
 
 	/** calculates the LJ force between the particles and adds it to their total forces
 	 * @param p1,p2 Particles for LJ force */
-	void calc(Particle& p1, Particle& p2);
+	virtual void calc(Particle& p1, Particle& p2);
 private:
 	double sigma;
 	double epsilon;

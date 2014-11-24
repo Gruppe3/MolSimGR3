@@ -58,5 +58,4 @@ void LennardJonesLC::calc(Particle&p1, Particle& p2) {
 	utils::Vector<double, 3> f = coeff * norm_inverse * field_pow * (1 - 2*field_pow) * diff;
 
 	f1 = f1 + f;
-	f2 = f2 - f;
 }

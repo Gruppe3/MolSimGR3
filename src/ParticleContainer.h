@@ -46,27 +46,27 @@ public:
 
 	/** Adds particle p to the end of the list
 	 * @param p The new particle */
-	void add(Particle& p);
+	virtual void add(Particle& p);
 
 	/** Returns number of particles in the list */
-	int size();
+	virtual int size();
 
 	/** Returns true if the iterator is not at the end of the list.
 	 * Has to be called before next() to avoid pointer errors */
-	bool hasNext();
+	virtual bool hasNext();
 
 	/** Returns next particle in the list (iterator). Also updates otherIterator to the following particle */
-	Particle& next();
+	virtual Particle& next();
 
 	/** Returns true if there are particles left in the list different from the current particle.
 	 * Has to be called before nextOther() to avoid pointer errors*/
-	bool hasNextOther();
+	virtual bool hasNextOther();
 
 	/** Returns next particle different from current particle (otherIterator) */
-	Particle& nextOther();
+	virtual Particle& nextOther();
 
 	/** Sets ALL internal iterators to the beginning of the list */
-	void resetIterator();
+	virtual void resetIterator();
 };
 
 #endif /* SRC_PARTICLECONTAINER_H_ */

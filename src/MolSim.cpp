@@ -32,13 +32,13 @@ using namespace std;
  * calculate the force between particles
  * @param force Type of force to calculate (Gravitation, LennardJones)
  */
-void calculateF(ForceHandler& force);
+void calculateF(ForceHandler* force);
 
 /**
  * calculate the position for all particles
  * @param LC Flag for usage of LC algorithm
  */
-void calculateX(bool LC);
+void calculateX();
 
 /**
  * calculate the position for all particles
@@ -63,7 +63,6 @@ string out_name("MD_vtk");
 int writeFreq = 10;
 double domainSize[3];
 double cutoff;
-
 
 ParticleContainer* particleContainer;
 
@@ -93,7 +92,6 @@ int main(int argc, char* argsv[]) {
 	}
 
 	// get input data
-	bool LC = false;
 	particleContainer = new ParticleContainer;
 	//Gravitation forceType;
 	ForceHandler* forceType = new LennardJones;
@@ -106,8 +104,11 @@ int main(int argc, char* argsv[]) {
 	}
 	else if (strcmp(argsv[1], "-xml") == 0) {	// xml file according to io/input.xsd
 		inputhandler = new XMLInput;
+		// delete #define to use ParticleContainer without LC algo
+		//#define LC
+#ifdef LC
 		forceType = new LennardJonesLC;
-		LC = true;
+#endif
 	}
 	else {
 		error();
@@ -118,13 +119,17 @@ int main(int argc, char* argsv[]) {
 	delete inputhandler;
 
 	if (strcmp(argsv[1], "-xml") == 0) {
-		particleContainer = new ParticleContainerLC(cutoff, domainSize, particleContainer);
+#ifdef LC
+		ParticleContainerLC* pc = new ParticleContainerLC(cutoff, domainSize, particleContainer);
+		particleContainer = pc;
+		LOG4CXX_DEBUG(molsimlog, "init ParticleContainerLC");
+#endif
 	}
 
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 	// the forces are needed to calculate x, but are not given in the input file.
 
-	calculateF(*forceType);
+	calculateF(forceType);
 
 	double current_time = start_time;
 
@@ -133,10 +138,10 @@ int main(int argc, char* argsv[]) {
 	 // for this loop, we assume: current x, current f and current v are known
 	while (current_time < end_time) {
 		// calculate new x
-		calculateX(LC);
+		calculateX();
 
 		// calculate new f
-		calculateF(*forceType);
+		calculateF(forceType);
 
 		// calculate new v
 		calculateV();
@@ -146,8 +151,12 @@ int main(int argc, char* argsv[]) {
 			plotParticles(iteration);
 			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " finished.");
 		}
-		//LOG4CXX_DEBUG(logger, "Iteration " << iteration << " finished.");
 
+
+#ifdef LC
+		// remove halo particles
+		((ParticleContainerLC*)particleContainer)->emptyHalo();
+#endif
 		current_time += delta_t;
 	}
 
@@ -155,10 +164,12 @@ int main(int argc, char* argsv[]) {
 	return 0;
 }
 
-void calculateF(ForceHandler& force) {
+void calculateF(ForceHandler* force) {
 	// initialize forces of all particles with 0 for this time step
+
 	particleContainer->resetIterator();
 	while (particleContainer->hasNext()) {
+		//LOG4CXX_DEBUG(molsimlog, "calc f before next1");
 		Particle& p = particleContainer->next();
 		utils::Vector<double, 3>& f = p.getF();
 		utils::Vector<double, 3>& f_old = p.getOldF();
@@ -169,28 +180,34 @@ void calculateF(ForceHandler& force) {
 
 	// calculate new forces
 	while (particleContainer->hasNext()) {
+		//LOG4CXX_DEBUG(molsimlog, "calc f before next2");
 		Particle& p1 = particleContainer->next();
 		while (particleContainer->hasNextOther()) {
 			Particle& p2 = particleContainer->nextOther();
-			force.calc(p1, p2);
+			//LOG4CXX_DEBUG(molsimlog, "f1 before :" << p1.getF().toString());
+			//LOG4CXX_DEBUG(molsimlog, "x1:" << p1.getX().toString() << ", x2:" << p2.getX().toString());
+			force->calc(p1, p2);
+			//LOG4CXX_DEBUG(molsimlog, "f1 after :" << p1.getF().toString());
 		}
 	}
 }
 
 
-void calculateX(bool LC) {
+void calculateX() {
 	particleContainer->resetIterator();
 
 	while (particleContainer->hasNext()) {
 		Particle& p = particleContainer->next();
-
+		//LOG4CXX_DEBUG(molsimlog, "calc x of:" << p.getX().toString());
 		// insert calculation of X here!
 		utils::Vector<double, 3>& x = p.getX();
 		x = x + delta_t * (p.getV() + delta_t / (2 * p.getM()) * p.getF());
+		//LOG4CXX_DEBUG(molsimlog, "new x:" << x.toString());
 	}
-	if (LC) {
-		((ParticleContainerLC*)particleContainer)->moveParticles();
-	}
+
+#ifdef LC
+	((ParticleContainerLC*)particleContainer)->moveParticles();//LOG4CXX_DEBUG(molsimlog, "after move");
+#endif
 }
 
 

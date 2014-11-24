@@ -15,9 +15,14 @@ using namespace std;
 #define DIM 3
 /**stores dynamic particle list for each cell*/
 typedef struct ParticleList {
-	Particle p;
+	Particle *p;
 	struct ParticleList *next;
 } ParticleList;
+
+/** type of cell with pointer to first element (if existing) */
+typedef struct Cell {
+	ParticleList *root;
+} Cell;
 
 /**calculates indices of the array of cells
  * @param ic index of the cell in each dimension
@@ -37,16 +42,18 @@ class ParticleContainerLC: public ParticleContainer {
 private:
 	/**points to current Particle in a given (current) cell*/
 	ParticleList * particleIteratorInCell;
+	/**points to Particle(List) last returned by next() */
+	ParticleList * returnedParticleIteratorInCell;
 	/**pointer to other Particle in a given (not necessary current)cell*/
 	ParticleList * otherParticleIteratorInCell;
 	/**pointer to current halo particle*/
 	ParticleList * haloIteratorInCell;
 	/**pointer to array of cells*/
-	ParticleList * cells;
+	Cell *cells;
 	/**pointer to array of halo cells*/
-	ParticleList * haloCells;
+	Cell *haloCells;
 	/** pointer to array of all cells (incl. halo) */
-	ParticleList** allCells;
+	Cell** allCells;
 	/**cutoff radius of the force*/
 	double radius;
 	/**number of cells in each dimension*/
@@ -58,9 +65,9 @@ private:
 	/**index in array of the current halo cell*/
 	int haloIndex;
 	/**beginning of linked list of a given cell different from central cell*/
-	ParticleList otherCurrentCell;
+	Cell *otherCurrentCell;
 	/**beginning of a linked list in a given cell*/
-	ParticleList centralCell;
+	Cell *centralCell;
 	/**beginning of a linked list in a given halo cell*/
 	ParticleList currentHaloCell;
 	/**beginning of otherCurrentCell according to central cell, helps to calculate indices for otherCellIndex*/
@@ -89,7 +96,7 @@ private:
 	 * @param cellNum index of the cell in array*/
 	void selectCell(int cellNum[]);
 	/**moves particle from one cell to another if necessary*/
-	void moveParticles_LC(ParticleList cells[], int *nc, double l);
+	void moveParticles_LC(Cell** cells, int *nc, double l);
 	/**inserts particles in a cell*/
 	void insertList(ParticleList **list, ParticleList *i);
 	/**deletes particles from a cell*/
@@ -106,24 +113,24 @@ private:
 public:
 	ParticleContainerLC();
 	virtual ~ParticleContainerLC();
-	/** creates ParticleContainerLC only from cutoff radius and domainSize */
-	ParticleContainerLC(double radius, double * domainSize);
 	/** creates ParticleContainerLC from cutoff radius, domainSize and values of another container */
 	ParticleContainerLC(double radius, double * domainSize,
 			const ParticleContainer* pc);
 /** Calculates index of the cell, where the particle should be added and inserts it its linked list
 	* @param p particle to add */
-	void add(Particle& p);
+	virtual void add(Particle& p);
+	/** returns number of particles in cells[] */
+	virtual int size();
 	/**Returns true if there are particles (different from current particle) left in all the cells*/
-	bool hasNextOther();
+	virtual bool hasNextOther();
 	/**Returns next particle (different from current particle) */
-	Particle& nextOther();
+	virtual Particle& nextOther();
 	/**Returns true if there are more particles left*/
-	bool hasNext();
+	virtual bool hasNext();
 	/**Returns next particle*/
-	Particle& next();
+	virtual Particle& next();
 	/**Sets indices for inner particles to 0 and resets cell-selectCell()*/
-	void resetIterator();
+	virtual void resetIterator();
 	/**Sets indices for boundary particles to 0 and resets cell-selectCell()*/
 	void resetBoundaryIterator();
 	/**Returns true if there are more boundary particles left*/
@@ -145,6 +152,9 @@ public:
 	/**removes specific particle
 	 * @ p particle to remove*/
 	void removeHaloParticle(Particle& p);
+
+	/** removes all particles stored in halo cells */
+	void emptyHalo();
 	/** moves particles into right cell; call from outside */
 	void moveParticles();
 };
