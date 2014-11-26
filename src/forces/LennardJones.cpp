@@ -37,17 +37,13 @@ void LennardJones::calc(Particle&p1, Particle& p2) {
 
 
 
-LennardJonesLC::LennardJonesLC() {
-	sigma = 1.0;
-	epsilon = 5.0;
-	coeff = 24 * epsilon;
-}
 
 LennardJonesLC::~LennardJonesLC() {
 
 }
 
 void LennardJonesLC::calc(Particle&p1, Particle& p2) {
+	//LOG4CXX_DEBUG(forcelog, "force calc LC");
 	utils::Vector<double, 3>& f1 = p1.getF();
 	utils::Vector<double, 3>& f2 = p2.getF();
 

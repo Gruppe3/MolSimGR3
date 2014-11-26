@@ -13,6 +13,7 @@ src/io/VTKOutput.cpp\
 src/io/XYZOutput.cpp\
 src/ParticleContainer.cpp\
 src/ParticleContainerLC.cpp\
+src/DynamicsCalc.cpp\
 src/Particle.cpp\
 src/forces/ForceHandler.cpp\
 src/forces/Gravitation.cpp\

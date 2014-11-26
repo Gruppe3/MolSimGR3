@@ -73,3 +73,21 @@ void ParticleContainer::resetIterator() {
 	tmp++;
 	othersIterator = tmp;
 }
+
+void ParticleContainer::iterate (PCApply *fnc) {
+	for (iterator = particles.begin(); iterator != particles.end(); iterator++) {
+		Particle& p = *iterator;
+		fnc->iterateFunc(p);
+	}
+}
+
+void ParticleContainer::iteratePair (PCApply *fnc) {
+	for (iterator = particles.begin(); iterator != particles.end(); iterator++) {
+		Particle& p1 = *iterator;
+		othersIterator = iterator;
+		for (++othersIterator; othersIterator != particles.end(); othersIterator++) {
+			Particle& p2 = *othersIterator;
+			fnc->iteratePairFunc(p1, p2);
+		}
+	}
+}

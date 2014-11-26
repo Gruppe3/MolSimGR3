@@ -6,6 +6,7 @@
 #include "MaxwellBoltzmannDistribution.h"
 #include "ParticleContainer.h"
 #include "ParticleGenerator.h"
+#include "DynamicsCalc.h"
 #include "io/ParticlesInput.h"
 #include "io/XMLInput.h"
 #include "io/VTKOutput.h"
@@ -38,12 +39,12 @@ void calculateF(ForceHandler* force);
  * calculate the position for all particles
  * @param LC Flag for usage of LC algorithm
  */
-void calculateX();
+void calculateX(Particle& p);
 
 /**
  * calculate the position for all particles
  */
-void calculateV();
+void calculateV(Particle& p);
 
 /**
  * plot the particles to a xyz-file
@@ -95,6 +96,8 @@ int main(int argc, char* argsv[]) {
 	particleContainer = new ParticleContainer;
 	//Gravitation forceType;
 	ForceHandler* forceType = new LennardJones;
+	CalcX *xcalc = new CalcX;
+	CalcV *vcalc = new CalcV;
 	InputHandler* inputhandler;
 	if (strcmp(argsv[1], "-c") == 0) {	// cuboids
 		inputhandler = new ParticleGenerator;
@@ -105,7 +108,7 @@ int main(int argc, char* argsv[]) {
 	else if (strcmp(argsv[1], "-xml") == 0) {	// xml file according to io/input.xsd
 		inputhandler = new XMLInput;
 		// delete #define to use ParticleContainer without LC algo
-		//#define LC
+		#define LC
 #ifdef LC
 		forceType = new LennardJonesLC;
 #endif
@@ -129,7 +132,11 @@ int main(int argc, char* argsv[]) {
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 	// the forces are needed to calculate x, but are not given in the input file.
 
-	calculateF(forceType);
+	// copies F to oldF of particles and sets F to 0
+	particleContainer->iterate(forceType);
+	// calculates new F
+	particleContainer->iteratePair(forceType);
+	//calculateF(forceType);
 
 	double current_time = start_time;
 
@@ -138,13 +145,19 @@ int main(int argc, char* argsv[]) {
 	 // for this loop, we assume: current x, current f and current v are known
 	while (current_time < end_time) {
 		// calculate new x
-		calculateX();
+		particleContainer->iterate(xcalc);
+#ifdef LC
+		((ParticleContainerLC*)particleContainer)->moveParticles();//LOG4CXX_DEBUG(molsimlog, "after move");
+#endif
 
+		// copies F to oldF of particles and sets F to 0
+		particleContainer->iterate(forceType);
 		// calculate new f
-		calculateF(forceType);
+		particleContainer->iteratePair(forceType);
 
 		// calculate new v
-		calculateV();
+		particleContainer->iterate(vcalc);
+
 
 		iteration++;
 		if (iteration % writeFreq == 0) {
@@ -193,34 +206,33 @@ void calculateF(ForceHandler* force) {
 }
 
 
-void calculateX() {
-	particleContainer->resetIterator();
-
+void calculateX(Particle& p) {
+	/*particleContainer->resetIterator();
+//int count = 0;
 	while (particleContainer->hasNext()) {
 		Particle& p = particleContainer->next();
 		//LOG4CXX_DEBUG(molsimlog, "calc x of:" << p.getX().toString());
 		// insert calculation of X here!
+		*/
 		utils::Vector<double, 3>& x = p.getX();
 		x = x + delta_t * (p.getV() + delta_t / (2 * p.getM()) * p.getF());
 		//LOG4CXX_DEBUG(molsimlog, "new x:" << x.toString());
-	}
-
-#ifdef LC
-	((ParticleContainerLC*)particleContainer)->moveParticles();//LOG4CXX_DEBUG(molsimlog, "after move");
-#endif
+		//count++;
+	//}
+	//LOG4CXX_DEBUG(molsimlog, "count x:" << count);
 }
 
 
-void calculateV() {
-	particleContainer->resetIterator();
+void calculateV(Particle& p) {
+	/*particleContainer->resetIterator();
 
 	while (particleContainer->hasNext()) {
-		Particle& p = particleContainer->next();
+		Particle& p = particleContainer->next();*/
 
 		// insert calculation of velocity here!
 		utils::Vector<double, 3>& v = p.getV();
 		v = v + delta_t / (2 * p.getM()) * (p.getOldF() + p.getF());
-	}
+	//}
 }
 
 

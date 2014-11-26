@@ -22,27 +22,27 @@ public:
 	/** calculates the LJ force between the particles and adds it to their total forces
 	 * @param p1,p2 Particles for LJ force */
 	virtual void calc(Particle& p1, Particle& p2);
-private:
+//protected:
 	double sigma;
 	double epsilon;
 	double coeff;
 };
 
 /** A force calculator using the Lennard-Jones potential for the LC algorithm (no Newton III) */
-class LennardJonesLC : public ForceHandler {
+class LennardJonesLC : public LennardJones {
 public:
 	/** constructor */
-	LennardJonesLC();
+	//LennardJonesLC();
 	/** destructor */
 	virtual ~LennardJonesLC();
 
 	/** calculates the LJ force between the particles and adds it to their total forces
 	 * @param p1,p2 Particles for LJ force */
 	virtual void calc(Particle& p1, Particle& p2);
-private:
-	double sigma;
-	double epsilon;
-	double coeff;
+
+	virtual void iteratePairFunc(Particle& p1, Particle& p2) {
+		calc(p1, p2);
+	}
 };
 
 #endif /* SRC_FORCES_LENNARDJONES_H_ */

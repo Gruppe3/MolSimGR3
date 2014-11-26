@@ -15,6 +15,19 @@
 using namespace std;
 using namespace log4cxx;
 
+/** Abstract class for calculation on particles of the ParticleContainer;
+ * Functions have to be handed over to the iterate/iteratePair methods of
+ * the ParticleContainer.*/
+class PCApply {
+public:
+	/** destructor */
+	virtual ~PCApply() {};
+	/** function which calculates something on the particle p */
+	virtual void iterateFunc(Particle& p) {};
+	/** function that calculates something on the pair p1, p2 */
+	virtual void iteratePairFunc(Particle& p1, Particle& p2) {};
+};
+
 /* based on iterator pattern*/
 /** Stores an amount of particles and provides functions for iteration */
 class ParticleContainer {
@@ -67,6 +80,10 @@ public:
 
 	/** Sets ALL internal iterators to the beginning of the list */
 	virtual void resetIterator();
+	/** Applies function on all stored particles */
+	virtual void iterate(PCApply *fnc);
+	/** Applies function on all particle pairs */
+	virtual void iteratePair(PCApply *fnc);
 };
 
 #endif /* SRC_PARTICLECONTAINER_H_ */

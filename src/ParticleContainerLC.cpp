@@ -22,29 +22,27 @@ ParticleContainerLC::~ParticleContainerLC() {
 }
 
 ParticleContainerLC::ParticleContainerLC(double rad,
-		double * domainSize, const ParticleContainer* pc) {
+		double *domain, const ParticleContainer* pc) {
 	//NOTE:compiles if particles,iterator and othersIterator from ParticleContainer are public
 	particles = pc->particles;
 	iterator = pc->iterator;
 	othersIterator = pc->othersIterator;
 
+	for (int i = 0; i < DIM; i++) {
+		domainSize[i] = domain[i];
+	}
 	radius = rad;
 
-#if 1==DIM
-	cellNums[0] = (int) (domainSize[0] / radius);
-	allCellNums[0] = cellNums[0] + 2;
-#elif 2==DIM
-	cellNums[0] = (int) (domainSize[0] / radius);
-	cellNums[1] = (int) (domainSize[1] / radius);
-	allCellNums[0] = cellNums[0] + 2;
-	allCellNums[1] = cellNums[1] + 2;
-	haloAllCellNums=2*((cellNums[0]+2)+(cellNums[1])+2);
-#elif 3==DIM
 	for (int d = 0; d < DIM; d++) {
 		int expansion = domainSize[d] / radius;
 		cellNums[d] = expansion > 0 ? expansion : 1;	// expansion in dimension d must be at least 1 for correct numcell()
 		allCellNums[d] = cellNums[d] + 2;
 	}
+#if 1==DIM
+	allCellNums[0] = cellNums[0] + 2;
+#elif 2==DIM
+	haloAllCellNums= /*2*((cellNums[0]+2)+(cellNums[1])+2)*/ (cellNums[0] + 2) * (cellNums[1] + 2) - cellNums[0]*cellNums[1];
+#elif 3==DIM
 	haloAllCellNums = /*2
 			* (((cellNums[0] + 2) * (cellNums[1] + 2))
 					+ (cellNums[1] * cellNums[2] + 2)
@@ -88,7 +86,7 @@ ParticleContainerLC::ParticleContainerLC(double rad,
 					allCells[calcIndex(ic, allCellNums)] = &cells[calcIndex(tmp, cellNums)];
 				}
 			}
-int count = 0;
+	int count = 0;
 	ParticleContainer::resetIterator();
 	while (ParticleContainer::hasNext()) {
 		count++;
@@ -162,7 +160,7 @@ void ParticleContainerLC::selectCell(int celli[]) {
 	particleIteratorInCell = centralCell->root;
 	returnedParticleIteratorInCell = particleIteratorInCell;
 
-	//LOG4CXX_DEBUG(particlelog, "select cell after:" << celli[0] << "," << celli[1] << "," << celli[2]);
+	//LOG4CXX_DEBUG(particlelog, "select cell after:" << celli[0]+1 << "," << celli[1]+1 << "," << celli[2]+1);
 }
 
 void ParticleContainerLC::insertList(ParticleList **list,
@@ -176,7 +174,7 @@ void ParticleContainerLC::deleteList(ParticleList **q) {
 }
 
 void ParticleContainerLC::moveParticles_LC(Cell** cell_arr, int *nc,
-		double l) {
+		double *l) {
 	int dim = DIM;
 	int ic[dim], kc[dim];
 	for (ic[0] = 0; ic[0] < nc[0]; ic[0]++)
@@ -191,11 +189,12 @@ void ParticleContainerLC::moveParticles_LC(Cell** cell_arr, int *nc,
 				//LOG4CXX_DEBUG(particlelog, "got i in move():" << q);
 				while (NULL != i) {
 					Particle& p = *i->p;
+					//LOG4CXX_DEBUG(particlelog, "l:" << l[0] << "," << l[1] << "," << l[2]);
 					// kc: 3d index of cell which has to store i->p according to the X vector of p
 					//LOG4CXX_DEBUG(particlelog, "next p in move():" << i->p->getX().toString());
 					utils::Vector<double, 3> X = p.getX();
 					for (int d = 0; d < DIM; d++) {
-						int coord = ((int) floor(X[d] / l)) + 1;	// +1 for transformation from cells[] to allCells[] coords.
+						int coord = ((int) floor(X[d] / radius)) + 1;	// +1 for transformation from cells[] to allCells[] coords.
 						kc[d] = coord < nc[d] ? (coord < 0 ? 0.0 : coord) : nc[d]-1;	// indices must fit into cell_arr[]
 					}
 					if ((ic[0] != kc[0]) || (ic[1] != kc[1])
@@ -206,6 +205,7 @@ void ParticleContainerLC::moveParticles_LC(Cell** cell_arr, int *nc,
 						//LOG4CXX_DEBUG(particlelog, "moving from "<<ic[0]<<","<<ic[1]<<","<<ic[2] << " to " <<kc[0]<<","<<kc[1]<<","<<kc[2]);
 						// move particle into cell kc
 						deleteList(q);
+
 						//LOG4CXX_DEBUG(particlelog, "deleted from old cell; old index:" << calcIndex(ic, nc) << "; new index:" << calcIndex(kc, nc));
 						insertList(&cell_arr[calcIndex(kc, nc)]->root, i);
 						//LOG4CXX_DEBUG(particlelog, "inserted in new cell");
@@ -218,7 +218,7 @@ void ParticleContainerLC::moveParticles_LC(Cell** cell_arr, int *nc,
 }
 
 void ParticleContainerLC::moveParticles() {
-	moveParticles_LC(allCells, allCellNums, radius);
+	moveParticles_LC(allCells, allCellNums, domainSize);
 }
 
 bool ParticleContainerLC::hasNext() {
@@ -280,8 +280,6 @@ Particle& ParticleContainerLC::next() { //nextInDomain
 			centralCellIndex[1] = 0;
 #endif
 			centralCellIndex[0]++;
-		} /*else {
-			return nextInCell();	// segmentation fault!
 		}
 		*/
 		selectCell(centralCellIndex);
@@ -332,9 +330,29 @@ bool ParticleContainerLC::hasNextOther() {
 		return true;
 	//LOG4CXX_DEBUG(particlelog, "not hasNextOtherInCell");
 	int idx[DIM];
-	for (int d = 0; d < DIM; d++) {
+	/*for (int d = 0; d < DIM; d++) {
 		idx[d] = otherCellIndex[d];
-	}
+	}*/
+	int other[DIM];
+	numToIndex(calcIndex(otherCellIndex, allCellNums)+1, other, allCellNums);	// next cell
+	for (idx[0] = other[0]; idx[0] < centralCellIndex[0]+3; idx[0]++)
+#if 1<DIM
+		for (idx[1] = other[1]; idx[1] < centralCellIndex[1]+3; idx[1]++)
+#endif
+#if 3==DIM
+			for (idx[2] = other[2]; idx[2] < centralCellIndex[2]+3; idx[2]++)
+#endif
+			{
+					if (allCells[calcIndex(idx, allCellNums)]->root != NULL) {
+						if (allCells[calcIndex(idx, allCellNums)]->root != returnedParticleIteratorInCell)
+							return true;
+						if (returnedParticleIteratorInCell->next != NULL)
+							return true;
+					}
+			}
+	return false;	// passed all neighbor cells without finding particles
+
+	/*
 	while(true) {
 		do {//LOG4CXX_DEBUG(particlelog, "in loop");
 #if 3==DIM
@@ -360,10 +378,13 @@ bool ParticleContainerLC::hasNextOther() {
 						idx[0]++;
 					}
 					else {
-						//LOG4CXX_DEBUG(particlelog, "false");
+						LOG4CXX_DEBUG(particlelog, "passed all");
 						return false;	// passed all surrounding (and empty) cells left
 					}
 				}
+				LOG4CXX_DEBUG(particlelog, "other begin cell:" << beginningOtherCellIndex[0] << "," << beginningOtherCellIndex[1] << "," << beginningOtherCellIndex[2]);
+				LOG4CXX_DEBUG(particlelog, "other cell:" << idx[0] << "," << idx[1] << "," << idx[2]);
+				LOG4CXX_DEBUG(particlelog, "central cell:" << centralCellIndex[0]+1 << "," << centralCellIndex[1]+1 << "," << centralCellIndex[2]+1);
 			}
 		} while (allCells[calcIndex(idx, allCellNums)]->root == NULL);
 		if (allCells[calcIndex(idx, allCellNums)]->root != returnedParticleIteratorInCell) {// skip particle got from next()
@@ -375,6 +396,7 @@ bool ParticleContainerLC::hasNextOther() {
 		// else: go to next surrounding cell
 	}
 	return false;
+	*/
 
 	/*
 	bool b = false;
@@ -431,6 +453,34 @@ bool ParticleContainerLC::hasNextOther() {
 Particle & ParticleContainerLC::nextOther() { //cellIteration
 	while (!hasNextOtherInCell()) {
 		// switch to next cell
+		if (otherCellIndex[0] < beginningOtherCellIndex[0]+2) {
+			otherCellIndex[0]++;
+		}
+		else if (otherCellIndex[1] < beginningOtherCellIndex[1]+2) {
+			otherCellIndex[1]++;
+			otherCellIndex[0] = beginningOtherCellIndex[0];
+			//otherCellIndex[2] = beginningOtherCellIndex[2];
+		}
+		else if (otherCellIndex[2] < beginningOtherCellIndex[2]+2) {
+			otherCellIndex[2]++;
+			otherCellIndex[0] = beginningOtherCellIndex[0];
+			otherCellIndex[1] = beginningOtherCellIndex[1];
+		}
+		else {
+			exit(-1);
+		}
+
+		int idx = calcIndex(otherCellIndex, allCellNums);
+		//numToIndex(idx, otherCellIndex, allCellNums);	// calculate next cell 3D index
+
+		otherCurrentCell = allCells[idx];
+		otherParticleIteratorInCell = otherCurrentCell->root;
+		neighborCells++;
+
+		//LOG4CXX_DEBUG(particlelog, "other cell:" << otherCellIndex[0] << "," << otherCellIndex[1] << "," << otherCellIndex[2]);
+		//LOG4CXX_DEBUG(particlelog, "central cell:" << centralCellIndex[0]+1 << "," << centralCellIndex[1]+1 << "," << centralCellIndex[2]+1);
+
+		/*
 		if (otherCellIndex[2] - beginningOtherCellIndex[2] < 2) {
 			otherCellIndex[2]++;
 		} else {
@@ -448,13 +498,8 @@ Particle & ParticleContainerLC::nextOther() { //cellIteration
 			}
 		}
 		otherCurrentCell = allCells[calcIndex(otherCellIndex, allCellNums)];
-		/*if (calcIndex(otherCellIndex, cellNums) == calcIndex(centralCellIndex, cellNums))
-			// skip all particles already passed by next() in centralCell
-			otherParticleIteratorInCell = particleIteratorInCell;
-		else
-			otherParticleIteratorInCell = &otherCurrentCell;*/
 		otherParticleIteratorInCell = otherCurrentCell->root;
-		neighborCells++;
+		neighborCells++;*/
 	}
 	if (otherParticleIteratorInCell == returnedParticleIteratorInCell)	// skip identical particle
 		otherParticleIteratorInCell = otherParticleIteratorInCell->next;
@@ -677,5 +722,66 @@ void ParticleContainerLC::emptyHalo() {
 
 		}*/
 		haloCells[i].root = NULL;
+	}
+}
+
+void ParticleContainerLC::numToIndex(int idx, int arr[], int size[]) {
+	arr[0] = idx % size[0];
+#if 1<DIM
+	arr[1] = (idx / size[0]) % size[1];
+#endif
+#if 3==DIM
+	arr[2] = idx / (size[1] * size[0]);
+#endif
+}
+
+
+
+void ParticleContainerLC::iterate(PCApply *fnc) {
+	for (int i = 0; i < numcell(cellNums); i++) {
+		ParticleList *pl = cells[i].root;
+		while (pl != NULL) {
+			Particle& p = *pl->p;
+			fnc->iterateFunc(p);
+			//LOG4CXX_DEBUG(particlelog, "iterate");
+			pl = pl->next;
+		}
+	}
+}
+
+void ParticleContainerLC::iteratePair(PCApply *fnc) {
+	for (int i = 0; i < numcell(cellNums); i++) {
+		//LOG4CXX_DEBUG(particlelog, "i:" << i << " of " << numcell(cellNums));
+		ParticleList *pl = cells[i].root;
+		int idx[DIM];
+		numToIndex(i, idx, cellNums);
+		selectCell(idx);
+		while (pl != NULL) {
+			int tmp[DIM];
+			int other[DIM];
+			numToIndex(calcIndex(otherCellIndex, allCellNums), other, allCellNums);	// next cell
+			int count = 0;
+			for (tmp[0] = other[0]; tmp[0] < idx[0]+3; tmp[0]++)	// +1 for centralCellIndex to allCells coords.
+#if 1<DIM
+				for (tmp[1] = other[1]; tmp[1] < idx[1]+3; tmp[1]++)
+#endif
+#if 3==DIM
+					for (tmp[2] = other[2]; tmp[2] < idx[2]+3; tmp[2]++)
+#endif
+					{
+						count++;
+						ParticleList *pl2 = allCells[calcIndex(tmp, allCellNums)]->root;
+						while (pl2 != NULL) {
+							if (pl != pl2) {
+								Particle& p1 = *pl->p;
+								Particle& p2 = *pl2->p;
+								fnc->iteratePairFunc(p1, p2);
+							}
+							pl2 = pl2->next;
+						}
+					}
+			//LOG4CXX_DEBUG(particlelog, "others count:" << count);
+			pl = pl->next;
+		}
 	}
 }

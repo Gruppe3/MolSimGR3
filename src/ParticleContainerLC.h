@@ -56,6 +56,8 @@ private:
 	Cell** allCells;
 	/**cutoff radius of the force*/
 	double radius;
+	/** size of the domain */
+	double domainSize[DIM];
 	/**number of cells in each dimension*/
 	int cellNums[DIM];
 	/**number of all cells in each dimension inclusive halo particles*/
@@ -96,7 +98,7 @@ private:
 	 * @param cellNum index of the cell in array*/
 	void selectCell(int cellNum[]);
 	/**moves particle from one cell to another if necessary*/
-	void moveParticles_LC(Cell** cells, int *nc, double l);
+	void moveParticles_LC(Cell** cells, int *nc, double *l);
 	/**inserts particles in a cell*/
 	void insertList(ParticleList **list, ParticleList *i);
 	/**deletes particles from a cell*/
@@ -109,6 +111,7 @@ private:
 	Particle & nextBoundary2D();
 	bool hasNextInHaloCell();
 	Particle& nextInHaloCell();
+	void numToIndex(int idx, int arr[], int size[]);
 
 public:
 	ParticleContainerLC();
@@ -157,6 +160,9 @@ public:
 	void emptyHalo();
 	/** moves particles into right cell; call from outside */
 	void moveParticles();
+
+	virtual void iterate(PCApply *fnc);
+	virtual void iteratePair(PCApply *fnc);
 };
 
 #endif /* SRC_PARTICLECONTAINERLC_H_ */

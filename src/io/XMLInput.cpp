@@ -43,6 +43,8 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 		domainSize[0] = molsim->domain()->size().x();
 		domainSize[1] = molsim->domain()->size().y();
 		domainSize[2] = molsim->domain()->size().z();
+		if (domainSize[2] == 0)
+			domainSize[2] = 1;
 		cutoff = molsim->domain()->cutoff();
 		LOG4CXX_DEBUG(iolog, "out: " << out_name << ", wFq: " << writeFreq << ", delta t: " <<
 				delta_t << ", end: " << end_time << ", cutoff: " << cutoff << ", domain: " <<
