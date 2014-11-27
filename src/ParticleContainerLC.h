@@ -4,14 +4,12 @@
  *  Created on: 16.11.2014
  *      Author: ninaavr
  */
-//NOTE:compiles if particles,iterator and othersIterator from ParticleContainer are public
 #ifndef SRC_PARTICLECONTAINERLC_H_
 #define SRC_PARTICLECONTAINERLC_H_
 
 #include "ParticleContainer.h"
 #include <list>
-#include <cstdlib>
-
+#include <stdlib.h>
 using namespace std;
 /**defines dimenstion of the grid*/
 #define DIM 3
@@ -98,14 +96,6 @@ private:
 	int xc, yc;
 	//help-variable, helps calculating conditions in hasNextOther()
 	int neighborCells;
-	/** Returns true if the iterator is not at the end of the linked list.*/
-	bool hasNextInCell();
-	/**Returns next particle in the linked list of the centralCell cell */
-	Particle& nextInCell();
-	/**Returns true if there are particles left in the linked list of the other particle.*/
-	bool hasNextOtherInCell();
-	/**Returns next particle in the linked list different from current particle.*/
-	Particle& nextOtherInCell();
 	/**resets cell
 	 * @param cellNum index of the cell in array*/
 	void selectCell(int cellNum[]);
@@ -150,45 +140,11 @@ public:
 /** Calculates index of the cell, where the particle should be added and inserts it its linked list
 	* @param p particle to add */
 	virtual void add(Particle& p);
-	/** returns number of particles in cells[] */
-	virtual int size();
-	/**Returns true if there are particles (different from current particle) left in all the cells*/
-	virtual bool hasNextOther();
-	/**Returns next particle (different from current particle) */
-	virtual Particle& nextOther();
-	/**Returns true if there are more particles left*/
-	virtual bool hasNext();
-	/**Returns next particle*/
-	virtual Particle& next();
-	/**Sets indices for inner particles to 0 and resets cell-selectCell()*/
-	virtual void resetIterator();
-	/**Sets indices for boundary particles to 0 and resets cell-selectCell()*/
-	void resetBoundaryIterator();
-	/**Returns true if there are more boundary particles left*/
-	bool hasNextBoundary();
-	/**Returns next boundary particle*/
-	Particle* nextBoundary();
-	/**adds particle in separate array of cells with lists of particles
-	 * @ p particle to add
-	 * @ i index, that defines in which cell to add the particle*/
-	void addHalo(Particle& p, int i);
-	/**Sets indices for halo particles to 0*/
-	void resetHaloIterator();
-	/**Returns true if there are more halo particles left.*/
-	bool hasNextHaloParticle();
-	/**returns next halo particle*/
-	Particle& nextHaloParticle();
-	/**iterator to remove all particles one after the other*/
-	void removeNextHalo();
-	/**removes specific particle
-	 * @ p particle to remove*/
-	void removeHaloParticle(Particle& p);
-
 	/** removes all particles stored in halo cells */
 	void emptyHalo();
 	/** moves particles into right cell; call from outside */
 	void moveParticles();
-
+	int size() ;
 	/** applies fnc->iterateFunc on every particle in the domain
 	 * @param fnc Pointer to a PCApply deriving object implementing the iterateFunc method */
 	virtual void iterate(PCApply *fnc);
