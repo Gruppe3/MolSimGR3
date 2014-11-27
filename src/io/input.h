@@ -31,8 +31,8 @@
 // in the accompanying FLOSSE file.
 //
 
-#ifndef MOLSIM_INPUT_HXX
-#define MOLSIM_INPUT_HXX
+#ifndef CXX_USERS_CHRISTIANSTURM2_DOCUMENTS_VORLESUNGEN_BOOKS_14_15_WS_PRAKTIKUM___MOLEKULARDYNAMIK_MOL_SIM_GR3_MOLSIM_INPUT_HXX
+#define CXX_USERS_CHRISTIANSTURM2_DOCUMENTS_VORLESUNGEN_BOOKS_14_15_WS_PRAKTIKUM___MOLEKULARDYNAMIK_MOL_SIM_GR3_MOLSIM_INPUT_HXX
 
 #ifndef XSD_USE_CHAR
 #define XSD_USE_CHAR
@@ -226,9 +226,11 @@ namespace input
 {
   class decimalvector;
   class integervector;
+  class boundarytype;
   class molsimdata;
   class domain;
   class objectlist;
+  class boundaries;
   class cuboid;
   class sphere;
   class particle;
@@ -414,6 +416,62 @@ namespace input
     ::xsd::cxx::tree::one< z_type > z_;
   };
 
+  class boundarytype: public ::xml_schema::string
+  {
+    public:
+    enum value
+    {
+      outflow,
+      reflecting
+    };
+
+    boundarytype (value v);
+
+    boundarytype (const char* v);
+
+    boundarytype (const ::std::string& v);
+
+    boundarytype (const ::xml_schema::string& v);
+
+    boundarytype (const ::xercesc::DOMElement& e,
+                  ::xml_schema::flags f = 0,
+                  ::xml_schema::container* c = 0);
+
+    boundarytype (const ::xercesc::DOMAttr& a,
+                  ::xml_schema::flags f = 0,
+                  ::xml_schema::container* c = 0);
+
+    boundarytype (const ::std::string& s,
+                  const ::xercesc::DOMElement* e,
+                  ::xml_schema::flags f = 0,
+                  ::xml_schema::container* c = 0);
+
+    boundarytype (const boundarytype& x,
+                  ::xml_schema::flags f = 0,
+                  ::xml_schema::container* c = 0);
+
+    virtual boundarytype*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    boundarytype&
+    operator= (value v);
+
+    virtual
+    operator value () const
+    {
+      return _xsd_boundarytype_convert ();
+    }
+
+    protected:
+    value
+    _xsd_boundarytype_convert () const;
+
+    public:
+    static const char* const _xsd_boundarytype_literals_[2];
+    static const value _xsd_boundarytype_indexes_[2];
+  };
+
   class molsimdata: public ::xml_schema::type
   {
     public:
@@ -596,13 +654,32 @@ namespace input
     void
     cutoff (const cutoff_type& x);
 
+    // boundaries
+    //
+    typedef ::input::boundaries boundaries_type;
+    typedef ::xsd::cxx::tree::traits< boundaries_type, char > boundaries_traits;
+
+    const boundaries_type&
+    boundaries () const;
+
+    boundaries_type&
+    boundaries ();
+
+    void
+    boundaries (const boundaries_type& x);
+
+    void
+    boundaries (::std::auto_ptr< boundaries_type > p);
+
     // Constructors.
     //
     domain (const size_type&,
-            const cutoff_type&);
+            const cutoff_type&,
+            const boundaries_type&);
 
     domain (::std::auto_ptr< size_type >,
-            const cutoff_type&);
+            const cutoff_type&,
+            ::std::auto_ptr< boundaries_type >);
 
     domain (const ::xercesc::DOMElement& e,
             ::xml_schema::flags f = 0,
@@ -632,6 +709,7 @@ namespace input
     protected:
     ::xsd::cxx::tree::one< size_type > size_;
     ::xsd::cxx::tree::one< cutoff_type > cutoff_;
+    ::xsd::cxx::tree::one< boundaries_type > boundaries_;
   };
 
   class objectlist: public ::xml_schema::type
@@ -721,6 +799,154 @@ namespace input
     cuboid_sequence cuboid_;
     sphere_sequence sphere_;
     particle_sequence particle_;
+  };
+
+  class boundaries: public ::xml_schema::type
+  {
+    public:
+    // front
+    //
+    typedef ::input::boundarytype front_type;
+    typedef ::xsd::cxx::tree::traits< front_type, char > front_traits;
+
+    const front_type&
+    front () const;
+
+    front_type&
+    front ();
+
+    void
+    front (const front_type& x);
+
+    void
+    front (::std::auto_ptr< front_type > p);
+
+    // back
+    //
+    typedef ::input::boundarytype back_type;
+    typedef ::xsd::cxx::tree::traits< back_type, char > back_traits;
+
+    const back_type&
+    back () const;
+
+    back_type&
+    back ();
+
+    void
+    back (const back_type& x);
+
+    void
+    back (::std::auto_ptr< back_type > p);
+
+    // left
+    //
+    typedef ::input::boundarytype left_type;
+    typedef ::xsd::cxx::tree::traits< left_type, char > left_traits;
+
+    const left_type&
+    left () const;
+
+    left_type&
+    left ();
+
+    void
+    left (const left_type& x);
+
+    void
+    left (::std::auto_ptr< left_type > p);
+
+    // right
+    //
+    typedef ::input::boundarytype right_type;
+    typedef ::xsd::cxx::tree::traits< right_type, char > right_traits;
+
+    const right_type&
+    right () const;
+
+    right_type&
+    right ();
+
+    void
+    right (const right_type& x);
+
+    void
+    right (::std::auto_ptr< right_type > p);
+
+    // top
+    //
+    typedef ::input::boundarytype top_type;
+    typedef ::xsd::cxx::tree::traits< top_type, char > top_traits;
+
+    const top_type&
+    top () const;
+
+    top_type&
+    top ();
+
+    void
+    top (const top_type& x);
+
+    void
+    top (::std::auto_ptr< top_type > p);
+
+    // bottom
+    //
+    typedef ::input::boundarytype bottom_type;
+    typedef ::xsd::cxx::tree::traits< bottom_type, char > bottom_traits;
+
+    const bottom_type&
+    bottom () const;
+
+    bottom_type&
+    bottom ();
+
+    void
+    bottom (const bottom_type& x);
+
+    void
+    bottom (::std::auto_ptr< bottom_type > p);
+
+    // Constructors.
+    //
+    boundaries (const front_type&,
+                const back_type&,
+                const left_type&,
+                const right_type&,
+                const top_type&,
+                const bottom_type&);
+
+    boundaries (const ::xercesc::DOMElement& e,
+                ::xml_schema::flags f = 0,
+                ::xml_schema::container* c = 0);
+
+    boundaries (const boundaries& x,
+                ::xml_schema::flags f = 0,
+                ::xml_schema::container* c = 0);
+
+    virtual boundaries*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    boundaries&
+    operator= (const boundaries& x);
+
+    virtual
+    ~boundaries ();
+
+    // Implementation.
+    //
+    protected:
+    void
+    parse (::xsd::cxx::xml::dom::parser< char >&,
+           ::xml_schema::flags);
+
+    protected:
+    ::xsd::cxx::tree::one< front_type > front_;
+    ::xsd::cxx::tree::one< back_type > back_;
+    ::xsd::cxx::tree::one< left_type > left_;
+    ::xsd::cxx::tree::one< right_type > right_;
+    ::xsd::cxx::tree::one< top_type > top_;
+    ::xsd::cxx::tree::one< bottom_type > bottom_;
   };
 
   class cuboid: public ::xml_schema::type
@@ -1180,4 +1406,4 @@ namespace input
 //
 // End epilogue.
 
-#endif // MOLSIM_INPUT_HXX
+#endif // CXX_USERS_CHRISTIANSTURM2_DOCUMENTS_VORLESUNGEN_BOOKS_14_15_WS_PRAKTIKUM___MOLEKULARDYNAMIK_MOL_SIM_GR3_MOLSIM_INPUT_HXX

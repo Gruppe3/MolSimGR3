@@ -62,11 +62,18 @@ double end_time = 1000;
 double delta_t = 0.014;
 string out_name("MD_vtk");
 int writeFreq = 10;
+/** domain size for LC algo */
 double domainSize[3];
+/** cut off radius for LC algo */
 double cutoff;
+/** distance between particles (2^(1/6)*sigma) */
+double meshWidth;
 
+/** stores boundary conditions in this order: left, right, bottom, top, front, back */
+Boundary domainBoundaries[6];
+
+/** the container that will be used to store particles */
 ParticleContainer* particleContainer;
-
 
 int main(int argc, char* argsv[]) {
 	PropertyConfigurator::configure("log4cxx.conf");
@@ -123,8 +130,10 @@ int main(int argc, char* argsv[]) {
 
 	if (strcmp(argsv[1], "-xml") == 0) {
 #ifdef LC
-		ParticleContainerLC* pc = new ParticleContainerLC(cutoff, domainSize, particleContainer);
-		particleContainer = pc;
+		/*ParticleContainerLC* pc = new ParticleContainerLC(cutoff, meshWidth, domainSize,
+				domainBoundaries, particleContainer);*/
+		particleContainer = new ParticleContainerLC(cutoff, meshWidth, domainSize,
+				domainBoundaries, particleContainer);
 		LOG4CXX_DEBUG(molsimlog, "init ParticleContainerLC");
 #endif
 	}
@@ -136,11 +145,15 @@ int main(int argc, char* argsv[]) {
 	particleContainer->iterate(forceType);
 	// calculates new F
 	particleContainer->iteratePair(forceType);
-	//calculateF(forceType);
+#ifdef LC
+	// add reflecting force to boundary particles according to domainBoundaries[]
+	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(REFLECTING, forceType);
+#endif
 
 	double current_time = start_time;
 
 	int iteration = 0;
+	int count_iterations = end_time/delta_t;
 
 	 // for this loop, we assume: current x, current f and current v are known
 	while (current_time < end_time) {
@@ -154,6 +167,10 @@ int main(int argc, char* argsv[]) {
 		particleContainer->iterate(forceType);
 		// calculate new f
 		particleContainer->iteratePair(forceType);
+#ifdef LC
+		// add reflecting force to boundary particles according to domainBoundaries[]
+		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(REFLECTING, forceType);
+#endif
 
 		// calculate new v
 		particleContainer->iterate(vcalc);
@@ -162,7 +179,7 @@ int main(int argc, char* argsv[]) {
 		iteration++;
 		if (iteration % writeFreq == 0) {
 			plotParticles(iteration);
-			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " finished.");
+			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished.");
 		}
 
 

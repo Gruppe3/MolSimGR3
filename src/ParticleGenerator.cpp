@@ -16,6 +16,7 @@
 
 extern const LoggerPtr iolog;
 extern const LoggerPtr particlelog;
+extern double meshWidth;
 
 ParticleGenerator::ParticleGenerator() {
 
@@ -64,6 +65,7 @@ void ParticleGenerator::getFileInput(char* fileName, ParticleContainer* pc) {
 			datastream >> meanV;
 			datastream >> M;
 			datastream >> H;
+			meshWidth = H;
 
 			// create particles from cuboid data
 			LOG4CXX_ERROR(particlelog, "Generating Cuboid...");
@@ -84,6 +86,7 @@ ParticleGenerator::ParticleGenerator(utils::Vector<double, 3>& x, utils::Vector<
 	num = n;
 	V = v;
 	H = h;
+	meshWidth = h;
 	M = m;
 	meanV = meanv;
 }

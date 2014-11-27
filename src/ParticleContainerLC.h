@@ -1,5 +1,5 @@
 /*
- * ParticleContainerForLCAlg.h
+ * ParticleContainerLC.h
  *
  *  Created on: 16.11.2014
  *      Author: ninaavr
@@ -23,6 +23,12 @@ typedef struct ParticleList {
 typedef struct Cell {
 	ParticleList *root;
 } Cell;
+
+/** types of boundary conditions */
+enum Boundary {OUTFLOW, REFLECTING};
+/** stores sides of the 3d domain;
+ * Attention: Don't change the order! */
+enum domainSide {LEFT, RIGHT, BOTTOM, TOP, FRONT, BACK};
 
 /**calculates indices of the array of cells
  * @param ic index of the cell in each dimension
@@ -56,8 +62,12 @@ private:
 	Cell** allCells;
 	/**cutoff radius of the force*/
 	double radius;
+	/** distance of particles (2^(1/6)*sigma) */
+	double distance;
 	/** size of the domain */
 	double domainSize[DIM];
+	/** boundary conditions for all sides of the 3D domain */
+	Boundary domainBoundary[6];
 	/**number of cells in each dimension*/
 	int cellNums[DIM];
 	/**number of all cells in each dimension inclusive halo particles*/
@@ -103,22 +113,38 @@ private:
 	void insertList(ParticleList **list, ParticleList *i);
 	/**deletes particles from a cell*/
 	void deleteList(ParticleList **q);
+	/** returns true if there are boundary particles left */
 	bool hasNextBoundaryWall();
-	Particle & nextBoundaryWall(int fixed, int fixedValue);
+	/** returns particle from next not empty boundary index
+	 * @param fixed Dimension of the wall which doesn't change
+	 * @param fixedValue Dimension fixed is set to this;  common values: 0 or cellNums[fixed]-1 */
+	Particle* nextBoundaryWall(int fixed, int fixedValue);
+	/** 3D implementation of hasNextBoundary() */
 	bool hasNextBoundary3D();
-	Particle & nextBoundary3D();
+	/** 3D implementation of nextBoundary() */
+	Particle* nextBoundary3D();
+	/** 2D implementation of hasNextBoundary() */
 	bool hasNextBoundary2D();
-	Particle & nextBoundary2D();
+	/** 2D implementation of nextBoundary() */
+	Particle* nextBoundary2D();
+	void applyToBoundaryWall(int fixedDim, int fixedVal, PCApply *fnc);
 	bool hasNextInHaloCell();
 	Particle& nextInHaloCell();
+	/** converts 1D index to DIM dimensional array index
+	 * @param idx 1D index
+	 * @param arr DIM dimensional array to store calculated coords.
+	 * @param size Size of each dimension of arr */
 	void numToIndex(int idx, int arr[], int size[]);
 
 public:
+	/** constructor */
 	ParticleContainerLC();
+	/** destructor */
 	virtual ~ParticleContainerLC();
-	/** creates ParticleContainerLC from cutoff radius, domainSize and values of another container */
-	ParticleContainerLC(double radius, double * domainSize,
-			const ParticleContainer* pc);
+	/** creates ParticleContainerLC from cutoff radius, domainSize boundary conditions
+	 *  and particles of another container */
+	ParticleContainerLC(const double radius, double distance, double *domainSize,
+			Boundary *boundary, const ParticleContainer* pc);
 /** Calculates index of the cell, where the particle should be added and inserts it its linked list
 	* @param p particle to add */
 	virtual void add(Particle& p);
@@ -139,7 +165,7 @@ public:
 	/**Returns true if there are more boundary particles left*/
 	bool hasNextBoundary();
 	/**Returns next boundary particle*/
-	Particle& nextBoundary();
+	Particle* nextBoundary();
 	/**adds particle in separate array of cells with lists of particles
 	 * @ p particle to add
 	 * @ i index, that defines in which cell to add the particle*/
@@ -161,8 +187,16 @@ public:
 	/** moves particles into right cell; call from outside */
 	void moveParticles();
 
+	/** applies fnc->iterateFunc on every particle in the domain
+	 * @param fnc Pointer to a PCApply deriving object implementing the iterateFunc method */
 	virtual void iterate(PCApply *fnc);
+	/** applies fnc->iteratePairFunc on every particle pair according to the cutoff radius
+	 * @param fnc Pointer to a PCApply deriving object implementing the iteratePairFunc method */
 	virtual void iteratePair(PCApply *fnc);
+	/** applies fnc->iterateFunc on boundary particles in the domain according to the given boundary type
+	 * @param bd Only domain sides of this boundary type are affected
+	 * @param fnc Pointer to a PCApply deriving object implementing the iterateFunc method */
+	void applyBoundaryConds(Boundary bd, PCApply *fnc);
 };
 
 #endif /* SRC_PARTICLECONTAINERLC_H_ */

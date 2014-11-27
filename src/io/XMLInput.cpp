@@ -21,7 +21,10 @@ extern int writeFreq;
 extern double delta_t;
 extern double domainSize[3];
 extern double cutoff;
+extern double meshWidth;
 extern const LoggerPtr iolog;
+extern Boundary domainBoundaries[6];
+
 
 XMLInput::~XMLInput() {
 	// TODO Auto-generated destructor stub
@@ -50,6 +53,14 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 				delta_t << ", end: " << end_time << ", cutoff: " << cutoff << ", domain: " <<
 				domainSize[0] << " x " << domainSize[1] << " x " << domainSize[2]);
 
+		// get boundary conditions
+		domainBoundaries[FRONT] = defineBoundary(molsim->domain()->boundaries().front());
+		domainBoundaries[BACK] = defineBoundary(molsim->domain()->boundaries().back());
+		domainBoundaries[LEFT] = defineBoundary(molsim->domain()->boundaries().left());
+		domainBoundaries[RIGHT] = defineBoundary(molsim->domain()->boundaries().right());
+		domainBoundaries[TOP] = defineBoundary(molsim->domain()->boundaries().top());
+		domainBoundaries[BOTTOM] = defineBoundary(molsim->domain()->boundaries().bottom());
+
 		LOG4CXX_INFO(iolog, "reading object data...");
 		objectlist objects = molsim->objectlist();
 
@@ -76,6 +87,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 			v[1] = i->velocity().y();
 			v[2] = i->velocity().z();
 
+			meshWidth = i->meshwidth();
 	    	ParticleGenerator pg;
 	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), i->brownian(), pc);
 	    }
@@ -97,6 +109,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 			v[1] = i->velocity().y();
 			v[2] = i->velocity().z();
 
+			meshWidth = i->meshwidth();
 			ParticleGenerator pg;
 			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), 1.0, 0.1, pc);
 		}
@@ -127,4 +140,8 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 		LOG4CXX_FATAL(iolog, "couldn't read XML file: " << e);
 		exit(-1);
 	}
+}
+
+Boundary XMLInput::defineBoundary(string str) {
+	return string("outflow").compare(str) == 0 ? OUTFLOW : REFLECTING;;
 }

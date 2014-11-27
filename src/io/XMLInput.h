@@ -9,6 +9,7 @@
 #define SRC_IO_XMLINPUT_H_
 
 #include "InputHandler.h"
+#include "../ParticleContainerLC.h"
 
 class XMLInput : public InputHandler {
 public:
@@ -19,6 +20,11 @@ public:
 	 * @param fileName File containing particle list
 	 * @param pc ParticleContainer to store particles*/
 	void getFileInput(char* fileName, ParticleContainer* pc);
+
+private:
+	/** returns the boundary type corresponding to the boundary string from XML file
+	 * @param str string from XML file*/
+	Boundary defineBoundary(string str);
 };
 
 #endif /* SRC_IO_XMLINPUT_H_ */

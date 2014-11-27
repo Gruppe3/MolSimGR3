@@ -12,6 +12,13 @@
 		<xs:attribute name="z" type="xs:unsignedInt" use="required"></xs:attribute>
 	</xs:complexType>
 	
+	<xs:simpleType name="boundarytype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="outflow"/>
+			<xs:enumeration value="reflecting"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
     <xs:element name="molsimdata">
     	<xs:complexType>
     		<xs:all>
@@ -24,6 +31,21 @@
     				<xs:all>
     					<xs:element name="size" type="tns:decimalvector"></xs:element>
     					<xs:element name="cutoff" type="xs:double"></xs:element>
+    					<xs:element name="boundaries">
+    						<xs:complexType>
+    							<xs:all>
+    							<!-- front and back are parallel to the xy plane! -->
+    								<xs:element name="front" type="tns:boundarytype"></xs:element>
+    								<xs:element name="back" type="tns:boundarytype"></xs:element>
+    							<!-- left and right are parallel to the yz plane! -->
+    								<xs:element name="left" type="tns:boundarytype"></xs:element>
+    								<xs:element name="right" type="tns:boundarytype"></xs:element>
+    							<!-- top and bottom are parallel to the xz plane -->
+    								<xs:element name="top" type="tns:boundarytype"></xs:element>
+    								<xs:element name="bottom" type="tns:boundarytype"></xs:element>
+    							</xs:all>
+    						</xs:complexType>
+    					</xs:element>
     				</xs:all>
     			</xs:complexType>
     		</xs:element>

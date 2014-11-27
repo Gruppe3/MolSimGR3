@@ -158,6 +158,51 @@ namespace input
   }
 
 
+  // boundarytype
+  //
+
+  boundarytype::
+  boundarytype (value v)
+  : ::xml_schema::string (_xsd_boundarytype_literals_[v])
+  {
+  }
+
+  boundarytype::
+  boundarytype (const char* v)
+  : ::xml_schema::string (v)
+  {
+  }
+
+  boundarytype::
+  boundarytype (const ::std::string& v)
+  : ::xml_schema::string (v)
+  {
+  }
+
+  boundarytype::
+  boundarytype (const ::xml_schema::string& v)
+  : ::xml_schema::string (v)
+  {
+  }
+
+  boundarytype::
+  boundarytype (const boundarytype& v,
+                ::xml_schema::flags f,
+                ::xml_schema::container* c)
+  : ::xml_schema::string (v, f, c)
+  {
+  }
+
+  boundarytype& boundarytype::
+  operator= (value v)
+  {
+    static_cast< ::xml_schema::string& > (*this) =
+    ::xml_schema::string (_xsd_boundarytype_literals_[v]);
+
+    return *this;
+  }
+
+
   // molsimdata
   //
 
@@ -339,6 +384,30 @@ namespace input
     this->cutoff_.set (x);
   }
 
+  const domain::boundaries_type& domain::
+  boundaries () const
+  {
+    return this->boundaries_.get ();
+  }
+
+  domain::boundaries_type& domain::
+  boundaries ()
+  {
+    return this->boundaries_.get ();
+  }
+
+  void domain::
+  boundaries (const boundaries_type& x)
+  {
+    this->boundaries_.set (x);
+  }
+
+  void domain::
+  boundaries (::std::auto_ptr< boundaries_type > x)
+  {
+    this->boundaries_.set (x);
+  }
+
 
   // objectlist
   //
@@ -395,6 +464,154 @@ namespace input
   particle (const particle_sequence& s)
   {
     this->particle_ = s;
+  }
+
+
+  // boundaries
+  //
+
+  const boundaries::front_type& boundaries::
+  front () const
+  {
+    return this->front_.get ();
+  }
+
+  boundaries::front_type& boundaries::
+  front ()
+  {
+    return this->front_.get ();
+  }
+
+  void boundaries::
+  front (const front_type& x)
+  {
+    this->front_.set (x);
+  }
+
+  void boundaries::
+  front (::std::auto_ptr< front_type > x)
+  {
+    this->front_.set (x);
+  }
+
+  const boundaries::back_type& boundaries::
+  back () const
+  {
+    return this->back_.get ();
+  }
+
+  boundaries::back_type& boundaries::
+  back ()
+  {
+    return this->back_.get ();
+  }
+
+  void boundaries::
+  back (const back_type& x)
+  {
+    this->back_.set (x);
+  }
+
+  void boundaries::
+  back (::std::auto_ptr< back_type > x)
+  {
+    this->back_.set (x);
+  }
+
+  const boundaries::left_type& boundaries::
+  left () const
+  {
+    return this->left_.get ();
+  }
+
+  boundaries::left_type& boundaries::
+  left ()
+  {
+    return this->left_.get ();
+  }
+
+  void boundaries::
+  left (const left_type& x)
+  {
+    this->left_.set (x);
+  }
+
+  void boundaries::
+  left (::std::auto_ptr< left_type > x)
+  {
+    this->left_.set (x);
+  }
+
+  const boundaries::right_type& boundaries::
+  right () const
+  {
+    return this->right_.get ();
+  }
+
+  boundaries::right_type& boundaries::
+  right ()
+  {
+    return this->right_.get ();
+  }
+
+  void boundaries::
+  right (const right_type& x)
+  {
+    this->right_.set (x);
+  }
+
+  void boundaries::
+  right (::std::auto_ptr< right_type > x)
+  {
+    this->right_.set (x);
+  }
+
+  const boundaries::top_type& boundaries::
+  top () const
+  {
+    return this->top_.get ();
+  }
+
+  boundaries::top_type& boundaries::
+  top ()
+  {
+    return this->top_.get ();
+  }
+
+  void boundaries::
+  top (const top_type& x)
+  {
+    this->top_.set (x);
+  }
+
+  void boundaries::
+  top (::std::auto_ptr< top_type > x)
+  {
+    this->top_.set (x);
+  }
+
+  const boundaries::bottom_type& boundaries::
+  bottom () const
+  {
+    return this->bottom_.get ();
+  }
+
+  boundaries::bottom_type& boundaries::
+  bottom ()
+  {
+    return this->bottom_.get ();
+  }
+
+  void boundaries::
+  bottom (const bottom_type& x)
+  {
+    this->bottom_.set (x);
+  }
+
+  void boundaries::
+  bottom (::std::auto_ptr< bottom_type > x)
+  {
+    this->bottom_.set (x);
   }
 
 
@@ -926,6 +1143,76 @@ namespace input
   {
   }
 
+  // boundarytype
+  //
+
+  boundarytype::
+  boundarytype (const ::xercesc::DOMElement& e,
+                ::xml_schema::flags f,
+                ::xml_schema::container* c)
+  : ::xml_schema::string (e, f, c)
+  {
+    _xsd_boundarytype_convert ();
+  }
+
+  boundarytype::
+  boundarytype (const ::xercesc::DOMAttr& a,
+                ::xml_schema::flags f,
+                ::xml_schema::container* c)
+  : ::xml_schema::string (a, f, c)
+  {
+    _xsd_boundarytype_convert ();
+  }
+
+  boundarytype::
+  boundarytype (const ::std::string& s,
+                const ::xercesc::DOMElement* e,
+                ::xml_schema::flags f,
+                ::xml_schema::container* c)
+  : ::xml_schema::string (s, e, f, c)
+  {
+    _xsd_boundarytype_convert ();
+  }
+
+  boundarytype* boundarytype::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class boundarytype (*this, f, c);
+  }
+
+  boundarytype::value boundarytype::
+  _xsd_boundarytype_convert () const
+  {
+    ::xsd::cxx::tree::enum_comparator< char > c (_xsd_boundarytype_literals_);
+    const value* i (::std::lower_bound (
+                      _xsd_boundarytype_indexes_,
+                      _xsd_boundarytype_indexes_ + 2,
+                      *this,
+                      c));
+
+    if (i == _xsd_boundarytype_indexes_ + 2 || _xsd_boundarytype_literals_[*i] != *this)
+    {
+      throw ::xsd::cxx::tree::unexpected_enumerator < char > (*this);
+    }
+
+    return *i;
+  }
+
+  const char* const boundarytype::
+  _xsd_boundarytype_literals_[2] =
+  {
+    "outflow",
+    "reflecting"
+  };
+
+  const boundarytype::value boundarytype::
+  _xsd_boundarytype_indexes_[2] =
+  {
+    ::input::boundarytype::outflow,
+    ::input::boundarytype::reflecting
+  };
+
   // molsimdata
   //
 
@@ -1152,19 +1439,23 @@ namespace input
 
   domain::
   domain (const size_type& size,
-          const cutoff_type& cutoff)
+          const cutoff_type& cutoff,
+          const boundaries_type& boundaries)
   : ::xml_schema::type (),
     size_ (size, this),
-    cutoff_ (cutoff, this)
+    cutoff_ (cutoff, this),
+    boundaries_ (boundaries, this)
   {
   }
 
   domain::
   domain (::std::auto_ptr< size_type > size,
-          const cutoff_type& cutoff)
+          const cutoff_type& cutoff,
+          ::std::auto_ptr< boundaries_type > boundaries)
   : ::xml_schema::type (),
     size_ (size, this),
-    cutoff_ (cutoff, this)
+    cutoff_ (cutoff, this),
+    boundaries_ (boundaries, this)
   {
   }
 
@@ -1174,7 +1465,8 @@ namespace input
           ::xml_schema::container* c)
   : ::xml_schema::type (x, f, c),
     size_ (x.size_, f, this),
-    cutoff_ (x.cutoff_, f, this)
+    cutoff_ (x.cutoff_, f, this),
+    boundaries_ (x.boundaries_, f, this)
   {
   }
 
@@ -1184,7 +1476,8 @@ namespace input
           ::xml_schema::container* c)
   : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
     size_ (this),
-    cutoff_ (this)
+    cutoff_ (this),
+    boundaries_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -1228,6 +1521,20 @@ namespace input
         }
       }
 
+      // boundaries
+      //
+      if (n.name () == "boundaries" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< boundaries_type > r (
+          boundaries_traits::create (i, f, this));
+
+        if (!boundaries_.present ())
+        {
+          this->boundaries_.set (r);
+          continue;
+        }
+      }
+
       break;
     }
 
@@ -1242,6 +1549,13 @@ namespace input
     {
       throw ::xsd::cxx::tree::expected_element< char > (
         "cutoff",
+        "http://www.example.org/input");
+    }
+
+    if (!boundaries_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "boundaries",
         "http://www.example.org/input");
     }
   }
@@ -1261,6 +1575,7 @@ namespace input
       static_cast< ::xml_schema::type& > (*this) = x;
       this->size_ = x.size_;
       this->cutoff_ = x.cutoff_;
+      this->boundaries_ = x.boundaries_;
     }
 
     return *this;
@@ -1380,6 +1695,228 @@ namespace input
 
   objectlist::
   ~objectlist ()
+  {
+  }
+
+  // boundaries
+  //
+
+  boundaries::
+  boundaries (const front_type& front,
+              const back_type& back,
+              const left_type& left,
+              const right_type& right,
+              const top_type& top,
+              const bottom_type& bottom)
+  : ::xml_schema::type (),
+    front_ (front, this),
+    back_ (back, this),
+    left_ (left, this),
+    right_ (right, this),
+    top_ (top, this),
+    bottom_ (bottom, this)
+  {
+  }
+
+  boundaries::
+  boundaries (const boundaries& x,
+              ::xml_schema::flags f,
+              ::xml_schema::container* c)
+  : ::xml_schema::type (x, f, c),
+    front_ (x.front_, f, this),
+    back_ (x.back_, f, this),
+    left_ (x.left_, f, this),
+    right_ (x.right_, f, this),
+    top_ (x.top_, f, this),
+    bottom_ (x.bottom_, f, this)
+  {
+  }
+
+  boundaries::
+  boundaries (const ::xercesc::DOMElement& e,
+              ::xml_schema::flags f,
+              ::xml_schema::container* c)
+  : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
+    front_ (this),
+    back_ (this),
+    left_ (this),
+    right_ (this),
+    top_ (this),
+    bottom_ (this)
+  {
+    if ((f & ::xml_schema::flags::base) == 0)
+    {
+      ::xsd::cxx::xml::dom::parser< char > p (e, true, false, false);
+      this->parse (p, f);
+    }
+  }
+
+  void boundaries::
+  parse (::xsd::cxx::xml::dom::parser< char >& p,
+         ::xml_schema::flags f)
+  {
+    for (; p.more_content (); p.next_content (false))
+    {
+      const ::xercesc::DOMElement& i (p.cur_element ());
+      const ::xsd::cxx::xml::qualified_name< char > n (
+        ::xsd::cxx::xml::dom::name< char > (i));
+
+      // front
+      //
+      if (n.name () == "front" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< front_type > r (
+          front_traits::create (i, f, this));
+
+        if (!front_.present ())
+        {
+          this->front_.set (r);
+          continue;
+        }
+      }
+
+      // back
+      //
+      if (n.name () == "back" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< back_type > r (
+          back_traits::create (i, f, this));
+
+        if (!back_.present ())
+        {
+          this->back_.set (r);
+          continue;
+        }
+      }
+
+      // left
+      //
+      if (n.name () == "left" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< left_type > r (
+          left_traits::create (i, f, this));
+
+        if (!left_.present ())
+        {
+          this->left_.set (r);
+          continue;
+        }
+      }
+
+      // right
+      //
+      if (n.name () == "right" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< right_type > r (
+          right_traits::create (i, f, this));
+
+        if (!right_.present ())
+        {
+          this->right_.set (r);
+          continue;
+        }
+      }
+
+      // top
+      //
+      if (n.name () == "top" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< top_type > r (
+          top_traits::create (i, f, this));
+
+        if (!top_.present ())
+        {
+          this->top_.set (r);
+          continue;
+        }
+      }
+
+      // bottom
+      //
+      if (n.name () == "bottom" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< bottom_type > r (
+          bottom_traits::create (i, f, this));
+
+        if (!bottom_.present ())
+        {
+          this->bottom_.set (r);
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (!front_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "front",
+        "http://www.example.org/input");
+    }
+
+    if (!back_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "back",
+        "http://www.example.org/input");
+    }
+
+    if (!left_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "left",
+        "http://www.example.org/input");
+    }
+
+    if (!right_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "right",
+        "http://www.example.org/input");
+    }
+
+    if (!top_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "top",
+        "http://www.example.org/input");
+    }
+
+    if (!bottom_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "bottom",
+        "http://www.example.org/input");
+    }
+  }
+
+  boundaries* boundaries::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class boundaries (*this, f, c);
+  }
+
+  boundaries& boundaries::
+  operator= (const boundaries& x)
+  {
+    if (this != &x)
+    {
+      static_cast< ::xml_schema::type& > (*this) = x;
+      this->front_ = x.front_;
+      this->back_ = x.back_;
+      this->left_ = x.left_;
+      this->right_ = x.right_;
+      this->top_ = x.top_;
+      this->bottom_ = x.bottom_;
+    }
+
+    return *this;
+  }
+
+  boundaries::
+  ~boundaries ()
   {
   }
 
