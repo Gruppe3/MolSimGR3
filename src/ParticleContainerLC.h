@@ -10,6 +10,8 @@
 
 #include "ParticleContainer.h"
 #include <list>
+#include <cstdlib>
+
 using namespace std;
 /**defines dimenstion of the grid*/
 #define DIM 3
