@@ -15,7 +15,7 @@
 #include <cstring>
 #include <cstdlib>
 
-extern const LoggerPtr particlelog;
+const LoggerPtr particlelog(log4cxx::Logger::getLogger("molsim.particle"));
 
 ParticleContainer::ParticleContainer() {
 	particles = std::list<Particle>();

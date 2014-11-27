@@ -11,6 +11,7 @@
 #include "io/XMLInput.h"
 #include "io/VTKOutput.h"
 #include "io/XYZOutput.h"
+#include "Simulation.h"
 
 #include "test/Runner.cpp"
 #include "test/LennardJonesTest.h"
@@ -25,7 +26,12 @@
 #include <cstdlib>
 #include <iostream>
 
+using namespace log4cxx;
+using namespace log4cxx::helpers;
 using namespace std;
+
+// undefine LC to use ParticleContainer without LC algo
+#define LC
 
 /**** forward declaration of the calculation functions ****/
 
@@ -55,29 +61,23 @@ void plotParticles(int iteration);
  * log parameter error */
 void error();
 
-extern const LoggerPtr molsimlog;
-
-double start_time = 0;
-double end_time = 1000;
-double delta_t = 0.014;
-string out_name("MD_vtk");
-int writeFreq = 10;
-/** domain size for LC algo */
-double domainSize[3];
-/** cut off radius for LC algo */
-double cutoff;
-/** distance between particles (2^(1/6)*sigma) */
-double meshWidth;
-
-/** stores boundary conditions in this order: left, right, bottom, top, front, back */
-Boundary domainBoundaries[6];
+// init logger
+const LoggerPtr molsimlog(Logger::getLogger("molsim"));
+const LoggerPtr particlelog(Logger::getLogger("molsim.particle"));
+const LoggerPtr forcelog(log4cxx::Logger::getLogger("molsim.particle.force"));
+const LoggerPtr testlog(log4cxx::Logger::getLogger("molsim.test"));
+const LoggerPtr iolog(log4cxx::Logger::getLogger("molsim.io"));
 
 /** the container that will be used to store particles */
 ParticleContainer* particleContainer;
+/** stores simulation parameters */
+Simulation *sim;
 
 int main(int argc, char* argsv[]) {
 	PropertyConfigurator::configure("log4cxx.conf");
 	LOG4CXX_INFO(molsimlog, "Hello from MolSim for PSE!");
+	sim = new Simulation();
+
 	switch (argc) {
 		case 2: 	// single file
 			error();
@@ -94,8 +94,8 @@ int main(int argc, char* argsv[]) {
 				break;
 			}
 		case 5:
-			delta_t = atof(argsv[3]);
-			end_time = atof(argsv[4]);// different delta_t and endtime
+			sim->delta_t = atof(argsv[3]);
+			sim->end_time = atof(argsv[4]);// different delta_t and endtime
 			break;
 		default:
 			error();
@@ -105,9 +105,9 @@ int main(int argc, char* argsv[]) {
 	// get input data
 	particleContainer = new ParticleContainer;
 	//Gravitation forceType;
-	ForceHandler* forceType = new LennardJones;
-	CalcX *xcalc = new CalcX;
-	CalcV *vcalc = new CalcV;
+	ForceHandler* forceType = new LennardJones();
+	CalcX *xcalc = new CalcX(sim);
+	CalcV *vcalc = new CalcV(sim);
 	InputHandler* inputhandler;
 	if (strcmp(argsv[1], "-c") == 0) {	// cuboids
 		inputhandler = new ParticleGenerator;
@@ -115,72 +115,68 @@ int main(int argc, char* argsv[]) {
 	else if (strcmp(argsv[1], "-p") == 0) {	// particles
 		inputhandler = new ParticlesInput;
 	}
-	else if (strcmp(argsv[1], "-xml") == 0) {	// xml file according to io/input.xsd
+	else if (strcmp(argsv[1], "-xml") == 0) {	// xml file according to molsim-input.xsd
 		inputhandler = new XMLInput;
-		// delete #define to use ParticleContainer without LC algo
-		#define LC
-#ifdef LC
+		#ifdef LC
 		forceType = new LennardJonesLC;
-#endif
+		#endif
 	}
 	else {
 		error();
 		return 1;
 	}
 
-	inputhandler->getFileInput(argsv[2], particleContainer);
-	delete inputhandler;
+	inputhandler->getFileInput(argsv[2], particleContainer, sim);
+	//delete inputhandler;
 
 	if (strcmp(argsv[1], "-xml") == 0) {
-#ifdef LC
+		#ifdef LC
 		/*ParticleContainerLC* pc = new ParticleContainerLC(cutoff, meshWidth, domainSize,
 				domainBoundaries, particleContainer);*/
-		particleContainer = new ParticleContainerLC(cutoff, meshWidth, domainSize,
-				domainBoundaries, particleContainer);
+		particleContainer = new ParticleContainerLC(particleContainer, sim);
 		LOG4CXX_DEBUG(molsimlog, "init ParticleContainerLC");
-#endif
+		#endif
 	}
 
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
-	// the forces are needed to calculate x, but are not given in the input file.
 
+	// the forces are needed to calculate x, but are not given in the input file.
 	// copies F to oldF of particles and sets F to 0
 	particleContainer->iterate(forceType);
 	// calculates new F
 	particleContainer->iteratePair(forceType);
-#ifdef LC
+	#ifdef LC
 	// add reflecting force to boundary particles according to domainBoundaries[]
-	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(REFLECTING, forceType);
-#endif
+	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConditions::REFLECTING, forceType);
+	#endif
 
-	double current_time = start_time;
-
+	double current_time = sim->start_time;
 	int iteration = 0;
-	int count_iterations = end_time/delta_t;
+	int count_iterations = sim->end_time / sim->delta_t;
 
 	 // for this loop, we assume: current x, current f and current v are known
-	while (current_time < end_time) {
+	while (current_time < sim->end_time) {
 		// calculate new x
 		particleContainer->iterate(xcalc);
-#ifdef LC
-		((ParticleContainerLC*)particleContainer)->moveParticles();//LOG4CXX_DEBUG(molsimlog, "after move");
-#endif
+		#ifdef LC
+		((ParticleContainerLC*)particleContainer)->moveParticles();
+		#endif
 
 		// copies F to oldF of particles and sets F to 0
 		particleContainer->iterate(forceType);
 		// calculate new f
 		particleContainer->iteratePair(forceType);
-#ifdef LC
-		// add reflecting force to boundary particles according to domainBoundaries[]
-		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(REFLECTING, forceType);
-#endif
+		#ifdef LC
+		// add reflecting force to boundary particles according to sim->domainBoundaries[]
+		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConditions::REFLECTING, forceType);
+		#endif
 
 		// calculate new v
 		particleContainer->iterate(vcalc);
 
 
 		iteration++;
-		if (iteration % writeFreq == 0) {
+		if (iteration % sim->writeFreq == 0) {
 			plotParticles(iteration);
 			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished.");
 		}
@@ -190,7 +186,7 @@ int main(int argc, char* argsv[]) {
 		// remove halo particles
 		((ParticleContainerLC*)particleContainer)->emptyHalo();
 #endif
-		current_time += delta_t;
+		current_time += sim->delta_t;
 	}
 
 	LOG4CXX_INFO(molsimlog, "output written. Terminating...");
@@ -235,7 +231,7 @@ void calculateX(Particle& p) {
 		// insert calculation of X here!
 		*/
 		utils::Vector<double, 3>& x = p.getX();
-		x = x + delta_t * (p.getV() + delta_t / (2 * p.getM()) * p.getF());
+		x = x + sim->delta_t * (p.getV() + sim->delta_t / (2 * p.getM()) * p.getF());
 		//LOG4CXX_DEBUG(molsimlog, "new x:" << x.toString());
 		//count++;
 	//}
@@ -251,16 +247,14 @@ void calculateV(Particle& p) {
 
 		// insert calculation of velocity here!
 		utils::Vector<double, 3>& v = p.getV();
-		v = v + delta_t / (2 * p.getM()) * (p.getOldF() + p.getF());
+		v = v + sim->delta_t / (2 * p.getM()) * (p.getOldF() + p.getF());
 	//}
 }
 
 
 void plotParticles(int iteration) {
-	//string out_name("MD_vtk");
-
 	VTKOutput vtko;
-	vtko.setOutput(out_name, iteration, particleContainer);
+	vtko.setOutput(sim->out_name, iteration, particleContainer);
 }
 
 void error() {

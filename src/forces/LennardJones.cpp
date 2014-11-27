@@ -9,7 +9,7 @@
 #include "Logger.h"
 #include <cmath>
 
-extern const LoggerPtr forcelog;
+const LoggerPtr forcelog(log4cxx::Logger::getLogger("molsim.particle.force"));
 
 LennardJones::LennardJones() {
 	sigma = 1.0;

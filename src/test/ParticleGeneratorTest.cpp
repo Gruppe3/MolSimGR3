@@ -8,6 +8,8 @@
 #include "ParticleGeneratorTest.h"
 #include <iostream>
 
+const LoggerPtr testlog(log4cxx::Logger::getLogger("molsim.test"));
+
 ParticleGeneratorTest::ParticleGeneratorTest() {
 
 
@@ -33,12 +35,12 @@ void ParticleGeneratorTest::tearDown() {
 }
 
 void ParticleGeneratorTest::testSize() {
-	LOG4CXX_DEBUG(Logger::getLogger("MolSim.test"), "-testSize");
+	LOG4CXX_DEBUG(testlog, "-testSize");
 	CPPUNIT_ASSERT(pc->size() == n[0]*n[1]*n[2]);
 }
 
 void ParticleGeneratorTest::testH() {
-	LOG4CXX_DEBUG(Logger::getLogger("MolSim.test"), "-testH");
+	LOG4CXX_DEBUG(testlog, "-testH");
 	Particle p1 = pc->next();
 	Particle p2 = pc->next();
 	utils::Vector<double, 3> h_vec;
@@ -47,7 +49,7 @@ void ParticleGeneratorTest::testH() {
 	h_vec[2] = h;
 	utils::Vector<double, 3> x1 = p1.getX();
 	utils::Vector<double, 3> x2 = p2.getX();
-	LOG4CXX_DEBUG(Logger::getLogger("MolSim.test"), "x1:" << x1.toString() << "; x2:" << x2.toString());
+	LOG4CXX_DEBUG(testlog, "x1:" << x1.toString() << "; x2:" << x2.toString());
 	CPPUNIT_ASSERT(x1 == (x2-h_vec));
 
 	p2 = pc->next();
@@ -59,7 +61,7 @@ void ParticleGeneratorTest::testH() {
 }
 
 void ParticleGeneratorTest::testV() {
-	LOG4CXX_DEBUG(Logger::getLogger("MolSim.test"), "-testV");
+	LOG4CXX_DEBUG(testlog, "-testV");
 	utils::Vector<double, 3> nul(0.0);
 	while (pc->hasNext()) {
 		Particle p = pc->next();

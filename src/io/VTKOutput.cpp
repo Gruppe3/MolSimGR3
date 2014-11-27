@@ -7,6 +7,9 @@
 
 #include "VTKOutput.h"
 #include "outputWriter/VTKWriter.h"
+#include "Logger.h"
+
+const LoggerPtr iolog(log4cxx::Logger::getLogger("molsim.io"));
 
 VTKOutput::~VTKOutput() {
 
@@ -17,6 +20,7 @@ void VTKOutput::setOutput(string fileName, int iteration, ParticleContainer* pc)
 	writer.initializeOutput(pc->size());
 
 	pc->resetIterator();
+	//LOG4CXX_DEBUG(iolog, "output: after reset" << pc->size());
 	while (pc->hasNext()) {
 		writer.plotParticle(pc->next());
 	}

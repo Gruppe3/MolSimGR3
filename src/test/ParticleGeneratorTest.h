@@ -13,13 +13,11 @@
 #include <cppunit/TestSuite.h>
 #include <cppunit/TestCaller.h>
 
-#include <log4cxx/logger.h>
-
+#include "../Logger.h"
 #include "../ParticleGenerator.h"
 #include "../ParticleContainer.h"
 
 using namespace CppUnit;
-using namespace log4cxx;
 
 /** defines test suite for ParticleGenerator */
 class ParticleGeneratorTest : public TestCase {

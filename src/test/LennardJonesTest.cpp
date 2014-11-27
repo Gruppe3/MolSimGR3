@@ -11,7 +11,7 @@
 #include <iostream>
 #include "Logger.h"
 
-extern const LoggerPtr forcelog;
+const LoggerPtr forcelog(log4cxx::Logger::getLogger("molsim.particle.force"));
 
 LennardJonesTest::LennardJonesTest() {
 	setUp();

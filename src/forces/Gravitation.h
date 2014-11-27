@@ -15,8 +15,6 @@
 /** A force calculator using the gravitational potential */
 class Gravitation : public ForceHandler {
 public:
-	/** constructor */
-	Gravitation();
 	/** destructor */
 	virtual ~Gravitation();
 

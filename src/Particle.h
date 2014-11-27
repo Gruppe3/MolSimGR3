@@ -9,9 +9,6 @@
 #define PARTICLE_H_
 
 #include "utils/Vector.h"
-#include <log4cxx/logger.h>
-
-using namespace log4cxx;
 
 /** A single particle */
 class Particle {

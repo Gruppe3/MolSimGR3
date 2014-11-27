@@ -12,7 +12,7 @@ ParticlesInput::~ParticlesInput() {
 
 }
 
-void ParticlesInput::getFileInput(char* fileName, ParticleContainer* pc) {
+void ParticlesInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *sim) {
 	FileReader fileReader;
 	fileReader.readFile(pc, fileName);
 }

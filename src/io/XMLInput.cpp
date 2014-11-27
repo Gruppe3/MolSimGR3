@@ -13,24 +13,13 @@
 using namespace std;
 using namespace input;
 
-extern double start_time;
-extern double end_time;
-extern double delta_t;
-extern string out_name;
-extern int writeFreq;
-extern double delta_t;
-extern double domainSize[3];
-extern double cutoff;
-extern double meshWidth;
-extern const LoggerPtr iolog;
-extern Boundary domainBoundaries[6];
-
+const LoggerPtr iolog(log4cxx::Logger::getLogger("molsim.io"));
 
 XMLInput::~XMLInput() {
 	// TODO Auto-generated destructor stub
 }
 
-void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
+void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *sim) {
 	try {
 		// initialize xml object
 		string file(fileName);
@@ -38,28 +27,35 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 
 		// set simulation parameters
 		LOG4CXX_INFO(iolog, "reading simulation parameters...");
-		start_time = 0;
-		out_name = molsim->outputbasename();
-		writeFreq = molsim->writefreq();
-		delta_t = molsim->timestep();
-		end_time = molsim->endtime();
-		domainSize[0] = molsim->domain()->size().x();
-		domainSize[1] = molsim->domain()->size().y();
-		domainSize[2] = molsim->domain()->size().z();
-		if (domainSize[2] == 0)
-			domainSize[2] = 1;
-		cutoff = molsim->domain()->cutoff();
-		LOG4CXX_DEBUG(iolog, "out: " << out_name << ", wFq: " << writeFreq << ", delta t: " <<
-				delta_t << ", end: " << end_time << ", cutoff: " << cutoff << ", domain: " <<
-				domainSize[0] << " x " << domainSize[1] << " x " << domainSize[2]);
+		sim->start_time = 0;
+		sim->out_name = molsim->outputbasename();
+		sim->writeFreq = molsim->writefreq();
+		sim->delta_t = molsim->timestep();
+		sim->end_time = molsim->endtime();
+		sim->domainSize[0] = molsim->domain()->size().x();
+		sim->domainSize[1] = molsim->domain()->size().y();
+		sim->domainSize[2] = molsim->domain()->size().z();
+		if (sim->domainSize[2] == 0)
+			sim->domainSize[2] = 1;
+		sim->cutoff = molsim->domain()->cutoff();
+		LOG4CXX_DEBUG(iolog, "out: " << sim->out_name << ", wFq: " << sim->writeFreq << ", delta t: " <<
+				sim->delta_t << ", end: " << sim->end_time << ", cutoff: " << sim->cutoff << ", domain: " <<
+				sim->domainSize[0] << " x " << sim->domainSize[1] << " x " << sim->domainSize[2]);
 
 		// get boundary conditions
-		domainBoundaries[FRONT] = defineBoundary(molsim->domain()->boundaries().front());
-		domainBoundaries[BACK] = defineBoundary(molsim->domain()->boundaries().back());
-		domainBoundaries[LEFT] = defineBoundary(molsim->domain()->boundaries().left());
-		domainBoundaries[RIGHT] = defineBoundary(molsim->domain()->boundaries().right());
-		domainBoundaries[TOP] = defineBoundary(molsim->domain()->boundaries().top());
-		domainBoundaries[BOTTOM] = defineBoundary(molsim->domain()->boundaries().bottom());
+		BoundaryConditions *bc = sim->boundaries;
+		string str = molsim->domain()->boundaries().front();
+		bc->setBoundary(BoundaryConditions::FRONT, defineBoundary(str));
+		str = molsim->domain()->boundaries().back();
+		bc->setBoundary(BoundaryConditions::BACK, defineBoundary(str));
+		str = molsim->domain()->boundaries().left();
+		bc->setBoundary(BoundaryConditions::LEFT, defineBoundary(str));
+		str = molsim->domain()->boundaries().right();
+		bc->setBoundary(BoundaryConditions::RIGHT, defineBoundary(str));
+		str = molsim->domain()->boundaries().top();
+		bc->setBoundary(BoundaryConditions::TOP, defineBoundary(str));
+		str = molsim->domain()->boundaries().bottom();
+		bc->setBoundary(BoundaryConditions::BOTTOM, defineBoundary(str));
 
 		LOG4CXX_INFO(iolog, "reading object data...");
 		objectlist objects = molsim->objectlist();
@@ -87,7 +83,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 			v[1] = i->velocity().y();
 			v[2] = i->velocity().z();
 
-			meshWidth = i->meshwidth();
+			sim->meshWidth = i->meshwidth();
 	    	ParticleGenerator pg;
 	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), i->brownian(), pc);
 	    }
@@ -109,7 +105,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 			v[1] = i->velocity().y();
 			v[2] = i->velocity().z();
 
-			meshWidth = i->meshwidth();
+			sim->meshWidth = i->meshwidth();
 			ParticleGenerator pg;
 			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), 1.0, 0.1, pc);
 		}
@@ -142,6 +138,6 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc) {
 	}
 }
 
-Boundary XMLInput::defineBoundary(string str) {
-	return string("outflow").compare(str) == 0 ? OUTFLOW : REFLECTING;;
+BoundaryConditions::Boundary XMLInput::defineBoundary(string str) {
+	return string("outflow").compare(str) == 0 ? BoundaryConditions::OUTFLOW : BoundaryConditions::REFLECTING;;
 }

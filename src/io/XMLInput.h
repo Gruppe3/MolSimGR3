@@ -19,12 +19,12 @@ public:
 	 * implementation of InputHandler::getFileInput
 	 * @param fileName File containing particle list
 	 * @param pc ParticleContainer to store particles*/
-	void getFileInput(char* fileName, ParticleContainer* pc);
+	void getFileInput(char* fileName, ParticleContainer* pc, Simulation *sim);
 
 private:
 	/** returns the boundary type corresponding to the boundary string from XML file
 	 * @param str string from XML file*/
-	Boundary defineBoundary(string str);
+	BoundaryConditions::Boundary defineBoundary(string str);
 };
 
 #endif /* SRC_IO_XMLINPUT_H_ */

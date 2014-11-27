@@ -9,7 +9,7 @@
 #include "../ParticleGenerator.h"
 #include "Logger.h"
 
-extern const LoggerPtr iolog;
+const LoggerPtr iolog(log4cxx::Logger::getLogger("molsim.io"));
 
 XMLInputTest::~XMLInputTest() {
 	// TODO Auto-generated destructor stub
@@ -28,7 +28,7 @@ void XMLInputTest::tearDown() {
 void XMLInputTest::testParticleGen() {
 	LOG4CXX_DEBUG(iolog, "running XMLInputTest::testParticleGen");
 	XMLInput xi;
-	xi.getFileInput("eingabe-two_bodies.xml", pc1);
+	xi.getFileInput("eingabe-two_bodies.xml", pc1, NULL);
 
 	// manual data input
 	ParticleGenerator pg;

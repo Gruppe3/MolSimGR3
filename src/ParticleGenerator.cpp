@@ -14,15 +14,14 @@
 #include <iostream>
 #include <cstdlib>
 
-extern const LoggerPtr iolog;
-extern const LoggerPtr particlelog;
-extern double meshWidth;
+const LoggerPtr particlelog(Logger::getLogger("molsim.particle"));
+const LoggerPtr iolog(log4cxx::Logger::getLogger("molsim.io"));
 
 ParticleGenerator::ParticleGenerator() {
 
 }
 
-void ParticleGenerator::getFileInput(char* fileName, ParticleContainer* pc) {
+void ParticleGenerator::getFileInput(char* fileName, ParticleContainer* pc, Simulation *sim) {
 	double m = 1;
 	int num_cuboids = 0;
 
@@ -65,7 +64,6 @@ void ParticleGenerator::getFileInput(char* fileName, ParticleContainer* pc) {
 			datastream >> meanV;
 			datastream >> M;
 			datastream >> H;
-			meshWidth = H;
 
 			// create particles from cuboid data
 			LOG4CXX_ERROR(particlelog, "Generating Cuboid...");
@@ -86,7 +84,6 @@ ParticleGenerator::ParticleGenerator(utils::Vector<double, 3>& x, utils::Vector<
 	num = n;
 	V = v;
 	H = h;
-	meshWidth = h;
 	M = m;
 	meanV = meanv;
 }

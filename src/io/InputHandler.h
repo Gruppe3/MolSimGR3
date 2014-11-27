@@ -9,6 +9,7 @@
 #define SRC_IO_INPUTHANDLER_H_
 
 #include "../ParticleContainer.h"
+#include "../Simulation.h"
 
 /** An abstract class every input type (e.g.ParticlesInput) has to implement */
 class InputHandler {
@@ -17,7 +18,7 @@ public:
 	virtual ~InputHandler();
 
 	/** abstract input method */
-	virtual void getFileInput(char* fileName, ParticleContainer* pc) = 0;
+	virtual void getFileInput(char* fileName, ParticleContainer* pc, Simulation *sim) = 0;
 };
 
 #endif /* SRC_IO_INPUTHANDLER_H_ */

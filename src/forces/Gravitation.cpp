@@ -7,10 +7,6 @@
 
 #include "Gravitation.h"
 
-Gravitation::Gravitation() {
-
-}
-
 Gravitation::~Gravitation() {
 
 }

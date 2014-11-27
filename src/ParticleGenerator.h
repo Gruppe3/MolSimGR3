@@ -12,6 +12,7 @@
 #include "Particle.h"
 #include "ParticleContainer.h"
 #include "io/InputHandler.h"
+#include "Simulation.h"
 
 /** Generates particle containers from cuboid data */
 class ParticleGenerator : public InputHandler {
@@ -21,7 +22,7 @@ public:
 	/** reads multiple cuboids from file
 	 * @param fileName file containing cuboid parameter lists
 	 * @param pc ParticleContainer to store created particles */
-	void getFileInput(char* fileName, ParticleContainer* pc);
+	void getFileInput(char* fileName, ParticleContainer* pc, Simulation *sim);
 
 	/** constructor for direct value input */
 	ParticleGenerator(utils::Vector<double, 3>& X, utils::Vector<int, 3>& n,

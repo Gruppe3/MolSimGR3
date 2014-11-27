@@ -13,9 +13,9 @@
 #include <string>
 #include "Logger.h"
 
-using namespace std;
+const LoggerPtr iolog(log4cxx::Logger::getLogger("molsim.io"));
 
-extern const LoggerPtr iolog;
+using namespace std;
 
 namespace outputWriter {
 

@@ -11,7 +11,7 @@
 #include <sstream>
 #include <iostream>
 
-extern const LoggerPtr particlelog;
+const LoggerPtr particlelog(Logger::getLogger("molsim.particle"));
 
 Particle::Particle(int type_arg) {
 	type = type_arg;
