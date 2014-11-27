@@ -79,17 +79,20 @@ int main(int argc, char* argsv[]) {
 	PropertyConfigurator::configure("log4cxx.conf");
 	LOG4CXX_INFO(molsimlog, "Hello from MolSim for PSE!");
 	switch (argc) {
-		case 2: 	// single file or test case
+		case 2: 	// single file
+			error();
+			return 1;
+		case 3:		// xml, cuboid or particle file, or test case
 			if (strcmp(argsv[1], "-test") == 0) {
-				run(XMLInputTest::suite());
+				if (strcmp(argsv[2], "LennardJones") == 0) {run(LennardJonesTest::suite());}
+				if (strcmp(argsv[2], "ParticleContainer") == 0) {run(ParticleContainerTest::suite());}
+				if (strcmp(argsv[2], "ParticleGenerator") == 0) {run(ParticleGeneratorTest::suite());}
+				if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
 				return 0;
 			}
 			else {
-				error();
-				return 1;
+				break;
 			}
-		case 3:	// xml, cuboid or particle file
-			break;
 		case 5:
 			delta_t = atof(argsv[3]);
 			end_time = atof(argsv[4]);// different delta_t and endtime
