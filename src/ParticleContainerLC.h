@@ -72,7 +72,7 @@ private:
 	double distance;
 
 	/** size of the domain */
-	double domainSize[DIM];
+	double domainSize[3];
 
 	/** boundary conditions for all sides of the 3D domain */
 	BoundaryConditions::Boundary domainBoundary[6];

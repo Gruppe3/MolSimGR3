@@ -53,9 +53,11 @@ public:
 	 * @param h meshwidth/ distance between two particles
 	 * @param m mass of each particle
 	 * @param meanv mean value of Brownian Motion
+	 * @param brownDim dimension of Brownian Motion
 	 * @param pc ParticleContainer storing created particles */
 	void createSphere(utils::Vector<double, 3>& x, int n,
-			utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc);
+			utils::Vector<double, 3>& v, double h, double m, double meanv,
+			int brownDim, ParticleContainer* pc);
 
 private:
 	/** 3 dimensional position of the cuboid (lower left front-side corner) */

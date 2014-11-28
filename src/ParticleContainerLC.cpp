@@ -27,7 +27,7 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc, Simulation *sim)
 	iterator = pc->iterator;
 	othersIterator = pc->othersIterator;
 
-	for (int i = 0; i < DIM; i++) {
+	for (int i = 0; i < 3; i++) {
 		domainSize[i] = sim->domainSize[i];
 	}
 	radius = sim->cutoff;
@@ -93,17 +93,19 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc, Simulation *sim)
 	while (pc->hasNext()) {
 		Particle& p = pc->next();
 #if 1==DIM
-		int particleIndex[]= {p.getX()[0] / radius};
+		int particleIndex[]= {p.getX()[0] / radius, 0, 0};
 #elif 2==DIM
-		int particleIndex[]= {p.getX()[0] / radius, p.getX()[1] / radius};
+		int particleIndex[]= {p.getX()[0] / radius, p.getX()[1] / radius, p.getX()[2] / radius};
 #elif 3==DIM
 		int particleIndex[] = { p.getX()[0] / radius, p.getX()[1] / radius,
 				p.getX()[2] / radius };
 #endif
 		// skip particles that don't suite into the domain
+		//LOG4CXX_DEBUG(particlelog, "add p: " << p.getX().toString() << ", domain:" << domainSize[0] << "," << domainSize[1] << "," << domainSize[2]);
 		bool outofbound = false;
-		for (int d = 0; d < DIM; d++) {
-			if (particleIndex[d] >= cellNums[d] || particleIndex[d] < 0)
+		for (int d = 0; d < 3; d++) {
+			if (particleIndex[d] >= cellNums[d] || particleIndex[d] < 0
+					|| p.getX()[d] < 0.0 || p.getX()[d] > domainSize[d])
 				outofbound = true;
 		}
 		if (outofbound)
@@ -117,7 +119,11 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc, Simulation *sim)
 		//LOG4CXX_DEBUG(particlelog, "add p: " << p.getX().toString() << " to index " << particleIndex[0] << "," << particleIndex[1] << "," << particleIndex[2]);
 		//LOG4CXX_DEBUG(particlelog, "root: " << cells[calcIndex(particleIndex, cellNums)].root->p->getX().toString());
 	}
-	LOG4CXX_DEBUG(particlelog, "grid: " << cellNums[0] << " x " << cellNums[1] << " x " << cellNums[2] << ", inserted count:" << count << ", size() delivers:" << size());
+	LOG4CXX_DEBUG(particlelog, "grid: " << cellNums[0] << " x " << cellNums[1] <<
+		#if 3==DIM
+			" x " << cellNums[2] <<
+		#endif
+			", inserted count:" << count << ", size() delivers:" << size());
 }
 
 int ParticleContainerLC::size() {
@@ -304,9 +310,11 @@ void ParticleContainerLC::iterate(PCApply *fnc) {
 			pl = pl->next;
 		}
 	}
+	//LOG4CXX_DEBUG(particlelog, "iterate end");
 }
 
 void ParticleContainerLC::iteratePair(PCApply *fnc) {
+	//LOG4CXX_DEBUG(particlelog, "iterate pair");
 	for (int i = 0; i < numcell(cellNums); i++) {
 		//LOG4CXX_DEBUG(particlelog, "cell " << i << " of " << numcell(cellNums));
 		ParticleList *pl = cells[i].root;

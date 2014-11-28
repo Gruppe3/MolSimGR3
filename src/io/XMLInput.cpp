@@ -107,7 +107,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 
 			sim->meshWidth = i->meshwidth();
 			ParticleGenerator pg;
-			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), 1.0, 0.1, pc);
+			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), 1.0, 0.1, 2, pc);
 		}
 
 		// iterating over particles

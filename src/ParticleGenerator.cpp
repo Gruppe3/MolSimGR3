@@ -135,7 +135,7 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 }
 
 void ParticleGenerator::createSphere(utils::Vector<double, 3>& x, int n,
-			utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc) {
+			utils::Vector<double, 3>& v, double h, double m, double meanv, int brownDim, ParticleContainer* pc) {
 
 	for (int i = -n; i <= n; i++) {	// X dimension
 		for (int j = -n; j <= n; j++) {	// Y dimension
@@ -149,7 +149,7 @@ void ParticleGenerator::createSphere(utils::Vector<double, 3>& x, int n,
 					xn[2] = x[2] + k * h;
 
 					Particle p(xn, v, m, 0);
-					MaxwellBoltzmannDistribution(p, meanv, 3);
+					MaxwellBoltzmannDistribution(p, meanv, brownDim);
 					pc->add(p);
 				}
 			}
