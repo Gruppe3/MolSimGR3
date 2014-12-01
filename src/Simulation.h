@@ -11,7 +11,8 @@
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
-#include "BoundaryConditions.h"
+
+#include "BoundaryConds.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ public:
 		writeFreq = 10;
 		cutoff = 3.0;
 		meshWidth = 1.1225;
-		boundaries = new BoundaryConditions;
+		boundaries = new BoundaryConds;
 	}
 
 	/** destructor */
@@ -56,7 +57,7 @@ public:
 	double meshWidth;
 
 	/** stores boundary conditions for LC algo */
-	BoundaryConditions *boundaries;
+	BoundaryConds *boundaries;
 };
 
 

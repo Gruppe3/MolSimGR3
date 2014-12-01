@@ -13,7 +13,7 @@ src/io/VTKOutput.cpp\
 src/io/XYZOutput.cpp\
 src/ParticleContainer.cpp\
 src/ParticleContainerLC.cpp\
-src/BoundaryConditions.cpp\
+src/BoundaryConds.cpp\
 src/DynamicsCalc.cpp\
 src/Particle.cpp\
 src/forces/ForceHandler.cpp\
@@ -22,6 +22,7 @@ src/forces/LennardJones.cpp\
 src/MaxwellBoltzmannDistribution.cpp\
 src/ParticleGenerator.cpp\
 src/test/ParticleContainerTest.cpp\
+src/test/ParticleContainerLCTest.cpp\
 src/test/LennardJonesTest.cpp\
 src/test/ParticleGeneratorTest.cpp\
 src/test/XMLInputTest.cpp\

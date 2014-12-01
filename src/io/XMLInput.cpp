@@ -43,19 +43,19 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 				sim->domainSize[0] << " x " << sim->domainSize[1] << " x " << sim->domainSize[2]);
 
 		// get boundary conditions
-		BoundaryConditions *bc = sim->boundaries;
+		BoundaryConds *bc = sim->boundaries;
 		string str = molsim->domain()->boundaries().front();
-		bc->setBoundary(BoundaryConditions::FRONT, defineBoundary(str));
+		bc->setBoundary(BoundaryConds::FRONT, defineBoundary(str));
 		str = molsim->domain()->boundaries().back();
-		bc->setBoundary(BoundaryConditions::BACK, defineBoundary(str));
+		bc->setBoundary(BoundaryConds::BACK, defineBoundary(str));
 		str = molsim->domain()->boundaries().left();
-		bc->setBoundary(BoundaryConditions::LEFT, defineBoundary(str));
+		bc->setBoundary(BoundaryConds::LEFT, defineBoundary(str));
 		str = molsim->domain()->boundaries().right();
-		bc->setBoundary(BoundaryConditions::RIGHT, defineBoundary(str));
+		bc->setBoundary(BoundaryConds::RIGHT, defineBoundary(str));
 		str = molsim->domain()->boundaries().top();
-		bc->setBoundary(BoundaryConditions::TOP, defineBoundary(str));
+		bc->setBoundary(BoundaryConds::TOP, defineBoundary(str));
 		str = molsim->domain()->boundaries().bottom();
-		bc->setBoundary(BoundaryConditions::BOTTOM, defineBoundary(str));
+		bc->setBoundary(BoundaryConds::BOTTOM, defineBoundary(str));
 
 		LOG4CXX_INFO(iolog, "reading object data...");
 		objectlist objects = molsim->objectlist();
@@ -138,6 +138,6 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 	}
 }
 
-BoundaryConditions::Boundary XMLInput::defineBoundary(string str) {
-	return string("outflow").compare(str) == 0 ? BoundaryConditions::OUTFLOW : BoundaryConditions::REFLECTING;;
+BoundaryConds::Boundary XMLInput::defineBoundary(string str) {
+	return string("outflow").compare(str) == 0 ? BoundaryConds::OUTFLOW : BoundaryConds::REFLECTING;;
 }

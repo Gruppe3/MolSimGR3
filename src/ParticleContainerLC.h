@@ -75,7 +75,7 @@ private:
 	double domainSize[3];
 
 	/** boundary conditions for all sides of the 3D domain */
-	BoundaryConditions::Boundary domainBoundary[6];
+	BoundaryConds::Boundary domainBoundary[6];
 
 	/**number of cells in each dimension*/
 	int cellNums[DIM];
@@ -215,7 +215,7 @@ public:
 	/** applies fnc->iterateFunc on boundary particles in the domain according to the given boundary type
 	 * @param bd Only domain sides of this boundary type are affected
 	 * @param fnc Pointer to a PCApply deriving object implementing the iterateFunc method */
-	void applyBoundaryConds(BoundaryConditions::Boundary bd, PCApply *fnc);
+	void applyBoundaryConds(BoundaryConds::Boundary bd, PCApply *fnc);
 };
 
 #endif /* SRC_PARTICLECONTAINERLC_H_ */

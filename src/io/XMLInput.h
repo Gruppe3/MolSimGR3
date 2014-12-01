@@ -24,7 +24,7 @@ public:
 private:
 	/** returns the boundary type corresponding to the boundary string from XML file
 	 * @param str string from XML file*/
-	BoundaryConditions::Boundary defineBoundary(string str);
+	BoundaryConds::Boundary defineBoundary(string str);
 };
 
 #endif /* SRC_IO_XMLINPUT_H_ */

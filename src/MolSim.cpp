@@ -16,6 +16,7 @@
 #include "test/Runner.cpp"
 #include "test/LennardJonesTest.h"
 #include "test/ParticleContainerTest.h"
+#include "test/ParticleContainerLCTest.h"
 #include "test/ParticleGeneratorTest.h"
 #include "test/XMLInputTest.h"
 
@@ -86,6 +87,7 @@ int main(int argc, char* argsv[]) {
 			if (strcmp(argsv[1], "-test") == 0) {
 				if (strcmp(argsv[2], "LennardJones") == 0) {run(LennardJonesTest::suite());}
 				if (strcmp(argsv[2], "ParticleContainer") == 0) {run(ParticleContainerTest::suite());}
+				if (strcmp(argsv[2], "ParticleContainerLC") == 0) {run(ParticleContainerLCTest::suite());}
 				if (strcmp(argsv[2], "ParticleGenerator") == 0) {run(ParticleGeneratorTest::suite());}
 				if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
 				return 0;
@@ -147,7 +149,7 @@ int main(int argc, char* argsv[]) {
 	particleContainer->iteratePair(forceType);
 	#ifdef LC
 	// add reflecting force to boundary particles according to domainBoundaries[]
-	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConditions::REFLECTING, forceType);
+	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
 	#endif
 
 	double current_time = sim->start_time;
@@ -168,7 +170,7 @@ int main(int argc, char* argsv[]) {
 		particleContainer->iteratePair(forceType);
 		#ifdef LC
 		// add reflecting force to boundary particles according to sim->domainBoundaries[]
-		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConditions::REFLECTING, forceType);
+		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
 		#endif
 
 		// calculate new v

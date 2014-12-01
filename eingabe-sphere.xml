@@ -10,9 +10,9 @@
   	<boundaries>
   	<front>outflow</front>
   	<back>outflow</back>
-  	<left>outflow</left>
-  	<right>outflow</right>
-  	<top>outflow</top>
+  	<left>reflecting</left>
+  	<right>reflecting</right>
+  	<top>reflecting</top>
   	<bottom>reflecting</bottom>
   	</boundaries>
   </domain>
