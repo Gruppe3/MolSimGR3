@@ -261,5 +261,5 @@ void plotParticles(int iteration) {
 
 void error() {
 	LOG4CXX_ERROR(molsimlog, "Errounous programme call!");
-	LOG4CXX_ERROR(molsimlog, "./MolSim (-c | -p) filename [delta_t end_time] | -xml filename | -test");
+	LOG4CXX_ERROR(molsimlog, "./MolSim (-c | -p) filename [delta_t end_time] | -xml filename | -test name of tested item");
 }

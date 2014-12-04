@@ -31,27 +31,43 @@ void ParticleContainerLCTest::setUp() {
 	ParticleContainer pc1;
 	pc = new ParticleContainerLC(&pc1, sim);
 	utils::Vector<double, 3> x(1.1);
+	utils::Vector<double, 3> x_(5.1);
+	x_[2]=0;
 	utils::Vector<double, 3> v(0.0);
 	v[0] = 10;
-	Particle *p = new Particle(x, v, 1.0, 0);
+	p = new Particle(x, v, 1.0, 0);
+	p_ = new Particle(x_, v, 1.0, 0);
 	LOG4CXX_INFO(testlog, "p:" << p->toString());
+	LOG4CXX_INFO(testlog, "p_:" << p_->toString());
 
 	pc->add(*p);
+	pc->add(*p_);
+
 }
 
 void ParticleContainerLCTest::tearDown() {
 	delete pc;
 	delete sim;
+	delete p;
+	delete p_;
+}
+void ParticleContainerLCTest::testSize() {
+	CPPUNIT_ASSERT(pc->size() == 2);
 }
 
-void ParticleContainerLCTest::testSize() {
-	CPPUNIT_ASSERT(pc->size() == 1);
+void ParticleContainerLCTest::testAdd(){
+	pc->resetIterator();
+	if(pc[0].hasNextInCell()){
+	Particle& tmp=pc[0].nextInCell();
+	CPPUNIT_ASSERT(*p==tmp);
+} else
+	CPPUNIT_ASSERT(false);
 }
 
 void ParticleContainerLCTest::testReflection() {
 	LOG4CXX_INFO(testlog, "testing reflection...");
 	LOG4CXX_INFO(testlog, "container size start:" << pc->size());
-	CPPUNIT_ASSERT(pc->size() == 1);
+	CPPUNIT_ASSERT(pc->size() == 2);
 
 	ForceHandler* forceType = new LennardJonesLC();
 	CalcX *xcalc = new CalcX(sim);
@@ -78,8 +94,25 @@ void ParticleContainerLCTest::testReflection() {
 	}
 
 	LOG4CXX_INFO(testlog, "container size end:" << pc->size());
-	CPPUNIT_ASSERT(pc->size() == 1);
+	CPPUNIT_ASSERT(pc->size() == 2);
 
 	pc->resetIterator();
 	LOG4CXX_INFO(testlog, "p: " << pc->next().toString());
+}
+
+
+
+void ParticleContainerLCTest::testMove(){
+	pc->resetIterator();
+	//change coordinates of the second particle p_ 
+	utils::Vector<double, 3>& x=p_->getX();
+	x=2;
+	//second particle should be moved in the first cell
+	pc->moveParticles();
+	pc->resetIterator();
+		if(pc[0].hasNextInCell()){
+		Particle& tmp=pc[0].nextInCell();
+		CPPUNIT_ASSERT(*p_==tmp);
+	} else
+		CPPUNIT_ASSERT(false);
 }

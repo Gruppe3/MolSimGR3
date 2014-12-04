@@ -28,12 +28,20 @@ public:
 
 	void testSize();
 
+	/**tests if add() sets the particle in the correct cell*/
+	void testAdd();
+
+	/**tests if move() sets the particle in the correct cell*/
+	void testMove();
+
 	/** tests if moving particle stays still in the domain after multiple iterations */
 	void testReflection();
 
 	static Test *suite ()  {
 		TestSuite *suiteOfTests = new TestSuite;
 		suiteOfTests->addTest (new TestCaller<ParticleContainerLCTest>("testSize", &ParticleContainerLCTest::testSize));
+		suiteOfTests->addTest (new TestCaller<ParticleContainerLCTest>("testAdd", &ParticleContainerLCTest::testAdd));
+		suiteOfTests->addTest (new TestCaller<ParticleContainerLCTest>("testMove", &ParticleContainerLCTest::testMove));
 		suiteOfTests->addTest (new TestCaller<ParticleContainerLCTest>("testReflection", &ParticleContainerLCTest::testReflection));
 		return suiteOfTests;
 	}
@@ -41,6 +49,8 @@ public:
 private:
 	ParticleContainerLC* pc;
 	Simulation *sim;
+	Particle *p;
+	Particle *p_;
 };
 
 #endif /* SRC_TEST_PARTICLECONTAINERLCTEST_H_ */

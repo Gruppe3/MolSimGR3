@@ -2,7 +2,7 @@
  * ParticleContainerLC.h
  *
  *  Created on: 16.11.2014
- *      Author: ninaavr
+ *      Author: vmuser
  */
 #ifndef SRC_PARTICLECONTAINERLC_H_
 #define SRC_PARTICLECONTAINERLC_H_
@@ -132,12 +132,6 @@ private:
 	/**deletes particles from a cell*/
 	void deleteList(ParticleList **q);
 
-	/** Returns true if the iterator is not at the end of the linked list.*/
-	bool hasNextInCell();
-
-	/**Returns next particle in the linked list of the centralCell cell */
-	Particle& nextInCell();
-
 	/** returns true if there are boundary particles left */
 	bool hasNextBoundaryWall();
 
@@ -200,6 +194,12 @@ public:
 
 	/**Returns next particle*/
 	virtual Particle& next();
+
+	/** Returns true if the iterator is not at the end of the linked list.*/
+	bool hasNextInCell();
+
+	/**Returns next particle in the linked list of the centralCell cell */
+	Particle& nextInCell();
 
 	/** resets the iterator for next() */
 	void resetIterator();
