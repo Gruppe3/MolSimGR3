@@ -110,6 +110,8 @@ int main(int argc, char* argsv[]) {
 	ForceHandler* forceType = new LennardJones();
 	CalcX *xcalc = new CalcX(sim);
 	CalcV *vcalc = new CalcV(sim);
+
+	CalcT *tcalc = new CalcT(sim);
 	InputHandler* inputhandler;
 	if (strcmp(argsv[1], "-c") == 0) {	// cuboids
 		inputhandler = new ParticleGenerator;
@@ -133,8 +135,6 @@ int main(int argc, char* argsv[]) {
 
 	if (strcmp(argsv[1], "-xml") == 0) {
 		#ifdef LC
-		/*ParticleContainerLC* pc = new ParticleContainerLC(cutoff, meshWidth, domainSize,
-				domainBoundaries, particleContainer);*/
 		particleContainer = new ParticleContainerLC(particleContainer, sim);
 		LOG4CXX_DEBUG(molsimlog, "init ParticleContainerLC");
 		#endif
@@ -155,8 +155,9 @@ int main(int argc, char* argsv[]) {
 	double current_time = sim->start_time;
 	int iteration = 0;
 	int count_iterations = sim->end_time / sim->delta_t;
-
+	double beta=1.0;
 	 // for this loop, we assume: current x, current f and current v are known
+	double temperature=sim->initTemperature;
 	while (current_time < sim->end_time) {
 		// calculate new x
 		particleContainer->iterate(xcalc);
@@ -172,15 +173,30 @@ int main(int argc, char* argsv[]) {
 		// add reflecting force to boundary particles according to sim->domainBoundaries[]
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
 		#endif
+		vcalc->setBeta(1.0);
+		if((iteration>sim->thermostatStart)&&(iteration%sim->tempFreq==0)){
+			tcalc->resetSum();
+			//calculates sum to get T
+			particleContainer->iterate(tcalc);
+			if(temperature<sim->targetTemp){
+				temperature=temperature+sim->tempDiff;
+			}
+			beta=tcalc->calcBeta(temperature,particleContainer->size());
+			//LOG4CXX_DEBUG("molsim",beta<<)
+			vcalc->setBeta(beta);
+		}
+		/*particleContainer->resetIterator();
+		while(particleContainer->hasNext()){
+			cout<<particleContainer->next().getV().toString()<<endl;
+		}*/
 
 		// calculate new v
 		particleContainer->iterate(vcalc);
-
-
 		iteration++;
 		if (iteration % sim->writeFreq == 0) {
 			plotParticles(iteration);
 			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished.");
+			//LOG4CXX_DEBUG(molsimlog,"beta"<<beta);
 		}
 
 

@@ -85,7 +85,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 
 			sim->meshWidth = i->meshwidth();
 	    	ParticleGenerator pg;
-	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), i->brownian(), pc);
+	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), i->brownian(), pc, sim);
 	    }
 
 		// iterating over spheres

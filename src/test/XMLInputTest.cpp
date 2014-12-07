@@ -46,7 +46,7 @@ void XMLInputTest::testParticleGen() {
 	v[0] = 0.0;
 	v[1] = 0.0;
 	v[2] = 0.0;
-	pg.createCuboid(x, n, v, 1.1225, 1.0, 0.1, pc2);
+	pg.createCuboid(x, n, v, 1.1225, 1.0, 0.1, pc2,NULL);
 	x2[0] = 70.0;
 	x2[1] = 60.0;
 	x2[2] = 0.0;
@@ -58,7 +58,7 @@ void XMLInputTest::testParticleGen() {
 	v2[0] = 0.0;
 	v2[1] = -10.0;
 	v2[2] = 0.0;
-	pg.createCuboid(x2, n2, v2, 1.1225, 1.0, 0.1, pc2);
+	pg.createCuboid(x2, n2, v2, 1.1225, 1.0, 0.1, pc2,NULL);
 
 	CPPUNIT_ASSERT(pc1->size() == pc2->size());
 	int i = 0;
