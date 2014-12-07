@@ -24,15 +24,24 @@ public:
 		delta_t = 0.014;
 		out_name = string("MD_vtk");
 		writeFreq = 10;
-		cutoff = 3.0;
+
 		meshWidth = 1.1225;
 		thermostatStart=100;
-		meanVelocityType=1;
+		meanVelocityTypeFlag=1;
 		initTemperature=5.0;
-		diffTargetTemp=true;
+		diffTargetTempFlag=true;
 		targetTemp=500.0;
 		tempDiff=2;
 		tempFreq=1;
+		sigma11=1.0;
+		sigma22=0.9412;
+		sigma12=(sigma11+sigma22)/2;
+		cutoff = 2.5*sigma12;
+		//sigma21=sigma12;
+		epsilon11=1.0;
+		epsilon22=1.0;
+		epsilon12=sqrt(epsilon11*epsilon22);
+		//epsilon21=epsilon12;
 		//boltzmannConst=1.3806488E-23;
 		boltzmannConst=1.0;
 		boundaries = new BoundaryConds;
@@ -70,11 +79,19 @@ public:
 	double initTemperature;
 
 	double boltzmannConst;
-	bool diffTargetTemp;
+	bool diffTargetTempFlag;
 	double targetTemp;
 	double tempDiff;
+	double sigma11;
+	double sigma12;
+	double sigma21;
+	double sigma22;
+	double epsilon11;
+	double epsilon12;
+	double epsilon21;
+	double epsilon22;
 	/**1 - initialize temperature for thermostat problem, 0 - initialize temperature only with Maxwell-Boltzmann*/
-	int meanVelocityType;
+	int meanVelocityTypeFlag;
 	int tempFreq;
 	/** stores boundary conditions for LC algo */
 	BoundaryConds *boundaries;

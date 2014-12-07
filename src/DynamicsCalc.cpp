@@ -50,5 +50,5 @@ void CalcT::resetSum(){
 }
 
 void initializeV(double * v, double tInit, double m){
-	*v=sqrt(tInit*m);
+	*v=sqrt(tInit/m);
 }

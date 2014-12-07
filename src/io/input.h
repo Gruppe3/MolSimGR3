@@ -31,8 +31,8 @@
 // in the accompanying FLOSSE file.
 //
 
-#ifndef CXX_USERS_CHRISTIANSTURM2_DOCUMENTS_VORLESUNGEN_BOOKS_14_15_WS_PRAKTIKUM___MOLEKULARDYNAMIK_MOL_SIM_GR3_MOLSIM_INPUT_HXX
-#define CXX_USERS_CHRISTIANSTURM2_DOCUMENTS_VORLESUNGEN_BOOKS_14_15_WS_PRAKTIKUM___MOLEKULARDYNAMIK_MOL_SIM_GR3_MOLSIM_INPUT_HXX
+#ifndef MOLSIM_INPUT_HXX
+#define MOLSIM_INPUT_HXX
 
 #ifndef XSD_USE_CHAR
 #define XSD_USE_CHAR
@@ -930,7 +930,7 @@ namespace input
     boundaries&
     operator= (const boundaries& x);
 
-    virtual
+    virtual 
     ~boundaries ();
 
     // Implementation.
@@ -1031,6 +1031,24 @@ namespace input
     void
     mass (const mass_type& x);
 
+    // particleType
+    //
+    typedef ::xml_schema::unsigned_int particleType_type;
+    typedef ::xsd::cxx::tree::optional< particleType_type > particleType_optional;
+    typedef ::xsd::cxx::tree::traits< particleType_type, char > particleType_traits;
+
+    const particleType_optional&
+    particleType () const;
+
+    particleType_optional&
+    particleType ();
+
+    void
+    particleType (const particleType_type& x);
+
+    void
+    particleType (const particleType_optional& x);
+
     // brownian
     //
     typedef ::xml_schema::double_ brownian_type;
@@ -1092,6 +1110,7 @@ namespace input
     ::xsd::cxx::tree::one< numparticles_type > numparticles_;
     ::xsd::cxx::tree::one< meshwidth_type > meshwidth_;
     ::xsd::cxx::tree::one< mass_type > mass_;
+    particleType_optional particleType_;
     ::xsd::cxx::tree::one< brownian_type > brownian_;
   };
 
@@ -1406,4 +1425,4 @@ namespace input
 //
 // End epilogue.
 
-#endif // CXX_USERS_CHRISTIANSTURM2_DOCUMENTS_VORLESUNGEN_BOOKS_14_15_WS_PRAKTIKUM___MOLEKULARDYNAMIK_MOL_SIM_GR3_MOLSIM_INPUT_HXX
+#endif // MOLSIM_INPUT_HXX

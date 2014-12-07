@@ -61,6 +61,7 @@
     								<xs:element name="numparticles" type="tns:integervector"></xs:element><!-- number of particles per dimension -->
     								<xs:element name="meshwidth" type="xs:double"></xs:element>
     								<xs:element name="mass" type="xs:double"></xs:element>
+								<xs:element name="particleType" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
     								<xs:element name="brownian" type="xs:double"></xs:element>
     							</xs:all>
     						</xs:complexType>

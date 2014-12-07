@@ -43,7 +43,7 @@
 namespace input
 {
   // decimalvector
-  //
+  // 
 
   const decimalvector::x_type& decimalvector::
   x () const
@@ -101,7 +101,7 @@ namespace input
 
 
   // integervector
-  //
+  // 
 
   const integervector::x_type& integervector::
   x () const
@@ -159,7 +159,7 @@ namespace input
 
 
   // boundarytype
-  //
+  // 
 
   boundarytype::
   boundarytype (value v)
@@ -196,7 +196,7 @@ namespace input
   boundarytype& boundarytype::
   operator= (value v)
   {
-    static_cast< ::xml_schema::string& > (*this) =
+    static_cast< ::xml_schema::string& > (*this) = 
     ::xml_schema::string (_xsd_boundarytype_literals_[v]);
 
     return *this;
@@ -204,7 +204,7 @@ namespace input
 
 
   // molsimdata
-  //
+  // 
 
   const molsimdata::outputbasename_type& molsimdata::
   outputbasename () const
@@ -340,7 +340,7 @@ namespace input
 
 
   // domain
-  //
+  // 
 
   const domain::size_type& domain::
   size () const
@@ -410,7 +410,7 @@ namespace input
 
 
   // objectlist
-  //
+  // 
 
   const objectlist::cuboid_sequence& objectlist::
   cuboid () const
@@ -468,7 +468,7 @@ namespace input
 
 
   // boundaries
-  //
+  // 
 
   const boundaries::front_type& boundaries::
   front () const
@@ -616,7 +616,7 @@ namespace input
 
 
   // cuboid
-  //
+  // 
 
   const cuboid::location_type& cuboid::
   location () const
@@ -726,6 +726,30 @@ namespace input
     this->mass_.set (x);
   }
 
+  const cuboid::particleType_optional& cuboid::
+  particleType () const
+  {
+    return this->particleType_;
+  }
+
+  cuboid::particleType_optional& cuboid::
+  particleType ()
+  {
+    return this->particleType_;
+  }
+
+  void cuboid::
+  particleType (const particleType_type& x)
+  {
+    this->particleType_.set (x);
+  }
+
+  void cuboid::
+  particleType (const particleType_optional& x)
+  {
+    this->particleType_ = x;
+  }
+
   const cuboid::brownian_type& cuboid::
   brownian () const
   {
@@ -746,7 +770,7 @@ namespace input
 
 
   // sphere
-  //
+  // 
 
   const sphere::location_type& sphere::
   location () const
@@ -834,7 +858,7 @@ namespace input
 
 
   // particle
-  //
+  // 
 
   const particle::location_type& particle::
   location () const
@@ -1936,6 +1960,7 @@ namespace input
     numparticles_ (numparticles, this),
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
+    particleType_ (this),
     brownian_ (brownian, this)
   {
   }
@@ -1953,6 +1978,7 @@ namespace input
     numparticles_ (numparticles, this),
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
+    particleType_ (this),
     brownian_ (brownian, this)
   {
   }
@@ -1967,6 +1993,7 @@ namespace input
     numparticles_ (x.numparticles_, f, this),
     meshwidth_ (x.meshwidth_, f, this),
     mass_ (x.mass_, f, this),
+    particleType_ (x.particleType_, f, this),
     brownian_ (x.brownian_, f, this)
   {
   }
@@ -1981,6 +2008,7 @@ namespace input
     numparticles_ (this),
     meshwidth_ (this),
     mass_ (this),
+    particleType_ (this),
     brownian_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
@@ -2064,6 +2092,17 @@ namespace input
         }
       }
 
+      // particleType
+      //
+      if (n.name () == "particleType" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!this->particleType_)
+        {
+          this->particleType_.set (particleType_traits::create (i, f, this));
+          continue;
+        }
+      }
+
       // brownian
       //
       if (n.name () == "brownian" && n.namespace_ () == "http://www.example.org/input")
@@ -2139,6 +2178,7 @@ namespace input
       this->numparticles_ = x.numparticles_;
       this->meshwidth_ = x.meshwidth_;
       this->mass_ = x.mass_;
+      this->particleType_ = x.particleType_;
       this->brownian_ = x.brownian_;
     }
 

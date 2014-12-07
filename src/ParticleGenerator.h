@@ -45,7 +45,7 @@ public:
 	 * @param meanv mean value of Brownian Motion
 	 * @param pc ParticleContainer storing created particles */
 	void createCuboid(utils::Vector<double, 3>& x, utils::Vector<int, 3>& n,
-			utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc, Simulation * sim);
+			utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc, Simulation * sim, int particleType=0);
 
 	/** creates particles due to sphere parameters
 	 * @param x 3 dimensional location vector of the sphere's center
