@@ -284,6 +284,24 @@ namespace input
     this->endtime_.set (x);
   }
 
+  const molsimdata::gravity_type& molsimdata::
+  gravity () const
+  {
+    return this->gravity_.get ();
+  }
+
+  molsimdata::gravity_type& molsimdata::
+  gravity ()
+  {
+    return this->gravity_.get ();
+  }
+
+  void molsimdata::
+  gravity (const gravity_type& x)
+  {
+    this->gravity_.set (x);
+  }
+
   const molsimdata::domain_optional& molsimdata::
   domain () const
   {
@@ -458,7 +476,7 @@ namespace input
 
 
   // thermostat
-  //
+  // 
 
   const thermostat::brownian_optional& thermostat::
   brownian () const
@@ -634,7 +652,7 @@ namespace input
 
 
   // particleTypes
-  //
+  // 
 
   const particleTypes::type_sequence& particleTypes::
   type () const
@@ -1044,42 +1062,6 @@ namespace input
     this->mass_.set (x);
   }
 
-  const sphere::sigma_type& sphere::
-  sigma () const
-  {
-    return this->sigma_.get ();
-  }
-
-  sphere::sigma_type& sphere::
-  sigma ()
-  {
-    return this->sigma_.get ();
-  }
-
-  void sphere::
-  sigma (const sigma_type& x)
-  {
-    this->sigma_.set (x);
-  }
-
-  const sphere::epsilon_type& sphere::
-  epsilon () const
-  {
-    return this->epsilon_.get ();
-  }
-
-  sphere::epsilon_type& sphere::
-  epsilon ()
-  {
-    return this->epsilon_.get ();
-  }
-
-  void sphere::
-  epsilon (const epsilon_type& x)
-  {
-    this->epsilon_.set (x);
-  }
-
   const sphere::type_optional& sphere::
   type () const
   {
@@ -1106,7 +1088,7 @@ namespace input
 
 
   // particle
-  //
+  // 
 
   const particle::location_type& particle::
   location () const
@@ -1200,7 +1182,7 @@ namespace input
 
 
   // type
-  //
+  // 
 
   const type::id_type& type::
   id () const
@@ -1577,6 +1559,7 @@ namespace input
               const writefreq_type& writefreq,
               const timestep_type& timestep,
               const endtime_type& endtime,
+              const gravity_type& gravity,
               const thermostat_type& thermostat,
               const objectlist_type& objectlist,
               const particleTypes_type& particleTypes)
@@ -1585,6 +1568,7 @@ namespace input
     writefreq_ (writefreq, this),
     timestep_ (timestep, this),
     endtime_ (endtime, this),
+    gravity_ (gravity, this),
     domain_ (this),
     thermostat_ (thermostat, this),
     objectlist_ (objectlist, this),
@@ -1597,6 +1581,7 @@ namespace input
               const writefreq_type& writefreq,
               const timestep_type& timestep,
               const endtime_type& endtime,
+              const gravity_type& gravity,
               ::std::auto_ptr< thermostat_type > thermostat,
               ::std::auto_ptr< objectlist_type > objectlist,
               ::std::auto_ptr< particleTypes_type > particleTypes)
@@ -1605,6 +1590,7 @@ namespace input
     writefreq_ (writefreq, this),
     timestep_ (timestep, this),
     endtime_ (endtime, this),
+    gravity_ (gravity, this),
     domain_ (this),
     thermostat_ (thermostat, this),
     objectlist_ (objectlist, this),
@@ -1621,6 +1607,7 @@ namespace input
     writefreq_ (x.writefreq_, f, this),
     timestep_ (x.timestep_, f, this),
     endtime_ (x.endtime_, f, this),
+    gravity_ (x.gravity_, f, this),
     domain_ (x.domain_, f, this),
     thermostat_ (x.thermostat_, f, this),
     objectlist_ (x.objectlist_, f, this),
@@ -1637,6 +1624,7 @@ namespace input
     writefreq_ (this),
     timestep_ (this),
     endtime_ (this),
+    gravity_ (this),
     domain_ (this),
     thermostat_ (this),
     objectlist_ (this),
@@ -1702,6 +1690,17 @@ namespace input
         if (!endtime_.present ())
         {
           this->endtime_.set (endtime_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // gravity
+      //
+      if (n.name () == "gravity" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!gravity_.present ())
+        {
+          this->gravity_.set (gravity_traits::create (i, f, this));
           continue;
         }
       }
@@ -1793,6 +1792,13 @@ namespace input
         "http://www.example.org/input");
     }
 
+    if (!gravity_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "gravity",
+        "http://www.example.org/input");
+    }
+
     if (!thermostat_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
@@ -1832,6 +1838,7 @@ namespace input
       this->writefreq_ = x.writefreq_;
       this->timestep_ = x.timestep_;
       this->endtime_ = x.endtime_;
+      this->gravity_ = x.gravity_;
       this->domain_ = x.domain_;
       this->thermostat_ = x.thermostat_;
       this->objectlist_ = x.objectlist_;
@@ -2839,17 +2846,13 @@ namespace input
           const velocity_type& velocity,
           const numparticles_type& numparticles,
           const meshwidth_type& meshwidth,
-          const mass_type& mass,
-          const sigma_type& sigma,
-          const epsilon_type& epsilon)
+          const mass_type& mass)
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
     numparticles_ (numparticles, this),
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
-    sigma_ (sigma, this),
-    epsilon_ (epsilon, this),
     type_ (this)
   {
   }
@@ -2859,17 +2862,13 @@ namespace input
           ::std::auto_ptr< velocity_type > velocity,
           const numparticles_type& numparticles,
           const meshwidth_type& meshwidth,
-          const mass_type& mass,
-          const sigma_type& sigma,
-          const epsilon_type& epsilon)
+          const mass_type& mass)
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
     numparticles_ (numparticles, this),
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
-    sigma_ (sigma, this),
-    epsilon_ (epsilon, this),
     type_ (this)
   {
   }
@@ -2884,8 +2883,6 @@ namespace input
     numparticles_ (x.numparticles_, f, this),
     meshwidth_ (x.meshwidth_, f, this),
     mass_ (x.mass_, f, this),
-    sigma_ (x.sigma_, f, this),
-    epsilon_ (x.epsilon_, f, this),
     type_ (x.type_, f, this)
   {
   }
@@ -2900,8 +2897,6 @@ namespace input
     numparticles_ (this),
     meshwidth_ (this),
     mass_ (this),
-    sigma_ (this),
-    epsilon_ (this),
     type_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
@@ -2982,28 +2977,6 @@ namespace input
         }
       }
 
-      // sigma
-      //
-      if (n.name () == "sigma" && n.namespace_ () == "http://www.example.org/input")
-      {
-        if (!sigma_.present ())
-        {
-          this->sigma_.set (sigma_traits::create (i, f, this));
-          continue;
-        }
-      }
-
-      // epsilon
-      //
-      if (n.name () == "epsilon" && n.namespace_ () == "http://www.example.org/input")
-      {
-        if (!epsilon_.present ())
-        {
-          this->epsilon_.set (epsilon_traits::create (i, f, this));
-          continue;
-        }
-      }
-
       // type
       //
       if (n.name () == "type" && n.namespace_ () == "http://www.example.org/input")
@@ -3052,20 +3025,6 @@ namespace input
         "mass",
         "http://www.example.org/input");
     }
-
-    if (!sigma_.present ())
-    {
-      throw ::xsd::cxx::tree::expected_element< char > (
-        "sigma",
-        "http://www.example.org/input");
-    }
-
-    if (!epsilon_.present ())
-    {
-      throw ::xsd::cxx::tree::expected_element< char > (
-        "epsilon",
-        "http://www.example.org/input");
-    }
   }
 
   sphere* sphere::
@@ -3086,8 +3045,6 @@ namespace input
       this->numparticles_ = x.numparticles_;
       this->meshwidth_ = x.meshwidth_;
       this->mass_ = x.mass_;
-      this->sigma_ = x.sigma_;
-      this->epsilon_ = x.epsilon_;
       this->type_ = x.type_;
     }
 

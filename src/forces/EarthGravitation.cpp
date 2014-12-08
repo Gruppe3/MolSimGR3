@@ -7,8 +7,8 @@
 
 #include <forces/EarthGravitation.h>
 
-EarthGravitation::EarthGravitation() {
-	earthGravity=9.807;
+EarthGravitation::EarthGravitation(Simulation * sim) {
+	earthGravity=sim->gravity;
 }
 
 EarthGravitation::~EarthGravitation() {

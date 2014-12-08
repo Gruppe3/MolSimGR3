@@ -27,6 +27,7 @@
     		<xs:element name="writefreq" type="xs:unsignedInt"></xs:element>
     		<xs:element name="timestep" type="xs:double"></xs:element>
     		<xs:element name="endtime" type="xs:double"></xs:element>
+		<xs:element name="gravity" type="xs:double"></xs:element>
     		<xs:element name="domain" minOccurs="0" maxOccurs="1">
     			<xs:complexType>
     				<xs:all>
@@ -89,8 +90,6 @@
     								<xs:element name="numparticles" type="xs:unsignedInt"></xs:element><!-- number of particles along radius -->
     								<xs:element name="meshwidth" type="xs:double"></xs:element>
     								<xs:element name="mass" type="xs:double"></xs:element>
-    								<xs:element name="sigma" type="xs:double"></xs:element>
-    								<xs:element name="epsilon" type="xs:double"></xs:element>
     								<xs:element name="type" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
     							</xs:all>
     						</xs:complexType>

@@ -538,6 +538,20 @@ namespace input
     void
     endtime (const endtime_type& x);
 
+    // gravity
+    //
+    typedef ::xml_schema::double_ gravity_type;
+    typedef ::xsd::cxx::tree::traits< gravity_type, char, ::xsd::cxx::tree::schema_type::double_ > gravity_traits;
+
+    const gravity_type&
+    gravity () const;
+
+    gravity_type&
+    gravity ();
+
+    void
+    gravity (const gravity_type& x);
+
     // domain
     //
     typedef ::input::domain domain_type;
@@ -616,6 +630,7 @@ namespace input
                 const writefreq_type&,
                 const timestep_type&,
                 const endtime_type&,
+                const gravity_type&,
                 const thermostat_type&,
                 const objectlist_type&,
                 const particleTypes_type&);
@@ -624,6 +639,7 @@ namespace input
                 const writefreq_type&,
                 const timestep_type&,
                 const endtime_type&,
+                const gravity_type&,
                 ::std::auto_ptr< thermostat_type >,
                 ::std::auto_ptr< objectlist_type >,
                 ::std::auto_ptr< particleTypes_type >);
@@ -658,6 +674,7 @@ namespace input
     ::xsd::cxx::tree::one< writefreq_type > writefreq_;
     ::xsd::cxx::tree::one< timestep_type > timestep_;
     ::xsd::cxx::tree::one< endtime_type > endtime_;
+    ::xsd::cxx::tree::one< gravity_type > gravity_;
     domain_optional domain_;
     ::xsd::cxx::tree::one< thermostat_type > thermostat_;
     ::xsd::cxx::tree::one< objectlist_type > objectlist_;
@@ -870,7 +887,7 @@ namespace input
     thermostat&
     operator= (const thermostat& x);
 
-    virtual
+    virtual 
     ~thermostat ();
 
     // Implementation.
@@ -1017,7 +1034,7 @@ namespace input
     particleTypes&
     operator= (const particleTypes& x);
 
-    virtual
+    virtual 
     ~particleTypes ();
 
     // Implementation.
@@ -1406,34 +1423,6 @@ namespace input
     void
     mass (const mass_type& x);
 
-    // sigma
-    //
-    typedef ::xml_schema::double_ sigma_type;
-    typedef ::xsd::cxx::tree::traits< sigma_type, char, ::xsd::cxx::tree::schema_type::double_ > sigma_traits;
-
-    const sigma_type&
-    sigma () const;
-
-    sigma_type&
-    sigma ();
-
-    void
-    sigma (const sigma_type& x);
-
-    // epsilon
-    //
-    typedef ::xml_schema::double_ epsilon_type;
-    typedef ::xsd::cxx::tree::traits< epsilon_type, char, ::xsd::cxx::tree::schema_type::double_ > epsilon_traits;
-
-    const epsilon_type&
-    epsilon () const;
-
-    epsilon_type&
-    epsilon ();
-
-    void
-    epsilon (const epsilon_type& x);
-
     // type
     //
     typedef ::xml_schema::unsigned_int type_type;
@@ -1458,17 +1447,13 @@ namespace input
             const velocity_type&,
             const numparticles_type&,
             const meshwidth_type&,
-            const mass_type&,
-            const sigma_type&,
-            const epsilon_type&);
+            const mass_type&);
 
     sphere (::std::auto_ptr< location_type >,
             ::std::auto_ptr< velocity_type >,
             const numparticles_type&,
             const meshwidth_type&,
-            const mass_type&,
-            const sigma_type&,
-            const epsilon_type&);
+            const mass_type&);
 
     sphere (const ::xercesc::DOMElement& e,
             ::xml_schema::flags f = 0,
@@ -1501,8 +1486,6 @@ namespace input
     ::xsd::cxx::tree::one< numparticles_type > numparticles_;
     ::xsd::cxx::tree::one< meshwidth_type > meshwidth_;
     ::xsd::cxx::tree::one< mass_type > mass_;
-    ::xsd::cxx::tree::one< sigma_type > sigma_;
-    ::xsd::cxx::tree::one< epsilon_type > epsilon_;
     type_optional type_;
   };
 
@@ -1683,7 +1666,7 @@ namespace input
     type&
     operator= (const type& x);
 
-    virtual
+    virtual 
     ~type ();
 
     // Implementation.

@@ -32,6 +32,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 		sim->writeFreq = molsim->writefreq();
 		sim->delta_t = molsim->timestep();
 		sim->end_time = molsim->endtime();
+		sim->gravity = molsim->gravity();
 		sim->domainSize[0] = molsim->domain()->size().x();
 		sim->domainSize[1] = molsim->domain()->size().y();
 		sim->domainSize[2] = molsim->domain()->size().z();

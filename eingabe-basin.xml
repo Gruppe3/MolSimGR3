@@ -4,6 +4,7 @@
   <writefreq>40</writefreq>
   <timestep>0.0005</timestep>
   <endtime>15</endtime>
+  <gravity>-12.44</gravity>
    <domain>
   	<size x="303" y="180" z="0"/>
   	<cutoff>3.0</cutoff>

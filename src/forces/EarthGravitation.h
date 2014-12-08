@@ -15,7 +15,7 @@ class EarthGravitation: public ForceHandler {
 private:
 	double earthGravity;
 public:
-	EarthGravitation();
+	EarthGravitation(Simulation* sim);
 	virtual ~EarthGravitation();
 	void iterateFunc(Particle& p);
 	virtual void calc(Particle& p1, Particle& p2);

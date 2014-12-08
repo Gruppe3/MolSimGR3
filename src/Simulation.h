@@ -41,6 +41,7 @@ public:
 		epsilon11=1.0;
 		epsilon22=1.0;
 		epsilon12=1.0;
+		gravity=-9.807;
 		//epsilon21=epsilon12;
 		//boltzmannConst=1.3806488E-23;
 		boltzmannConst = 1.0;
@@ -98,11 +99,15 @@ public:
 	double epsilon12;
 	double epsilon21;
 	double epsilon22;
+
 	/**1 - initialize temperature for thermostat problem, 0 - initialize temperature only with Maxwell-Boltzmann*/
 	int meanVelocityTypeFlag;
 
 	/** time steps between thermostat applications */
 	int tempFreq;
+
+	/** gravitation force,that is applied to particles additionally*/
+	double gravity;
 
 	/** stores boundary conditions for LC algo */
 	BoundaryConds *boundaries;

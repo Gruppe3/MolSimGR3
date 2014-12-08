@@ -113,7 +113,7 @@ int main(int argc, char* argsv[]) {
 	CalcV *vcalc = new CalcV(sim);
 
 	CalcT *tcalc = new CalcT(sim);
-	EarthGravitation* gravity=new EarthGravitation();
+	EarthGravitation* gravity=new EarthGravitation(sim);
 	InputHandler* inputhandler;
 	if (strcmp(argsv[1], "-c") == 0) {	// cuboids
 		inputhandler = new ParticleGenerator;
