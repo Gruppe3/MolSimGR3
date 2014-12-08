@@ -3,6 +3,7 @@
 #include <forces/Gravitation.h>
 #include <forces/LennardJones.h>
 #include <ParticleContainerLC.h>
+#include "forces/EarthGravitation.h"
 #include "MaxwellBoltzmannDistribution.h"
 #include "ParticleContainer.h"
 #include "ParticleGenerator.h"
@@ -112,6 +113,7 @@ int main(int argc, char* argsv[]) {
 	CalcV *vcalc = new CalcV(sim);
 
 	CalcT *tcalc = new CalcT(sim);
+	EarthGravitation* gravity=new EarthGravitation();
 	InputHandler* inputhandler;
 	if (strcmp(argsv[1], "-c") == 0) {	// cuboids
 		inputhandler = new ParticleGenerator;
@@ -169,6 +171,8 @@ int main(int argc, char* argsv[]) {
 		particleContainer->iterate(forceType);
 		// calculate new f
 		particleContainer->iteratePair(forceType);
+		particleContainer->iterate(gravity);
+
 		#ifdef LC
 		// add reflecting force to boundary particles according to sim->domainBoundaries[]
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);

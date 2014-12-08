@@ -231,10 +231,12 @@ namespace input
   class domain;
   class thermostat;
   class objectlist;
+  class particleTypes;
   class boundaries;
   class cuboid;
   class sphere;
   class particle;
+  class type;
 }
 
 
@@ -591,6 +593,23 @@ namespace input
     void
     objectlist (::std::auto_ptr< objectlist_type > p);
 
+    // particleTypes
+    //
+    typedef ::input::particleTypes particleTypes_type;
+    typedef ::xsd::cxx::tree::traits< particleTypes_type, char > particleTypes_traits;
+
+    const particleTypes_type&
+    particleTypes () const;
+
+    particleTypes_type&
+    particleTypes ();
+
+    void
+    particleTypes (const particleTypes_type& x);
+
+    void
+    particleTypes (::std::auto_ptr< particleTypes_type > p);
+
     // Constructors.
     //
     molsimdata (const outputbasename_type&,
@@ -598,14 +617,16 @@ namespace input
                 const timestep_type&,
                 const endtime_type&,
                 const thermostat_type&,
-                const objectlist_type&);
+                const objectlist_type&,
+                const particleTypes_type&);
 
     molsimdata (const outputbasename_type&,
                 const writefreq_type&,
                 const timestep_type&,
                 const endtime_type&,
                 ::std::auto_ptr< thermostat_type >,
-                ::std::auto_ptr< objectlist_type >);
+                ::std::auto_ptr< objectlist_type >,
+                ::std::auto_ptr< particleTypes_type >);
 
     molsimdata (const ::xercesc::DOMElement& e,
                 ::xml_schema::flags f = 0,
@@ -640,6 +661,7 @@ namespace input
     domain_optional domain_;
     ::xsd::cxx::tree::one< thermostat_type > thermostat_;
     ::xsd::cxx::tree::one< objectlist_type > objectlist_;
+    ::xsd::cxx::tree::one< particleTypes_type > particleTypes_;
   };
 
   class domain: public ::xml_schema::type
@@ -956,6 +978,59 @@ namespace input
     particle_sequence particle_;
   };
 
+  class particleTypes: public ::xml_schema::type
+  {
+    public:
+    // type
+    //
+    typedef ::input::type type_type;
+    typedef ::xsd::cxx::tree::sequence< type_type > type_sequence;
+    typedef type_sequence::iterator type_iterator;
+    typedef type_sequence::const_iterator type_const_iterator;
+    typedef ::xsd::cxx::tree::traits< type_type, char > type_traits;
+
+    const type_sequence&
+    type () const;
+
+    type_sequence&
+    type ();
+
+    void
+    type (const type_sequence& s);
+
+    // Constructors.
+    //
+    particleTypes ();
+
+    particleTypes (const ::xercesc::DOMElement& e,
+                   ::xml_schema::flags f = 0,
+                   ::xml_schema::container* c = 0);
+
+    particleTypes (const particleTypes& x,
+                   ::xml_schema::flags f = 0,
+                   ::xml_schema::container* c = 0);
+
+    virtual particleTypes*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    particleTypes&
+    operator= (const particleTypes& x);
+
+    virtual
+    ~particleTypes ();
+
+    // Implementation.
+    //
+    protected:
+    void
+    parse (::xsd::cxx::xml::dom::parser< char >&,
+           ::xml_schema::flags);
+
+    protected:
+    type_sequence type_;
+  };
+
   class boundaries: public ::xml_schema::type
   {
     public:
@@ -1085,7 +1160,7 @@ namespace input
     boundaries&
     operator= (const boundaries& x);
 
-    virtual
+    virtual 
     ~boundaries ();
 
     // Implementation.
@@ -1186,33 +1261,23 @@ namespace input
     void
     mass (const mass_type& x);
 
-    // sigma
+    // type
     //
-    typedef ::xml_schema::double_ sigma_type;
-    typedef ::xsd::cxx::tree::traits< sigma_type, char, ::xsd::cxx::tree::schema_type::double_ > sigma_traits;
+    typedef ::xml_schema::unsigned_int type_type;
+    typedef ::xsd::cxx::tree::optional< type_type > type_optional;
+    typedef ::xsd::cxx::tree::traits< type_type, char > type_traits;
 
-    const sigma_type&
-    sigma () const;
+    const type_optional&
+    type () const;
 
-    sigma_type&
-    sigma ();
+    type_optional&
+    type ();
 
     void
-    sigma (const sigma_type& x);
-
-    // epsilon
-    //
-    typedef ::xml_schema::double_ epsilon_type;
-    typedef ::xsd::cxx::tree::traits< epsilon_type, char, ::xsd::cxx::tree::schema_type::double_ > epsilon_traits;
-
-    const epsilon_type&
-    epsilon () const;
-
-    epsilon_type&
-    epsilon ();
+    type (const type_type& x);
 
     void
-    epsilon (const epsilon_type& x);
+    type (const type_optional& x);
 
     // Constructors.
     //
@@ -1220,17 +1285,13 @@ namespace input
             const velocity_type&,
             const numparticles_type&,
             const meshwidth_type&,
-            const mass_type&,
-            const sigma_type&,
-            const epsilon_type&);
+            const mass_type&);
 
     cuboid (::std::auto_ptr< location_type >,
             ::std::auto_ptr< velocity_type >,
             ::std::auto_ptr< numparticles_type >,
             const meshwidth_type&,
-            const mass_type&,
-            const sigma_type&,
-            const epsilon_type&);
+            const mass_type&);
 
     cuboid (const ::xercesc::DOMElement& e,
             ::xml_schema::flags f = 0,
@@ -1263,8 +1324,7 @@ namespace input
     ::xsd::cxx::tree::one< numparticles_type > numparticles_;
     ::xsd::cxx::tree::one< meshwidth_type > meshwidth_;
     ::xsd::cxx::tree::one< mass_type > mass_;
-    ::xsd::cxx::tree::one< sigma_type > sigma_;
-    ::xsd::cxx::tree::one< epsilon_type > epsilon_;
+    type_optional type_;
   };
 
   class sphere: public ::xml_schema::type
@@ -1374,6 +1434,24 @@ namespace input
     void
     epsilon (const epsilon_type& x);
 
+    // type
+    //
+    typedef ::xml_schema::unsigned_int type_type;
+    typedef ::xsd::cxx::tree::optional< type_type > type_optional;
+    typedef ::xsd::cxx::tree::traits< type_type, char > type_traits;
+
+    const type_optional&
+    type () const;
+
+    type_optional&
+    type ();
+
+    void
+    type (const type_type& x);
+
+    void
+    type (const type_optional& x);
+
     // Constructors.
     //
     sphere (const location_type&,
@@ -1425,6 +1503,7 @@ namespace input
     ::xsd::cxx::tree::one< mass_type > mass_;
     ::xsd::cxx::tree::one< sigma_type > sigma_;
     ::xsd::cxx::tree::one< epsilon_type > epsilon_;
+    type_optional type_;
   };
 
   class particle: public ::xml_schema::type
@@ -1478,6 +1557,24 @@ namespace input
     void
     mass (const mass_type& x);
 
+    // type
+    //
+    typedef ::xml_schema::unsigned_int type_type;
+    typedef ::xsd::cxx::tree::optional< type_type > type_optional;
+    typedef ::xsd::cxx::tree::traits< type_type, char > type_traits;
+
+    const type_optional&
+    type () const;
+
+    type_optional&
+    type ();
+
+    void
+    type (const type_type& x);
+
+    void
+    type (const type_optional& x);
+
     // Constructors.
     //
     particle (const location_type&,
@@ -1517,6 +1614,89 @@ namespace input
     ::xsd::cxx::tree::one< location_type > location_;
     ::xsd::cxx::tree::one< velocity_type > velocity_;
     ::xsd::cxx::tree::one< mass_type > mass_;
+    type_optional type_;
+  };
+
+  class type: public ::xml_schema::type
+  {
+    public:
+    // id
+    //
+    typedef ::xml_schema::unsigned_int id_type;
+    typedef ::xsd::cxx::tree::traits< id_type, char > id_traits;
+
+    const id_type&
+    id () const;
+
+    id_type&
+    id ();
+
+    void
+    id (const id_type& x);
+
+    // sigma
+    //
+    typedef ::xml_schema::double_ sigma_type;
+    typedef ::xsd::cxx::tree::traits< sigma_type, char, ::xsd::cxx::tree::schema_type::double_ > sigma_traits;
+
+    const sigma_type&
+    sigma () const;
+
+    sigma_type&
+    sigma ();
+
+    void
+    sigma (const sigma_type& x);
+
+    // epsilon
+    //
+    typedef ::xml_schema::double_ epsilon_type;
+    typedef ::xsd::cxx::tree::traits< epsilon_type, char, ::xsd::cxx::tree::schema_type::double_ > epsilon_traits;
+
+    const epsilon_type&
+    epsilon () const;
+
+    epsilon_type&
+    epsilon ();
+
+    void
+    epsilon (const epsilon_type& x);
+
+    // Constructors.
+    //
+    type (const id_type&,
+          const sigma_type&,
+          const epsilon_type&);
+
+    type (const ::xercesc::DOMElement& e,
+          ::xml_schema::flags f = 0,
+          ::xml_schema::container* c = 0);
+
+    type (const type& x,
+          ::xml_schema::flags f = 0,
+          ::xml_schema::container* c = 0);
+
+    virtual type*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    type&
+    operator= (const type& x);
+
+    virtual
+    ~type ();
+
+    // Implementation.
+    //
+    protected:
+    void
+    parse (::xsd::cxx::xml::dom::parser< char >&,
+           ::xml_schema::flags);
+
+    protected:
+    ::xsd::cxx::tree::one< id_type > id_;
+    ::xsd::cxx::tree::one< sigma_type > sigma_;
+    ::xsd::cxx::tree::one< epsilon_type > epsilon_;
   };
 }
 

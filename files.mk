@@ -18,6 +18,7 @@ src/DynamicsCalc.cpp\
 src/Particle.cpp\
 src/forces/ForceHandler.cpp\
 src/forces/Gravitation.cpp\
+src/forces/EarthGravitation.cpp\
 src/forces/LennardJones.cpp\
 src/MaxwellBoltzmannDistribution.cpp\
 src/ParticleGenerator.cpp\

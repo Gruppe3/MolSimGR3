@@ -113,7 +113,7 @@ void ParticleGenerator::createParticles(ParticleContainer* pc) {
 }
 
 void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector<int, 3>& n,
-		utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc, Simulation *sim) {
+		utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc,Simulation * sim, int particleType) {
 	int dim = n[2] <= 1 ? 2 : 3;
 
 	for (int i = 0; i < n[0]; i++) {	// X dimension
@@ -125,9 +125,9 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 				x[1] = xn[1] + j * h;
 				x[2] = xn[2] + k * h;
 
-				Particle p(x, v, m, 0);
-				if(sim->meanVelocityType == 1){
-					CalcT::initializeV(&meanv, sim->initTemp, p.getM());
+				Particle p(x, v, m, particleType);
+				if(sim->meanVelocityTypeFlag==1){
+					CalcT::initializeV(&meanv,sim->initTemp,p.getM());
 				}
 				//cout<<"meanV     "<<meanv<<endl;
 				MaxwellBoltzmannDistribution(p, meanv, dim);

@@ -62,10 +62,10 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 		thermostat thermo = molsim->thermostat();
 		if (thermo.brownian().present()) {
 			brownian = thermo.brownian().get();
-			sim->meanVelocityType = 0;
+			sim->meanVelocityTypeFlag = 0;
 		}
 		else
-			sim->meanVelocityType = 1;
+			sim->meanVelocityTypeFlag = 1;
 		sim->initTemp = thermo.inittemp();
 		sim->targetTemp = thermo.targettemp();
 		sim->tempDiff = thermo.tempdiff();
@@ -100,7 +100,10 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 
 			sim->meshWidth = i->meshwidth();
 	    	ParticleGenerator pg;
-	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), brownian, pc, sim);
+	    	int type = 0;
+	    	if (i->type().present())
+	    		type = i->type().get();
+	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), brownian, pc, sim, type);
 	    }
 
 		// iterating over spheres

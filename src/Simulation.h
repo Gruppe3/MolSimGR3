@@ -24,15 +24,24 @@ public:
 		delta_t = 0.014;
 		out_name = string("MD_vtk");
 		writeFreq = 10;
-		cutoff = 3.0;
+
 		meshWidth = 1.1225;
-		thermostatStart = 100;
-		meanVelocityType = 1;
-		initTemp = 5.0;
-		diffTargetTemp = true;
-		targetTemp = 500.0;
-		tempDiff = 2;
-		tempFreq = 1;
+		thermostatStart=100;
+		meanVelocityTypeFlag=1;
+		initTemp=5.0;
+		diffTargetTempFlag=true;
+		targetTemp=500.0;
+		tempDiff=2;
+		tempFreq=1;
+		sigma11=1.0;
+		sigma22=0.9412;
+		sigma12=(sigma11+sigma22)/2;
+		cutoff = 2.5*sigma12;
+		//sigma21=sigma12;
+		epsilon11=1.0;
+		epsilon22=1.0;
+		epsilon12=sqrt(epsilon11*epsilon22);
+		//epsilon21=epsilon12;
 		//boltzmannConst=1.3806488E-23;
 		boltzmannConst = 1.0;
 		boundaries = new BoundaryConds;
@@ -72,7 +81,8 @@ public:
 	double initTemp;
 
 	double boltzmannConst;
-	bool diffTargetTemp;
+
+	bool diffTargetTempFlag;
 
 	/** desired temperature */
 	double targetTemp;
@@ -80,8 +90,16 @@ public:
 	/** step size in which temperature should be changed */
 	double tempDiff;
 
-	/** 1 - initialize temperature for thermostat problem, 0 - initialize temperature only with Maxwell-Boltzmann/Brownian Motion scalar*/
-	int meanVelocityType;
+	double sigma11;
+	double sigma12;
+	double sigma21;
+	double sigma22;
+	double epsilon11;
+	double epsilon12;
+	double epsilon21;
+	double epsilon22;
+	/**1 - initialize temperature for thermostat problem, 0 - initialize temperature only with Maxwell-Boltzmann*/
+	int meanVelocityTypeFlag;
 
 	/** time steps between thermostat applications */
 	int tempFreq;

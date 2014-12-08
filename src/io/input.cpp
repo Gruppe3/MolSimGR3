@@ -43,7 +43,7 @@
 namespace input
 {
   // decimalvector
-  //
+  // 
 
   const decimalvector::x_type& decimalvector::
   x () const
@@ -101,7 +101,7 @@ namespace input
 
 
   // integervector
-  //
+  // 
 
   const integervector::x_type& integervector::
   x () const
@@ -159,7 +159,7 @@ namespace input
 
 
   // boundarytype
-  //
+  // 
 
   boundarytype::
   boundarytype (value v)
@@ -196,7 +196,7 @@ namespace input
   boundarytype& boundarytype::
   operator= (value v)
   {
-    static_cast< ::xml_schema::string& > (*this) =
+    static_cast< ::xml_schema::string& > (*this) = 
     ::xml_schema::string (_xsd_boundarytype_literals_[v]);
 
     return *this;
@@ -204,7 +204,7 @@ namespace input
 
 
   // molsimdata
-  //
+  // 
 
   const molsimdata::outputbasename_type& molsimdata::
   outputbasename () const
@@ -362,9 +362,33 @@ namespace input
     this->objectlist_.set (x);
   }
 
+  const molsimdata::particleTypes_type& molsimdata::
+  particleTypes () const
+  {
+    return this->particleTypes_.get ();
+  }
+
+  molsimdata::particleTypes_type& molsimdata::
+  particleTypes ()
+  {
+    return this->particleTypes_.get ();
+  }
+
+  void molsimdata::
+  particleTypes (const particleTypes_type& x)
+  {
+    this->particleTypes_.set (x);
+  }
+
+  void molsimdata::
+  particleTypes (::std::auto_ptr< particleTypes_type > x)
+  {
+    this->particleTypes_.set (x);
+  }
+
 
   // domain
-  //
+  // 
 
   const domain::size_type& domain::
   size () const
@@ -552,7 +576,7 @@ namespace input
 
 
   // objectlist
-  //
+  // 
 
   const objectlist::cuboid_sequence& objectlist::
   cuboid () const
@@ -609,8 +633,30 @@ namespace input
   }
 
 
-  // boundaries
+  // particleTypes
   //
+
+  const particleTypes::type_sequence& particleTypes::
+  type () const
+  {
+    return this->type_;
+  }
+
+  particleTypes::type_sequence& particleTypes::
+  type ()
+  {
+    return this->type_;
+  }
+
+  void particleTypes::
+  type (const type_sequence& s)
+  {
+    this->type_ = s;
+  }
+
+
+  // boundaries
+  // 
 
   const boundaries::front_type& boundaries::
   front () const
@@ -758,7 +804,7 @@ namespace input
 
 
   // cuboid
-  //
+  // 
 
   const cuboid::location_type& cuboid::
   location () const
@@ -868,45 +914,33 @@ namespace input
     this->mass_.set (x);
   }
 
-  const cuboid::sigma_type& cuboid::
-  sigma () const
+  const cuboid::type_optional& cuboid::
+  type () const
   {
-    return this->sigma_.get ();
+    return this->type_;
   }
 
-  cuboid::sigma_type& cuboid::
-  sigma ()
+  cuboid::type_optional& cuboid::
+  type ()
   {
-    return this->sigma_.get ();
-  }
-
-  void cuboid::
-  sigma (const sigma_type& x)
-  {
-    this->sigma_.set (x);
-  }
-
-  const cuboid::epsilon_type& cuboid::
-  epsilon () const
-  {
-    return this->epsilon_.get ();
-  }
-
-  cuboid::epsilon_type& cuboid::
-  epsilon ()
-  {
-    return this->epsilon_.get ();
+    return this->type_;
   }
 
   void cuboid::
-  epsilon (const epsilon_type& x)
+  type (const type_type& x)
   {
-    this->epsilon_.set (x);
+    this->type_.set (x);
+  }
+
+  void cuboid::
+  type (const type_optional& x)
+  {
+    this->type_ = x;
   }
 
 
   // sphere
-  //
+  // 
 
   const sphere::location_type& sphere::
   location () const
@@ -1046,6 +1080,30 @@ namespace input
     this->epsilon_.set (x);
   }
 
+  const sphere::type_optional& sphere::
+  type () const
+  {
+    return this->type_;
+  }
+
+  sphere::type_optional& sphere::
+  type ()
+  {
+    return this->type_;
+  }
+
+  void sphere::
+  type (const type_type& x)
+  {
+    this->type_.set (x);
+  }
+
+  void sphere::
+  type (const type_optional& x)
+  {
+    this->type_ = x;
+  }
+
 
   // particle
   //
@@ -1114,6 +1172,88 @@ namespace input
   mass (const mass_type& x)
   {
     this->mass_.set (x);
+  }
+
+  const particle::type_optional& particle::
+  type () const
+  {
+    return this->type_;
+  }
+
+  particle::type_optional& particle::
+  type ()
+  {
+    return this->type_;
+  }
+
+  void particle::
+  type (const type_type& x)
+  {
+    this->type_.set (x);
+  }
+
+  void particle::
+  type (const type_optional& x)
+  {
+    this->type_ = x;
+  }
+
+
+  // type
+  //
+
+  const type::id_type& type::
+  id () const
+  {
+    return this->id_.get ();
+  }
+
+  type::id_type& type::
+  id ()
+  {
+    return this->id_.get ();
+  }
+
+  void type::
+  id (const id_type& x)
+  {
+    this->id_.set (x);
+  }
+
+  const type::sigma_type& type::
+  sigma () const
+  {
+    return this->sigma_.get ();
+  }
+
+  type::sigma_type& type::
+  sigma ()
+  {
+    return this->sigma_.get ();
+  }
+
+  void type::
+  sigma (const sigma_type& x)
+  {
+    this->sigma_.set (x);
+  }
+
+  const type::epsilon_type& type::
+  epsilon () const
+  {
+    return this->epsilon_.get ();
+  }
+
+  type::epsilon_type& type::
+  epsilon ()
+  {
+    return this->epsilon_.get ();
+  }
+
+  void type::
+  epsilon (const epsilon_type& x)
+  {
+    this->epsilon_.set (x);
   }
 }
 
@@ -1438,7 +1578,8 @@ namespace input
               const timestep_type& timestep,
               const endtime_type& endtime,
               const thermostat_type& thermostat,
-              const objectlist_type& objectlist)
+              const objectlist_type& objectlist,
+              const particleTypes_type& particleTypes)
   : ::xml_schema::type (),
     outputbasename_ (outputbasename, this),
     writefreq_ (writefreq, this),
@@ -1446,7 +1587,8 @@ namespace input
     endtime_ (endtime, this),
     domain_ (this),
     thermostat_ (thermostat, this),
-    objectlist_ (objectlist, this)
+    objectlist_ (objectlist, this),
+    particleTypes_ (particleTypes, this)
   {
   }
 
@@ -1456,7 +1598,8 @@ namespace input
               const timestep_type& timestep,
               const endtime_type& endtime,
               ::std::auto_ptr< thermostat_type > thermostat,
-              ::std::auto_ptr< objectlist_type > objectlist)
+              ::std::auto_ptr< objectlist_type > objectlist,
+              ::std::auto_ptr< particleTypes_type > particleTypes)
   : ::xml_schema::type (),
     outputbasename_ (outputbasename, this),
     writefreq_ (writefreq, this),
@@ -1464,7 +1607,8 @@ namespace input
     endtime_ (endtime, this),
     domain_ (this),
     thermostat_ (thermostat, this),
-    objectlist_ (objectlist, this)
+    objectlist_ (objectlist, this),
+    particleTypes_ (particleTypes, this)
   {
   }
 
@@ -1479,7 +1623,8 @@ namespace input
     endtime_ (x.endtime_, f, this),
     domain_ (x.domain_, f, this),
     thermostat_ (x.thermostat_, f, this),
-    objectlist_ (x.objectlist_, f, this)
+    objectlist_ (x.objectlist_, f, this),
+    particleTypes_ (x.particleTypes_, f, this)
   {
   }
 
@@ -1494,7 +1639,8 @@ namespace input
     endtime_ (this),
     domain_ (this),
     thermostat_ (this),
-    objectlist_ (this)
+    objectlist_ (this),
+    particleTypes_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -1602,6 +1748,20 @@ namespace input
         }
       }
 
+      // particleTypes
+      //
+      if (n.name () == "particleTypes" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< particleTypes_type > r (
+          particleTypes_traits::create (i, f, this));
+
+        if (!particleTypes_.present ())
+        {
+          this->particleTypes_.set (r);
+          continue;
+        }
+      }
+
       break;
     }
 
@@ -1646,6 +1806,13 @@ namespace input
         "objectlist",
         "http://www.example.org/input");
     }
+
+    if (!particleTypes_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "particleTypes",
+        "http://www.example.org/input");
+    }
   }
 
   molsimdata* molsimdata::
@@ -1668,6 +1835,7 @@ namespace input
       this->domain_ = x.domain_;
       this->thermostat_ = x.thermostat_;
       this->objectlist_ = x.objectlist_;
+      this->particleTypes_ = x.particleTypes_;
     }
 
     return *this;
@@ -2138,6 +2306,88 @@ namespace input
   {
   }
 
+  // particleTypes
+  //
+
+  particleTypes::
+  particleTypes ()
+  : ::xml_schema::type (),
+    type_ (this)
+  {
+  }
+
+  particleTypes::
+  particleTypes (const particleTypes& x,
+                 ::xml_schema::flags f,
+                 ::xml_schema::container* c)
+  : ::xml_schema::type (x, f, c),
+    type_ (x.type_, f, this)
+  {
+  }
+
+  particleTypes::
+  particleTypes (const ::xercesc::DOMElement& e,
+                 ::xml_schema::flags f,
+                 ::xml_schema::container* c)
+  : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
+    type_ (this)
+  {
+    if ((f & ::xml_schema::flags::base) == 0)
+    {
+      ::xsd::cxx::xml::dom::parser< char > p (e, true, false, false);
+      this->parse (p, f);
+    }
+  }
+
+  void particleTypes::
+  parse (::xsd::cxx::xml::dom::parser< char >& p,
+         ::xml_schema::flags f)
+  {
+    for (; p.more_content (); p.next_content (false))
+    {
+      const ::xercesc::DOMElement& i (p.cur_element ());
+      const ::xsd::cxx::xml::qualified_name< char > n (
+        ::xsd::cxx::xml::dom::name< char > (i));
+
+      // type
+      //
+      if (n.name () == "type" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< type_type > r (
+          type_traits::create (i, f, this));
+
+        this->type_.push_back (r);
+        continue;
+      }
+
+      break;
+    }
+  }
+
+  particleTypes* particleTypes::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class particleTypes (*this, f, c);
+  }
+
+  particleTypes& particleTypes::
+  operator= (const particleTypes& x)
+  {
+    if (this != &x)
+    {
+      static_cast< ::xml_schema::type& > (*this) = x;
+      this->type_ = x.type_;
+    }
+
+    return *this;
+  }
+
+  particleTypes::
+  ~particleTypes ()
+  {
+  }
+
   // boundaries
   //
 
@@ -2368,17 +2618,14 @@ namespace input
           const velocity_type& velocity,
           const numparticles_type& numparticles,
           const meshwidth_type& meshwidth,
-          const mass_type& mass,
-          const sigma_type& sigma,
-          const epsilon_type& epsilon)
+          const mass_type& mass)
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
     numparticles_ (numparticles, this),
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
-    sigma_ (sigma, this),
-    epsilon_ (epsilon, this)
+    type_ (this)
   {
   }
 
@@ -2387,17 +2634,14 @@ namespace input
           ::std::auto_ptr< velocity_type > velocity,
           ::std::auto_ptr< numparticles_type > numparticles,
           const meshwidth_type& meshwidth,
-          const mass_type& mass,
-          const sigma_type& sigma,
-          const epsilon_type& epsilon)
+          const mass_type& mass)
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
     numparticles_ (numparticles, this),
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
-    sigma_ (sigma, this),
-    epsilon_ (epsilon, this)
+    type_ (this)
   {
   }
 
@@ -2411,8 +2655,7 @@ namespace input
     numparticles_ (x.numparticles_, f, this),
     meshwidth_ (x.meshwidth_, f, this),
     mass_ (x.mass_, f, this),
-    sigma_ (x.sigma_, f, this),
-    epsilon_ (x.epsilon_, f, this)
+    type_ (x.type_, f, this)
   {
   }
 
@@ -2426,8 +2669,7 @@ namespace input
     numparticles_ (this),
     meshwidth_ (this),
     mass_ (this),
-    sigma_ (this),
-    epsilon_ (this)
+    type_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -2510,24 +2752,13 @@ namespace input
         }
       }
 
-      // sigma
+      // type
       //
-      if (n.name () == "sigma" && n.namespace_ () == "http://www.example.org/input")
+      if (n.name () == "type" && n.namespace_ () == "http://www.example.org/input")
       {
-        if (!sigma_.present ())
+        if (!this->type_)
         {
-          this->sigma_.set (sigma_traits::create (i, f, this));
-          continue;
-        }
-      }
-
-      // epsilon
-      //
-      if (n.name () == "epsilon" && n.namespace_ () == "http://www.example.org/input")
-      {
-        if (!epsilon_.present ())
-        {
-          this->epsilon_.set (epsilon_traits::create (i, f, this));
+          this->type_.set (type_traits::create (i, f, this));
           continue;
         }
       }
@@ -2569,20 +2800,6 @@ namespace input
         "mass",
         "http://www.example.org/input");
     }
-
-    if (!sigma_.present ())
-    {
-      throw ::xsd::cxx::tree::expected_element< char > (
-        "sigma",
-        "http://www.example.org/input");
-    }
-
-    if (!epsilon_.present ())
-    {
-      throw ::xsd::cxx::tree::expected_element< char > (
-        "epsilon",
-        "http://www.example.org/input");
-    }
   }
 
   cuboid* cuboid::
@@ -2603,8 +2820,7 @@ namespace input
       this->numparticles_ = x.numparticles_;
       this->meshwidth_ = x.meshwidth_;
       this->mass_ = x.mass_;
-      this->sigma_ = x.sigma_;
-      this->epsilon_ = x.epsilon_;
+      this->type_ = x.type_;
     }
 
     return *this;
@@ -2633,7 +2849,8 @@ namespace input
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
     sigma_ (sigma, this),
-    epsilon_ (epsilon, this)
+    epsilon_ (epsilon, this),
+    type_ (this)
   {
   }
 
@@ -2652,7 +2869,8 @@ namespace input
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
     sigma_ (sigma, this),
-    epsilon_ (epsilon, this)
+    epsilon_ (epsilon, this),
+    type_ (this)
   {
   }
 
@@ -2667,7 +2885,8 @@ namespace input
     meshwidth_ (x.meshwidth_, f, this),
     mass_ (x.mass_, f, this),
     sigma_ (x.sigma_, f, this),
-    epsilon_ (x.epsilon_, f, this)
+    epsilon_ (x.epsilon_, f, this),
+    type_ (x.type_, f, this)
   {
   }
 
@@ -2682,7 +2901,8 @@ namespace input
     meshwidth_ (this),
     mass_ (this),
     sigma_ (this),
-    epsilon_ (this)
+    epsilon_ (this),
+    type_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -2784,6 +3004,17 @@ namespace input
         }
       }
 
+      // type
+      //
+      if (n.name () == "type" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!this->type_)
+        {
+          this->type_.set (type_traits::create (i, f, this));
+          continue;
+        }
+      }
+
       break;
     }
 
@@ -2857,6 +3088,7 @@ namespace input
       this->mass_ = x.mass_;
       this->sigma_ = x.sigma_;
       this->epsilon_ = x.epsilon_;
+      this->type_ = x.type_;
     }
 
     return *this;
@@ -2877,7 +3109,8 @@ namespace input
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
-    mass_ (mass, this)
+    mass_ (mass, this),
+    type_ (this)
   {
   }
 
@@ -2888,7 +3121,8 @@ namespace input
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
-    mass_ (mass, this)
+    mass_ (mass, this),
+    type_ (this)
   {
   }
 
@@ -2899,7 +3133,8 @@ namespace input
   : ::xml_schema::type (x, f, c),
     location_ (x.location_, f, this),
     velocity_ (x.velocity_, f, this),
-    mass_ (x.mass_, f, this)
+    mass_ (x.mass_, f, this),
+    type_ (x.type_, f, this)
   {
   }
 
@@ -2910,7 +3145,8 @@ namespace input
   : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
     location_ (this),
     velocity_ (this),
-    mass_ (this)
+    mass_ (this),
+    type_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -2968,6 +3204,17 @@ namespace input
         }
       }
 
+      // type
+      //
+      if (n.name () == "type" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!this->type_)
+        {
+          this->type_.set (type_traits::create (i, f, this));
+          continue;
+        }
+      }
+
       break;
     }
 
@@ -3009,6 +3256,7 @@ namespace input
       this->location_ = x.location_;
       this->velocity_ = x.velocity_;
       this->mass_ = x.mass_;
+      this->type_ = x.type_;
     }
 
     return *this;
@@ -3016,6 +3264,124 @@ namespace input
 
   particle::
   ~particle ()
+  {
+  }
+
+  // type
+  //
+
+  type::
+  type (const id_type& id,
+        const sigma_type& sigma,
+        const epsilon_type& epsilon)
+  : ::xml_schema::type (),
+    id_ (id, this),
+    sigma_ (sigma, this),
+    epsilon_ (epsilon, this)
+  {
+  }
+
+  type::
+  type (const type& x,
+        ::xml_schema::flags f,
+        ::xml_schema::container* c)
+  : ::xml_schema::type (x, f, c),
+    id_ (x.id_, f, this),
+    sigma_ (x.sigma_, f, this),
+    epsilon_ (x.epsilon_, f, this)
+  {
+  }
+
+  type::
+  type (const ::xercesc::DOMElement& e,
+        ::xml_schema::flags f,
+        ::xml_schema::container* c)
+  : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
+    id_ (this),
+    sigma_ (this),
+    epsilon_ (this)
+  {
+    if ((f & ::xml_schema::flags::base) == 0)
+    {
+      ::xsd::cxx::xml::dom::parser< char > p (e, false, false, true);
+      this->parse (p, f);
+    }
+  }
+
+  void type::
+  parse (::xsd::cxx::xml::dom::parser< char >& p,
+         ::xml_schema::flags f)
+  {
+    while (p.more_attributes ())
+    {
+      const ::xercesc::DOMAttr& i (p.next_attribute ());
+      const ::xsd::cxx::xml::qualified_name< char > n (
+        ::xsd::cxx::xml::dom::name< char > (i));
+
+      if (n.name () == "id" && n.namespace_ ().empty ())
+      {
+        this->id_.set (id_traits::create (i, f, this));
+        continue;
+      }
+
+      if (n.name () == "sigma" && n.namespace_ ().empty ())
+      {
+        this->sigma_.set (sigma_traits::create (i, f, this));
+        continue;
+      }
+
+      if (n.name () == "epsilon" && n.namespace_ ().empty ())
+      {
+        this->epsilon_.set (epsilon_traits::create (i, f, this));
+        continue;
+      }
+    }
+
+    if (!id_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_attribute< char > (
+        "id",
+        "");
+    }
+
+    if (!sigma_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_attribute< char > (
+        "sigma",
+        "");
+    }
+
+    if (!epsilon_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_attribute< char > (
+        "epsilon",
+        "");
+    }
+  }
+
+  type* type::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class type (*this, f, c);
+  }
+
+  type& type::
+  operator= (const type& x)
+  {
+    if (this != &x)
+    {
+      static_cast< ::xml_schema::type& > (*this) = x;
+      this->id_ = x.id_;
+      this->sigma_ = x.sigma_;
+      this->epsilon_ = x.epsilon_;
+    }
+
+    return *this;
+  }
+
+  type::
+  ~type ()
   {
   }
 }

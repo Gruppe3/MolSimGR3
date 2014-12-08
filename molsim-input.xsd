@@ -75,8 +75,8 @@
     								<xs:element name="numparticles" type="tns:integervector"></xs:element><!-- number of particles per dimension -->
     								<xs:element name="meshwidth" type="xs:double"></xs:element>
     								<xs:element name="mass" type="xs:double"></xs:element>
-    								<xs:element name="sigma" type="xs:double"></xs:element>
-    								<xs:element name="epsilon" type="xs:double"></xs:element>
+    							<!-- refers to particleTypes (see bottom) -->
+									<xs:element name="type" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
     							</xs:all>
     						</xs:complexType>
     					</xs:element>
@@ -91,6 +91,7 @@
     								<xs:element name="mass" type="xs:double"></xs:element>
     								<xs:element name="sigma" type="xs:double"></xs:element>
     								<xs:element name="epsilon" type="xs:double"></xs:element>
+    								<xs:element name="type" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
     							</xs:all>
     						</xs:complexType>
     					</xs:element>
@@ -101,7 +102,22 @@
     								<xs:element name="location" type="tns:decimalvector"></xs:element>
     								<xs:element name="velocity" type="tns:decimalvector"></xs:element>
     								<xs:element name="mass" type="xs:double"></xs:element>
+    								<xs:element name="type" type="xs:unsignedInt" minOccurs="0" maxOccurs="1"/>
     							</xs:all>
+    						</xs:complexType>
+    					</xs:element>
+    				</xs:sequence>
+    			</xs:complexType>
+    		</xs:element>
+    		<xs:element name="particleTypes">
+    			<xs:complexType>
+    				<xs:sequence>
+    					<xs:element name="type" minOccurs="1" maxOccurs="unbounded">
+    						<xs:complexType>
+    						<!-- id must be unique in this list -->
+    							<xs:attribute name="id" type="xs:unsignedInt" use="required"></xs:attribute>
+    							<xs:attribute name="sigma" type="xs:double" use="required"></xs:attribute>
+    							<xs:attribute name="epsilon" type="xs:double" use="required"></xs:attribute>
     						</xs:complexType>
     					</xs:element>
     				</xs:sequence>
