@@ -4,7 +4,7 @@
   <writefreq>40</writefreq>
   <timestep>0.0005</timestep>
   <endtime>15</endtime>
-  <domain>
+   <domain>
   	<size x="303" y="180" z="0"/>
   	<cutoff>3.0</cutoff>
   	<boundaries>
@@ -29,9 +29,11 @@
   		<velocity x="0.0" y="0.0" z="0.0"/>
   		<numparticles x="250" y="50" z="1"/>
   		<mass>1.0</mass>
+		<type>0</type>
   		<meshwidth>1.2</meshwidth>
-  		<sigma>1.2</sigma>
-  		<epsilon>1.0</epsilon>
   	</cuboid>
   </objectlist>
+  <particleTypes>
+	<type id ="0" sigma = "1.2" epsilon="1.0" />
+  </particleTypes>
 </molsimdata>

@@ -29,18 +29,18 @@ public:
 		thermostatStart=100;
 		meanVelocityTypeFlag=1;
 		initTemp=5.0;
-		diffTargetTempFlag=true;
+		//diffTargetTempFlag=true;
 		targetTemp=500.0;
 		tempDiff=2;
 		tempFreq=1;
 		sigma11=1.0;
 		sigma22=0.9412;
-		sigma12=(sigma11+sigma22)/2;
+		sigma12=1.0;
 		cutoff = 2.5*sigma12;
 		//sigma21=sigma12;
 		epsilon11=1.0;
 		epsilon22=1.0;
-		epsilon12=sqrt(epsilon11*epsilon22);
+		epsilon12=1.0;
 		//epsilon21=epsilon12;
 		//boltzmannConst=1.3806488E-23;
 		boltzmannConst = 1.0;
@@ -82,7 +82,7 @@ public:
 
 	double boltzmannConst;
 
-	bool diffTargetTempFlag;
+	//bool diffTargetTempFlag;
 
 	/** desired temperature */
 	double targetTemp;

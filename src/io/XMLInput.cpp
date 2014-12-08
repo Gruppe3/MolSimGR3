@@ -101,8 +101,19 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 			sim->meshWidth = i->meshwidth();
 	    	ParticleGenerator pg;
 	    	int type = 0;
-	    	if (i->type().present())
+	    	sim->epsilon11 = molsim->particleTypes().type()[0].epsilon();
+	    	sim->sigma11=molsim->particleTypes().type()[0].sigma();
+	    	if (i->type().present()){
 	    		type = i->type().get();
+	    		sim->epsilon11 = molsim->particleTypes().type()[0].epsilon();
+	    		sim->epsilon22 = molsim->particleTypes().type()[1].epsilon();
+	    		sim->sigma11 = molsim->particleTypes().type()[0].sigma();
+	    		sim->sigma22 = molsim->particleTypes().type()[1].sigma();
+	    		/*LOG4CXX_DEBUG(iolog, "epsilon11:  "<< sim->epsilon11 << "  epsilon22:  "<< sim->epsilon22
+	    				<< "  sigma11:  "<<sim->sigma11 << "  sigma22:  "<<sim->sigma22);*/
+	    		sim->sigma12=(sim->sigma11+sim->sigma22)/2;
+	    		sim->epsilon12=sqrt(sim->epsilon11*sim->epsilon22);
+	    	}
 	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), brownian, pc, sim, type);
 	    }
 
