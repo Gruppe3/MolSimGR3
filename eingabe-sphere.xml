@@ -8,20 +8,31 @@
   	<size x="120" y="50" z="0"/>
   	<cutoff>3.0</cutoff>
   	<boundaries>
-  	<front>outflow</front>
-  	<back>outflow</back>
-  	<left>reflecting</left>
-  	<right>reflecting</right>
-  	<top>reflecting</top>
-  	<bottom>reflecting</bottom>
+  		<front>outflow</front>
+  		<back>outflow</back>
+  		<left>reflecting</left>
+  		<right>reflecting</right>
+  		<top>reflecting</top>
+  		<bottom>reflecting</bottom>
   	</boundaries>
   </domain>
+  <thermostat>
+  	<brownian>0.1</brownian>
+  	<inittemp>0.0</inittemp>
+  	<starttime>300000</starttime>
+  	<targettemp>0.0</targettemp>
+  	<tempdiff>0.0</tempdiff>
+  	<interval>1</interval>
+  </thermostat>
   <objectlist>
   	<sphere>
   		<location x="60" y="25" z="0"/>
   		<velocity x="0.0" y="-10.0" z="0.0"></velocity>
   		<numparticles>15</numparticles>
   		<meshwidth>1.1225</meshwidth>
+  		<mass>1.0</mass>
+  		<sigma>1.0</sigma>
+  		<epsilon>5.0</epsilon>
   	</sphere>
   </objectlist>
 </molsimdata>

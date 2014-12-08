@@ -57,6 +57,21 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 		str = molsim->domain()->boundaries().bottom();
 		bc->setBoundary(BoundaryConds::BOTTOM, defineBoundary(str));
 
+		// set thermostat values
+		double brownian = 0.0;
+		thermostat thermo = molsim->thermostat();
+		if (thermo.brownian().present()) {
+			brownian = thermo.brownian().get();
+			sim->meanVelocityType = 0;
+		}
+		else
+			sim->meanVelocityType = 1;
+		sim->initTemp = thermo.inittemp();
+		sim->targetTemp = thermo.targettemp();
+		sim->tempDiff = thermo.tempdiff();
+		sim->tempFreq = thermo.interval();
+		sim->thermostatStart = thermo.starttime();
+
 		LOG4CXX_INFO(iolog, "reading object data...");
 		objectlist objects = molsim->objectlist();
 
@@ -85,7 +100,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 
 			sim->meshWidth = i->meshwidth();
 	    	ParticleGenerator pg;
-	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), i->brownian(), pc, sim);
+	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), brownian, pc, sim);
 	    }
 
 		// iterating over spheres
@@ -107,7 +122,7 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 
 			sim->meshWidth = i->meshwidth();
 			ParticleGenerator pg;
-			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), 1.0, 0.1, 2, pc);
+			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), 1.0, brownian, 2, pc);
 		}
 
 		// iterating over particles
@@ -139,5 +154,6 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 }
 
 BoundaryConds::Boundary XMLInput::defineBoundary(string str) {
-	return string("outflow").compare(str) == 0 ? BoundaryConds::OUTFLOW : BoundaryConds::REFLECTING;;
+	return string("outflow").compare(str) == 0 ? BoundaryConds::OUTFLOW
+			: (string("reflecting").compare(str) == 0 ? BoundaryConds::REFLECTING : BoundaryConds::PERIODIC);
 }

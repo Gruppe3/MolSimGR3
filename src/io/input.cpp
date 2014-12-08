@@ -314,6 +314,30 @@ namespace input
     this->domain_.set (x);
   }
 
+  const molsimdata::thermostat_type& molsimdata::
+  thermostat () const
+  {
+    return this->thermostat_.get ();
+  }
+
+  molsimdata::thermostat_type& molsimdata::
+  thermostat ()
+  {
+    return this->thermostat_.get ();
+  }
+
+  void molsimdata::
+  thermostat (const thermostat_type& x)
+  {
+    this->thermostat_.set (x);
+  }
+
+  void molsimdata::
+  thermostat (::std::auto_ptr< thermostat_type > x)
+  {
+    this->thermostat_.set (x);
+  }
+
   const molsimdata::objectlist_type& molsimdata::
   objectlist () const
   {
@@ -406,6 +430,124 @@ namespace input
   boundaries (::std::auto_ptr< boundaries_type > x)
   {
     this->boundaries_.set (x);
+  }
+
+
+  // thermostat
+  //
+
+  const thermostat::brownian_optional& thermostat::
+  brownian () const
+  {
+    return this->brownian_;
+  }
+
+  thermostat::brownian_optional& thermostat::
+  brownian ()
+  {
+    return this->brownian_;
+  }
+
+  void thermostat::
+  brownian (const brownian_type& x)
+  {
+    this->brownian_.set (x);
+  }
+
+  void thermostat::
+  brownian (const brownian_optional& x)
+  {
+    this->brownian_ = x;
+  }
+
+  const thermostat::inittemp_type& thermostat::
+  inittemp () const
+  {
+    return this->inittemp_.get ();
+  }
+
+  thermostat::inittemp_type& thermostat::
+  inittemp ()
+  {
+    return this->inittemp_.get ();
+  }
+
+  void thermostat::
+  inittemp (const inittemp_type& x)
+  {
+    this->inittemp_.set (x);
+  }
+
+  const thermostat::starttime_type& thermostat::
+  starttime () const
+  {
+    return this->starttime_.get ();
+  }
+
+  thermostat::starttime_type& thermostat::
+  starttime ()
+  {
+    return this->starttime_.get ();
+  }
+
+  void thermostat::
+  starttime (const starttime_type& x)
+  {
+    this->starttime_.set (x);
+  }
+
+  const thermostat::targettemp_type& thermostat::
+  targettemp () const
+  {
+    return this->targettemp_.get ();
+  }
+
+  thermostat::targettemp_type& thermostat::
+  targettemp ()
+  {
+    return this->targettemp_.get ();
+  }
+
+  void thermostat::
+  targettemp (const targettemp_type& x)
+  {
+    this->targettemp_.set (x);
+  }
+
+  const thermostat::tempdiff_type& thermostat::
+  tempdiff () const
+  {
+    return this->tempdiff_.get ();
+  }
+
+  thermostat::tempdiff_type& thermostat::
+  tempdiff ()
+  {
+    return this->tempdiff_.get ();
+  }
+
+  void thermostat::
+  tempdiff (const tempdiff_type& x)
+  {
+    this->tempdiff_.set (x);
+  }
+
+  const thermostat::interval_type& thermostat::
+  interval () const
+  {
+    return this->interval_.get ();
+  }
+
+  thermostat::interval_type& thermostat::
+  interval ()
+  {
+    return this->interval_.get ();
+  }
+
+  void thermostat::
+  interval (const interval_type& x)
+  {
+    this->interval_.set (x);
   }
 
 
@@ -726,22 +868,40 @@ namespace input
     this->mass_.set (x);
   }
 
-  const cuboid::brownian_type& cuboid::
-  brownian () const
+  const cuboid::sigma_type& cuboid::
+  sigma () const
   {
-    return this->brownian_.get ();
+    return this->sigma_.get ();
   }
 
-  cuboid::brownian_type& cuboid::
-  brownian ()
+  cuboid::sigma_type& cuboid::
+  sigma ()
   {
-    return this->brownian_.get ();
+    return this->sigma_.get ();
   }
 
   void cuboid::
-  brownian (const brownian_type& x)
+  sigma (const sigma_type& x)
   {
-    this->brownian_.set (x);
+    this->sigma_.set (x);
+  }
+
+  const cuboid::epsilon_type& cuboid::
+  epsilon () const
+  {
+    return this->epsilon_.get ();
+  }
+
+  cuboid::epsilon_type& cuboid::
+  epsilon ()
+  {
+    return this->epsilon_.get ();
+  }
+
+  void cuboid::
+  epsilon (const epsilon_type& x)
+  {
+    this->epsilon_.set (x);
   }
 
 
@@ -830,6 +990,60 @@ namespace input
   meshwidth (const meshwidth_type& x)
   {
     this->meshwidth_.set (x);
+  }
+
+  const sphere::mass_type& sphere::
+  mass () const
+  {
+    return this->mass_.get ();
+  }
+
+  sphere::mass_type& sphere::
+  mass ()
+  {
+    return this->mass_.get ();
+  }
+
+  void sphere::
+  mass (const mass_type& x)
+  {
+    this->mass_.set (x);
+  }
+
+  const sphere::sigma_type& sphere::
+  sigma () const
+  {
+    return this->sigma_.get ();
+  }
+
+  sphere::sigma_type& sphere::
+  sigma ()
+  {
+    return this->sigma_.get ();
+  }
+
+  void sphere::
+  sigma (const sigma_type& x)
+  {
+    this->sigma_.set (x);
+  }
+
+  const sphere::epsilon_type& sphere::
+  epsilon () const
+  {
+    return this->epsilon_.get ();
+  }
+
+  sphere::epsilon_type& sphere::
+  epsilon ()
+  {
+    return this->epsilon_.get ();
+  }
+
+  void sphere::
+  epsilon (const epsilon_type& x)
+  {
+    this->epsilon_.set (x);
   }
 
 
@@ -1187,11 +1401,11 @@ namespace input
     ::xsd::cxx::tree::enum_comparator< char > c (_xsd_boundarytype_literals_);
     const value* i (::std::lower_bound (
                       _xsd_boundarytype_indexes_,
-                      _xsd_boundarytype_indexes_ + 2,
+                      _xsd_boundarytype_indexes_ + 3,
                       *this,
                       c));
 
-    if (i == _xsd_boundarytype_indexes_ + 2 || _xsd_boundarytype_literals_[*i] != *this)
+    if (i == _xsd_boundarytype_indexes_ + 3 || _xsd_boundarytype_literals_[*i] != *this)
     {
       throw ::xsd::cxx::tree::unexpected_enumerator < char > (*this);
     }
@@ -1200,16 +1414,18 @@ namespace input
   }
 
   const char* const boundarytype::
-  _xsd_boundarytype_literals_[2] =
+  _xsd_boundarytype_literals_[3] =
   {
     "outflow",
-    "reflecting"
+    "reflecting",
+    "periodic"
   };
 
   const boundarytype::value boundarytype::
-  _xsd_boundarytype_indexes_[2] =
+  _xsd_boundarytype_indexes_[3] =
   {
     ::input::boundarytype::outflow,
+    ::input::boundarytype::periodic,
     ::input::boundarytype::reflecting
   };
 
@@ -1221,6 +1437,7 @@ namespace input
               const writefreq_type& writefreq,
               const timestep_type& timestep,
               const endtime_type& endtime,
+              const thermostat_type& thermostat,
               const objectlist_type& objectlist)
   : ::xml_schema::type (),
     outputbasename_ (outputbasename, this),
@@ -1228,6 +1445,7 @@ namespace input
     timestep_ (timestep, this),
     endtime_ (endtime, this),
     domain_ (this),
+    thermostat_ (thermostat, this),
     objectlist_ (objectlist, this)
   {
   }
@@ -1237,6 +1455,7 @@ namespace input
               const writefreq_type& writefreq,
               const timestep_type& timestep,
               const endtime_type& endtime,
+              ::std::auto_ptr< thermostat_type > thermostat,
               ::std::auto_ptr< objectlist_type > objectlist)
   : ::xml_schema::type (),
     outputbasename_ (outputbasename, this),
@@ -1244,6 +1463,7 @@ namespace input
     timestep_ (timestep, this),
     endtime_ (endtime, this),
     domain_ (this),
+    thermostat_ (thermostat, this),
     objectlist_ (objectlist, this)
   {
   }
@@ -1258,6 +1478,7 @@ namespace input
     timestep_ (x.timestep_, f, this),
     endtime_ (x.endtime_, f, this),
     domain_ (x.domain_, f, this),
+    thermostat_ (x.thermostat_, f, this),
     objectlist_ (x.objectlist_, f, this)
   {
   }
@@ -1272,6 +1493,7 @@ namespace input
     timestep_ (this),
     endtime_ (this),
     domain_ (this),
+    thermostat_ (this),
     objectlist_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
@@ -1352,6 +1574,20 @@ namespace input
         }
       }
 
+      // thermostat
+      //
+      if (n.name () == "thermostat" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< thermostat_type > r (
+          thermostat_traits::create (i, f, this));
+
+        if (!thermostat_.present ())
+        {
+          this->thermostat_.set (r);
+          continue;
+        }
+      }
+
       // objectlist
       //
       if (n.name () == "objectlist" && n.namespace_ () == "http://www.example.org/input")
@@ -1397,6 +1633,13 @@ namespace input
         "http://www.example.org/input");
     }
 
+    if (!thermostat_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "thermostat",
+        "http://www.example.org/input");
+    }
+
     if (!objectlist_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
@@ -1423,6 +1666,7 @@ namespace input
       this->timestep_ = x.timestep_;
       this->endtime_ = x.endtime_;
       this->domain_ = x.domain_;
+      this->thermostat_ = x.thermostat_;
       this->objectlist_ = x.objectlist_;
     }
 
@@ -1583,6 +1827,202 @@ namespace input
 
   domain::
   ~domain ()
+  {
+  }
+
+  // thermostat
+  //
+
+  thermostat::
+  thermostat (const inittemp_type& inittemp,
+              const starttime_type& starttime,
+              const targettemp_type& targettemp,
+              const tempdiff_type& tempdiff,
+              const interval_type& interval)
+  : ::xml_schema::type (),
+    brownian_ (this),
+    inittemp_ (inittemp, this),
+    starttime_ (starttime, this),
+    targettemp_ (targettemp, this),
+    tempdiff_ (tempdiff, this),
+    interval_ (interval, this)
+  {
+  }
+
+  thermostat::
+  thermostat (const thermostat& x,
+              ::xml_schema::flags f,
+              ::xml_schema::container* c)
+  : ::xml_schema::type (x, f, c),
+    brownian_ (x.brownian_, f, this),
+    inittemp_ (x.inittemp_, f, this),
+    starttime_ (x.starttime_, f, this),
+    targettemp_ (x.targettemp_, f, this),
+    tempdiff_ (x.tempdiff_, f, this),
+    interval_ (x.interval_, f, this)
+  {
+  }
+
+  thermostat::
+  thermostat (const ::xercesc::DOMElement& e,
+              ::xml_schema::flags f,
+              ::xml_schema::container* c)
+  : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
+    brownian_ (this),
+    inittemp_ (this),
+    starttime_ (this),
+    targettemp_ (this),
+    tempdiff_ (this),
+    interval_ (this)
+  {
+    if ((f & ::xml_schema::flags::base) == 0)
+    {
+      ::xsd::cxx::xml::dom::parser< char > p (e, true, false, false);
+      this->parse (p, f);
+    }
+  }
+
+  void thermostat::
+  parse (::xsd::cxx::xml::dom::parser< char >& p,
+         ::xml_schema::flags f)
+  {
+    for (; p.more_content (); p.next_content (false))
+    {
+      const ::xercesc::DOMElement& i (p.cur_element ());
+      const ::xsd::cxx::xml::qualified_name< char > n (
+        ::xsd::cxx::xml::dom::name< char > (i));
+
+      // brownian
+      //
+      if (n.name () == "brownian" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!this->brownian_)
+        {
+          this->brownian_.set (brownian_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // inittemp
+      //
+      if (n.name () == "inittemp" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!inittemp_.present ())
+        {
+          this->inittemp_.set (inittemp_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // starttime
+      //
+      if (n.name () == "starttime" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!starttime_.present ())
+        {
+          this->starttime_.set (starttime_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // targettemp
+      //
+      if (n.name () == "targettemp" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!targettemp_.present ())
+        {
+          this->targettemp_.set (targettemp_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // tempdiff
+      //
+      if (n.name () == "tempdiff" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!tempdiff_.present ())
+        {
+          this->tempdiff_.set (tempdiff_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // interval
+      //
+      if (n.name () == "interval" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!interval_.present ())
+        {
+          this->interval_.set (interval_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (!inittemp_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "inittemp",
+        "http://www.example.org/input");
+    }
+
+    if (!starttime_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "starttime",
+        "http://www.example.org/input");
+    }
+
+    if (!targettemp_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "targettemp",
+        "http://www.example.org/input");
+    }
+
+    if (!tempdiff_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "tempdiff",
+        "http://www.example.org/input");
+    }
+
+    if (!interval_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "interval",
+        "http://www.example.org/input");
+    }
+  }
+
+  thermostat* thermostat::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class thermostat (*this, f, c);
+  }
+
+  thermostat& thermostat::
+  operator= (const thermostat& x)
+  {
+    if (this != &x)
+    {
+      static_cast< ::xml_schema::type& > (*this) = x;
+      this->brownian_ = x.brownian_;
+      this->inittemp_ = x.inittemp_;
+      this->starttime_ = x.starttime_;
+      this->targettemp_ = x.targettemp_;
+      this->tempdiff_ = x.tempdiff_;
+      this->interval_ = x.interval_;
+    }
+
+    return *this;
+  }
+
+  thermostat::
+  ~thermostat ()
   {
   }
 
@@ -1929,14 +2369,16 @@ namespace input
           const numparticles_type& numparticles,
           const meshwidth_type& meshwidth,
           const mass_type& mass,
-          const brownian_type& brownian)
+          const sigma_type& sigma,
+          const epsilon_type& epsilon)
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
     numparticles_ (numparticles, this),
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
-    brownian_ (brownian, this)
+    sigma_ (sigma, this),
+    epsilon_ (epsilon, this)
   {
   }
 
@@ -1946,14 +2388,16 @@ namespace input
           ::std::auto_ptr< numparticles_type > numparticles,
           const meshwidth_type& meshwidth,
           const mass_type& mass,
-          const brownian_type& brownian)
+          const sigma_type& sigma,
+          const epsilon_type& epsilon)
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
     numparticles_ (numparticles, this),
     meshwidth_ (meshwidth, this),
     mass_ (mass, this),
-    brownian_ (brownian, this)
+    sigma_ (sigma, this),
+    epsilon_ (epsilon, this)
   {
   }
 
@@ -1967,7 +2411,8 @@ namespace input
     numparticles_ (x.numparticles_, f, this),
     meshwidth_ (x.meshwidth_, f, this),
     mass_ (x.mass_, f, this),
-    brownian_ (x.brownian_, f, this)
+    sigma_ (x.sigma_, f, this),
+    epsilon_ (x.epsilon_, f, this)
   {
   }
 
@@ -1981,7 +2426,8 @@ namespace input
     numparticles_ (this),
     meshwidth_ (this),
     mass_ (this),
-    brownian_ (this)
+    sigma_ (this),
+    epsilon_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -2064,13 +2510,24 @@ namespace input
         }
       }
 
-      // brownian
+      // sigma
       //
-      if (n.name () == "brownian" && n.namespace_ () == "http://www.example.org/input")
+      if (n.name () == "sigma" && n.namespace_ () == "http://www.example.org/input")
       {
-        if (!brownian_.present ())
+        if (!sigma_.present ())
         {
-          this->brownian_.set (brownian_traits::create (i, f, this));
+          this->sigma_.set (sigma_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // epsilon
+      //
+      if (n.name () == "epsilon" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!epsilon_.present ())
+        {
+          this->epsilon_.set (epsilon_traits::create (i, f, this));
           continue;
         }
       }
@@ -2113,10 +2570,17 @@ namespace input
         "http://www.example.org/input");
     }
 
-    if (!brownian_.present ())
+    if (!sigma_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
-        "brownian",
+        "sigma",
+        "http://www.example.org/input");
+    }
+
+    if (!epsilon_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "epsilon",
         "http://www.example.org/input");
     }
   }
@@ -2139,7 +2603,8 @@ namespace input
       this->numparticles_ = x.numparticles_;
       this->meshwidth_ = x.meshwidth_;
       this->mass_ = x.mass_;
-      this->brownian_ = x.brownian_;
+      this->sigma_ = x.sigma_;
+      this->epsilon_ = x.epsilon_;
     }
 
     return *this;
@@ -2157,12 +2622,18 @@ namespace input
   sphere (const location_type& location,
           const velocity_type& velocity,
           const numparticles_type& numparticles,
-          const meshwidth_type& meshwidth)
+          const meshwidth_type& meshwidth,
+          const mass_type& mass,
+          const sigma_type& sigma,
+          const epsilon_type& epsilon)
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
     numparticles_ (numparticles, this),
-    meshwidth_ (meshwidth, this)
+    meshwidth_ (meshwidth, this),
+    mass_ (mass, this),
+    sigma_ (sigma, this),
+    epsilon_ (epsilon, this)
   {
   }
 
@@ -2170,12 +2641,18 @@ namespace input
   sphere (::std::auto_ptr< location_type > location,
           ::std::auto_ptr< velocity_type > velocity,
           const numparticles_type& numparticles,
-          const meshwidth_type& meshwidth)
+          const meshwidth_type& meshwidth,
+          const mass_type& mass,
+          const sigma_type& sigma,
+          const epsilon_type& epsilon)
   : ::xml_schema::type (),
     location_ (location, this),
     velocity_ (velocity, this),
     numparticles_ (numparticles, this),
-    meshwidth_ (meshwidth, this)
+    meshwidth_ (meshwidth, this),
+    mass_ (mass, this),
+    sigma_ (sigma, this),
+    epsilon_ (epsilon, this)
   {
   }
 
@@ -2187,7 +2664,10 @@ namespace input
     location_ (x.location_, f, this),
     velocity_ (x.velocity_, f, this),
     numparticles_ (x.numparticles_, f, this),
-    meshwidth_ (x.meshwidth_, f, this)
+    meshwidth_ (x.meshwidth_, f, this),
+    mass_ (x.mass_, f, this),
+    sigma_ (x.sigma_, f, this),
+    epsilon_ (x.epsilon_, f, this)
   {
   }
 
@@ -2199,7 +2679,10 @@ namespace input
     location_ (this),
     velocity_ (this),
     numparticles_ (this),
-    meshwidth_ (this)
+    meshwidth_ (this),
+    mass_ (this),
+    sigma_ (this),
+    epsilon_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -2268,6 +2751,39 @@ namespace input
         }
       }
 
+      // mass
+      //
+      if (n.name () == "mass" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!mass_.present ())
+        {
+          this->mass_.set (mass_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // sigma
+      //
+      if (n.name () == "sigma" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!sigma_.present ())
+        {
+          this->sigma_.set (sigma_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // epsilon
+      //
+      if (n.name () == "epsilon" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!epsilon_.present ())
+        {
+          this->epsilon_.set (epsilon_traits::create (i, f, this));
+          continue;
+        }
+      }
+
       break;
     }
 
@@ -2298,6 +2814,27 @@ namespace input
         "meshwidth",
         "http://www.example.org/input");
     }
+
+    if (!mass_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "mass",
+        "http://www.example.org/input");
+    }
+
+    if (!sigma_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "sigma",
+        "http://www.example.org/input");
+    }
+
+    if (!epsilon_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "epsilon",
+        "http://www.example.org/input");
+    }
   }
 
   sphere* sphere::
@@ -2317,6 +2854,9 @@ namespace input
       this->velocity_ = x.velocity_;
       this->numparticles_ = x.numparticles_;
       this->meshwidth_ = x.meshwidth_;
+      this->mass_ = x.mass_;
+      this->sigma_ = x.sigma_;
+      this->epsilon_ = x.epsilon_;
     }
 
     return *this;

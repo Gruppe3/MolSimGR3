@@ -26,15 +26,15 @@ public:
 		writeFreq = 10;
 		cutoff = 3.0;
 		meshWidth = 1.1225;
-		thermostatStart=100;
-		meanVelocityType=1;
-		initTemperature=5.0;
-		diffTargetTemp=true;
-		targetTemp=500.0;
-		tempDiff=2;
-		tempFreq=1;
+		thermostatStart = 100;
+		meanVelocityType = 1;
+		initTemp = 5.0;
+		diffTargetTemp = true;
+		targetTemp = 500.0;
+		tempDiff = 2;
+		tempFreq = 1;
 		//boltzmannConst=1.3806488E-23;
-		boltzmannConst=1.0;
+		boltzmannConst = 1.0;
 		boundaries = new BoundaryConds;
 	}
 
@@ -65,17 +65,27 @@ public:
 	/** distance between particles (2^(1/6)*sigma) */
 	double meshWidth;
 
+	/** time step to start first thermostat application */
 	int thermostatStart;
 
-	double initTemperature;
+	/** initial temperature of the system */
+	double initTemp;
 
 	double boltzmannConst;
 	bool diffTargetTemp;
+
+	/** desired temperature */
 	double targetTemp;
+
+	/** step size in which temperature should be changed */
 	double tempDiff;
-	/**1 - initialize temperature for thermostat problem, 0 - initialize temperature only with Maxwell-Boltzmann*/
+
+	/** 1 - initialize temperature for thermostat problem, 0 - initialize temperature only with Maxwell-Boltzmann/Brownian Motion scalar*/
 	int meanVelocityType;
+
+	/** time steps between thermostat applications */
 	int tempFreq;
+
 	/** stores boundary conditions for LC algo */
 	BoundaryConds *boundaries;
 };

@@ -3,9 +3,9 @@
   <outputbasename>MD_vtk</outputbasename>
   <writefreq>40</writefreq>
   <timestep>0.0005</timestep>
-  <endtime>20</endtime>
+  <endtime>15</endtime>
   <domain>
-  	<size x="180" y="90" z="0"/>
+  	<size x="303" y="180" z="0"/>
   	<cutoff>3.0</cutoff>
   	<boundaries>
   		<front>outflow</front>
@@ -17,31 +17,21 @@
   	</boundaries>
   </domain>
   <thermostat>
-  	<brownian>0.1</brownian>
-  	<inittemp>0.0</inittemp>
-  	<starttime>100000</starttime>
+  	<inittemp>0.5</inittemp>
+  	<starttime>0</starttime>
   	<targettemp>0.0</targettemp>
   	<tempdiff>0.0</tempdiff>
-  	<interval>1</interval>
+  	<interval>1000</interval>
   </thermostat>
   <objectlist>
   	<cuboid>
-  		<location x="20" y="20" z="0"/>
+  		<location x="1.5" y="2.0" z="0"/>
   		<velocity x="0.0" y="0.0" z="0.0"/>
-  		<numparticles x="100" y="20" z="1"/>
+  		<numparticles x="250" y="50" z="1"/>
   		<mass>1.0</mass>
-  		<meshwidth>1.1225</meshwidth>
-  		<sigma>1.0</sigma>
-  		<epsilon>5.0</epsilon>
-  	</cuboid>
-  	<cuboid>
-  		<location x="70" y="60" z="0"/>
-  		<velocity x="0.0" y="-10.0" z="0.0"/>
-  		<numparticles x="20" y="20" z="1"/>
-  		<mass>1.0</mass>
-  		<meshwidth>1.1225</meshwidth>
-  		<sigma>1.0</sigma>
-  		<epsilon>5.0</epsilon>
+  		<meshwidth>1.2</meshwidth>
+  		<sigma>1.2</sigma>
+  		<epsilon>1.0</epsilon>
   	</cuboid>
   </objectlist>
 </molsimdata>

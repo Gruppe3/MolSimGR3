@@ -16,6 +16,7 @@
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="outflow"/>
 			<xs:enumeration value="reflecting"/>
+			<xs:enumeration value="periodic"/>
 		</xs:restriction>
 	</xs:simpleType>
 	
@@ -49,6 +50,19 @@
     				</xs:all>
     			</xs:complexType>
     		</xs:element>
+    		<xs:element name="thermostat">
+    			<xs:complexType>
+    				<xs:all>
+    				<!-- if defined brownian motion scalar will be used for initial Maxwell-Boltzmann distribution, else inittemp -->
+    					<xs:element name="brownian" type="xs:double" minOccurs="0"></xs:element>
+    					<xs:element name="inittemp" type="xs:double"></xs:element>
+    					<xs:element name="starttime" type="xs:unsignedInt"></xs:element>
+    					<xs:element name="targettemp" type="xs:double"></xs:element>
+    					<xs:element name="tempdiff" type="xs:double"></xs:element>
+    					<xs:element name="interval" type="xs:unsignedInt"></xs:element>
+    				</xs:all>
+    			</xs:complexType>
+    		</xs:element>
     		
     		<xs:element name="objectlist"><!-- list of particles and/or objects that allow to generate particles -->
     			<xs:complexType>
@@ -61,7 +75,8 @@
     								<xs:element name="numparticles" type="tns:integervector"></xs:element><!-- number of particles per dimension -->
     								<xs:element name="meshwidth" type="xs:double"></xs:element>
     								<xs:element name="mass" type="xs:double"></xs:element>
-    								<xs:element name="brownian" type="xs:double"></xs:element>
+    								<xs:element name="sigma" type="xs:double"></xs:element>
+    								<xs:element name="epsilon" type="xs:double"></xs:element>
     							</xs:all>
     						</xs:complexType>
     					</xs:element>
@@ -73,6 +88,9 @@
     								<xs:element name="velocity" type="tns:decimalvector"></xs:element>
     								<xs:element name="numparticles" type="xs:unsignedInt"></xs:element><!-- number of particles along radius -->
     								<xs:element name="meshwidth" type="xs:double"></xs:element>
+    								<xs:element name="mass" type="xs:double"></xs:element>
+    								<xs:element name="sigma" type="xs:double"></xs:element>
+    								<xs:element name="epsilon" type="xs:double"></xs:element>
     							</xs:all>
     						</xs:complexType>
     					</xs:element>

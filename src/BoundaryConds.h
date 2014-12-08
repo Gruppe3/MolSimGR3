@@ -12,7 +12,7 @@
 class BoundaryConds {
 public:
 	/** types of boundary conditions */
-	enum Boundary {OUTFLOW, REFLECTING};
+	enum Boundary {OUTFLOW, REFLECTING, PERIODIC};
 
 	/** stores sides of the 3d domain;
 	 * Attention: Don't change the order! */

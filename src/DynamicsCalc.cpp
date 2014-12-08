@@ -26,29 +26,28 @@ void CalcX::iterateFunc(Particle& p) {
 
 void CalcV::iterateFunc(Particle& p) {
 	utils::Vector<double, 3>& v = p.getV();
-	v = (v + sim->delta_t / (2 * p.getM()) * (p.getOldF() + p.getF()))*beta;
+	v = (v + sim->delta_t / (2 * p.getM()) * (p.getOldF() + p.getF())) * beta;
 }
 
 void CalcV::setBeta(double beta_tag) {
-	beta=beta_tag;
+	beta = beta_tag;
 }
 
-void CalcT::iterateFunc(Particle& p){
-	double tmp=p.getV().L2Norm();
-	sum=sum+p.getM()*tmp*tmp;
+void CalcT::iterateFunc(Particle& p) {
+	double vnorm = p.getV().L2Norm();
+	energy = energy + p.getM() * vnorm*vnorm;
 }
 
 double CalcT::calcBeta(double tD,int numParticles){
-	double T=sum/(DIM*numParticles*sim->boltzmannConst);
+	double T = energy / (DIM * numParticles * sim->boltzmannConst);
 	//cout<<"Temperature:   "<<T<<endl;
-	double beta = sqrt(tD/T);
-	return beta;
+	return sqrt(tD / T);
 }
 
-void CalcT::resetSum(){
-	sum=0;
+void CalcT::resetEnergy(){
+	energy = 0;
 }
 
-void initializeV(double * v, double tInit, double m){
-	*v=sqrt(tInit*m);
+void CalcT::initializeV(double *v, double tInit, double m) {
+	*v = sqrt(tInit / m);
 }

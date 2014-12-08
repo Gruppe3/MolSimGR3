@@ -31,8 +31,8 @@
 // in the accompanying FLOSSE file.
 //
 
-#ifndef CXX_USERS_CHRISTIANSTURM2_DOCUMENTS_VORLESUNGEN_BOOKS_14_15_WS_PRAKTIKUM___MOLEKULARDYNAMIK_MOL_SIM_GR3_MOLSIM_INPUT_HXX
-#define CXX_USERS_CHRISTIANSTURM2_DOCUMENTS_VORLESUNGEN_BOOKS_14_15_WS_PRAKTIKUM___MOLEKULARDYNAMIK_MOL_SIM_GR3_MOLSIM_INPUT_HXX
+#ifndef MOLSIM_INPUT_HXX
+#define MOLSIM_INPUT_HXX
 
 #ifndef XSD_USE_CHAR
 #define XSD_USE_CHAR
@@ -229,6 +229,7 @@ namespace input
   class boundarytype;
   class molsimdata;
   class domain;
+  class thermostat;
   class objectlist;
   class boundaries;
   class cuboid;
@@ -422,7 +423,8 @@ namespace input
     enum value
     {
       outflow,
-      reflecting
+      reflecting,
+      periodic
     };
 
     boundarytype (value v);
@@ -468,8 +470,8 @@ namespace input
     _xsd_boundarytype_convert () const;
 
     public:
-    static const char* const _xsd_boundarytype_literals_[2];
-    static const value _xsd_boundarytype_indexes_[2];
+    static const char* const _xsd_boundarytype_literals_[3];
+    static const value _xsd_boundarytype_indexes_[3];
   };
 
   class molsimdata: public ::xml_schema::type
@@ -555,6 +557,23 @@ namespace input
     void
     domain (::std::auto_ptr< domain_type > p);
 
+    // thermostat
+    //
+    typedef ::input::thermostat thermostat_type;
+    typedef ::xsd::cxx::tree::traits< thermostat_type, char > thermostat_traits;
+
+    const thermostat_type&
+    thermostat () const;
+
+    thermostat_type&
+    thermostat ();
+
+    void
+    thermostat (const thermostat_type& x);
+
+    void
+    thermostat (::std::auto_ptr< thermostat_type > p);
+
     // objectlist
     //
     typedef ::input::objectlist objectlist_type;
@@ -578,12 +597,14 @@ namespace input
                 const writefreq_type&,
                 const timestep_type&,
                 const endtime_type&,
+                const thermostat_type&,
                 const objectlist_type&);
 
     molsimdata (const outputbasename_type&,
                 const writefreq_type&,
                 const timestep_type&,
                 const endtime_type&,
+                ::std::auto_ptr< thermostat_type >,
                 ::std::auto_ptr< objectlist_type >);
 
     molsimdata (const ::xercesc::DOMElement& e,
@@ -617,6 +638,7 @@ namespace input
     ::xsd::cxx::tree::one< timestep_type > timestep_;
     ::xsd::cxx::tree::one< endtime_type > endtime_;
     domain_optional domain_;
+    ::xsd::cxx::tree::one< thermostat_type > thermostat_;
     ::xsd::cxx::tree::one< objectlist_type > objectlist_;
   };
 
@@ -710,6 +732,139 @@ namespace input
     ::xsd::cxx::tree::one< size_type > size_;
     ::xsd::cxx::tree::one< cutoff_type > cutoff_;
     ::xsd::cxx::tree::one< boundaries_type > boundaries_;
+  };
+
+  class thermostat: public ::xml_schema::type
+  {
+    public:
+    // brownian
+    //
+    typedef ::xml_schema::double_ brownian_type;
+    typedef ::xsd::cxx::tree::optional< brownian_type > brownian_optional;
+    typedef ::xsd::cxx::tree::traits< brownian_type, char, ::xsd::cxx::tree::schema_type::double_ > brownian_traits;
+
+    const brownian_optional&
+    brownian () const;
+
+    brownian_optional&
+    brownian ();
+
+    void
+    brownian (const brownian_type& x);
+
+    void
+    brownian (const brownian_optional& x);
+
+    // inittemp
+    //
+    typedef ::xml_schema::double_ inittemp_type;
+    typedef ::xsd::cxx::tree::traits< inittemp_type, char, ::xsd::cxx::tree::schema_type::double_ > inittemp_traits;
+
+    const inittemp_type&
+    inittemp () const;
+
+    inittemp_type&
+    inittemp ();
+
+    void
+    inittemp (const inittemp_type& x);
+
+    // starttime
+    //
+    typedef ::xml_schema::unsigned_int starttime_type;
+    typedef ::xsd::cxx::tree::traits< starttime_type, char > starttime_traits;
+
+    const starttime_type&
+    starttime () const;
+
+    starttime_type&
+    starttime ();
+
+    void
+    starttime (const starttime_type& x);
+
+    // targettemp
+    //
+    typedef ::xml_schema::double_ targettemp_type;
+    typedef ::xsd::cxx::tree::traits< targettemp_type, char, ::xsd::cxx::tree::schema_type::double_ > targettemp_traits;
+
+    const targettemp_type&
+    targettemp () const;
+
+    targettemp_type&
+    targettemp ();
+
+    void
+    targettemp (const targettemp_type& x);
+
+    // tempdiff
+    //
+    typedef ::xml_schema::double_ tempdiff_type;
+    typedef ::xsd::cxx::tree::traits< tempdiff_type, char, ::xsd::cxx::tree::schema_type::double_ > tempdiff_traits;
+
+    const tempdiff_type&
+    tempdiff () const;
+
+    tempdiff_type&
+    tempdiff ();
+
+    void
+    tempdiff (const tempdiff_type& x);
+
+    // interval
+    //
+    typedef ::xml_schema::unsigned_int interval_type;
+    typedef ::xsd::cxx::tree::traits< interval_type, char > interval_traits;
+
+    const interval_type&
+    interval () const;
+
+    interval_type&
+    interval ();
+
+    void
+    interval (const interval_type& x);
+
+    // Constructors.
+    //
+    thermostat (const inittemp_type&,
+                const starttime_type&,
+                const targettemp_type&,
+                const tempdiff_type&,
+                const interval_type&);
+
+    thermostat (const ::xercesc::DOMElement& e,
+                ::xml_schema::flags f = 0,
+                ::xml_schema::container* c = 0);
+
+    thermostat (const thermostat& x,
+                ::xml_schema::flags f = 0,
+                ::xml_schema::container* c = 0);
+
+    virtual thermostat*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    thermostat&
+    operator= (const thermostat& x);
+
+    virtual
+    ~thermostat ();
+
+    // Implementation.
+    //
+    protected:
+    void
+    parse (::xsd::cxx::xml::dom::parser< char >&,
+           ::xml_schema::flags);
+
+    protected:
+    brownian_optional brownian_;
+    ::xsd::cxx::tree::one< inittemp_type > inittemp_;
+    ::xsd::cxx::tree::one< starttime_type > starttime_;
+    ::xsd::cxx::tree::one< targettemp_type > targettemp_;
+    ::xsd::cxx::tree::one< tempdiff_type > tempdiff_;
+    ::xsd::cxx::tree::one< interval_type > interval_;
   };
 
   class objectlist: public ::xml_schema::type
@@ -1031,19 +1186,33 @@ namespace input
     void
     mass (const mass_type& x);
 
-    // brownian
+    // sigma
     //
-    typedef ::xml_schema::double_ brownian_type;
-    typedef ::xsd::cxx::tree::traits< brownian_type, char, ::xsd::cxx::tree::schema_type::double_ > brownian_traits;
+    typedef ::xml_schema::double_ sigma_type;
+    typedef ::xsd::cxx::tree::traits< sigma_type, char, ::xsd::cxx::tree::schema_type::double_ > sigma_traits;
 
-    const brownian_type&
-    brownian () const;
+    const sigma_type&
+    sigma () const;
 
-    brownian_type&
-    brownian ();
+    sigma_type&
+    sigma ();
 
     void
-    brownian (const brownian_type& x);
+    sigma (const sigma_type& x);
+
+    // epsilon
+    //
+    typedef ::xml_schema::double_ epsilon_type;
+    typedef ::xsd::cxx::tree::traits< epsilon_type, char, ::xsd::cxx::tree::schema_type::double_ > epsilon_traits;
+
+    const epsilon_type&
+    epsilon () const;
+
+    epsilon_type&
+    epsilon ();
+
+    void
+    epsilon (const epsilon_type& x);
 
     // Constructors.
     //
@@ -1052,14 +1221,16 @@ namespace input
             const numparticles_type&,
             const meshwidth_type&,
             const mass_type&,
-            const brownian_type&);
+            const sigma_type&,
+            const epsilon_type&);
 
     cuboid (::std::auto_ptr< location_type >,
             ::std::auto_ptr< velocity_type >,
             ::std::auto_ptr< numparticles_type >,
             const meshwidth_type&,
             const mass_type&,
-            const brownian_type&);
+            const sigma_type&,
+            const epsilon_type&);
 
     cuboid (const ::xercesc::DOMElement& e,
             ::xml_schema::flags f = 0,
@@ -1092,7 +1263,8 @@ namespace input
     ::xsd::cxx::tree::one< numparticles_type > numparticles_;
     ::xsd::cxx::tree::one< meshwidth_type > meshwidth_;
     ::xsd::cxx::tree::one< mass_type > mass_;
-    ::xsd::cxx::tree::one< brownian_type > brownian_;
+    ::xsd::cxx::tree::one< sigma_type > sigma_;
+    ::xsd::cxx::tree::one< epsilon_type > epsilon_;
   };
 
   class sphere: public ::xml_schema::type
@@ -1160,17 +1332,65 @@ namespace input
     void
     meshwidth (const meshwidth_type& x);
 
+    // mass
+    //
+    typedef ::xml_schema::double_ mass_type;
+    typedef ::xsd::cxx::tree::traits< mass_type, char, ::xsd::cxx::tree::schema_type::double_ > mass_traits;
+
+    const mass_type&
+    mass () const;
+
+    mass_type&
+    mass ();
+
+    void
+    mass (const mass_type& x);
+
+    // sigma
+    //
+    typedef ::xml_schema::double_ sigma_type;
+    typedef ::xsd::cxx::tree::traits< sigma_type, char, ::xsd::cxx::tree::schema_type::double_ > sigma_traits;
+
+    const sigma_type&
+    sigma () const;
+
+    sigma_type&
+    sigma ();
+
+    void
+    sigma (const sigma_type& x);
+
+    // epsilon
+    //
+    typedef ::xml_schema::double_ epsilon_type;
+    typedef ::xsd::cxx::tree::traits< epsilon_type, char, ::xsd::cxx::tree::schema_type::double_ > epsilon_traits;
+
+    const epsilon_type&
+    epsilon () const;
+
+    epsilon_type&
+    epsilon ();
+
+    void
+    epsilon (const epsilon_type& x);
+
     // Constructors.
     //
     sphere (const location_type&,
             const velocity_type&,
             const numparticles_type&,
-            const meshwidth_type&);
+            const meshwidth_type&,
+            const mass_type&,
+            const sigma_type&,
+            const epsilon_type&);
 
     sphere (::std::auto_ptr< location_type >,
             ::std::auto_ptr< velocity_type >,
             const numparticles_type&,
-            const meshwidth_type&);
+            const meshwidth_type&,
+            const mass_type&,
+            const sigma_type&,
+            const epsilon_type&);
 
     sphere (const ::xercesc::DOMElement& e,
             ::xml_schema::flags f = 0,
@@ -1202,6 +1422,9 @@ namespace input
     ::xsd::cxx::tree::one< velocity_type > velocity_;
     ::xsd::cxx::tree::one< numparticles_type > numparticles_;
     ::xsd::cxx::tree::one< meshwidth_type > meshwidth_;
+    ::xsd::cxx::tree::one< mass_type > mass_;
+    ::xsd::cxx::tree::one< sigma_type > sigma_;
+    ::xsd::cxx::tree::one< epsilon_type > epsilon_;
   };
 
   class particle: public ::xml_schema::type
@@ -1406,4 +1629,4 @@ namespace input
 //
 // End epilogue.
 
-#endif // CXX_USERS_CHRISTIANSTURM2_DOCUMENTS_VORLESUNGEN_BOOKS_14_15_WS_PRAKTIKUM___MOLEKULARDYNAMIK_MOL_SIM_GR3_MOLSIM_INPUT_HXX
+#endif // MOLSIM_INPUT_HXX

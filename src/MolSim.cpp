@@ -155,9 +155,9 @@ int main(int argc, char* argsv[]) {
 	double current_time = sim->start_time;
 	int iteration = 0;
 	int count_iterations = sim->end_time / sim->delta_t;
-	double beta=1.0;
+	double beta = 1.0;
 	 // for this loop, we assume: current x, current f and current v are known
-	double temperature=sim->initTemperature;
+	double temperature = sim->initTemp;
 	while (current_time < sim->end_time) {
 		// calculate new x
 		particleContainer->iterate(xcalc);
@@ -173,15 +173,19 @@ int main(int argc, char* argsv[]) {
 		// add reflecting force to boundary particles according to sim->domainBoundaries[]
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
 		#endif
+
 		vcalc->setBeta(1.0);
-		if((iteration>sim->thermostatStart)&&(iteration%sim->tempFreq==0)){
-			tcalc->resetSum();
+		if ((iteration > sim->thermostatStart) && (iteration % sim->tempFreq == 0)){
+			tcalc->resetEnergy();
 			//calculates sum to get T
 			particleContainer->iterate(tcalc);
-			if(temperature<sim->targetTemp){
-				temperature=temperature+sim->tempDiff;
+			if (temperature < sim->targetTemp){
+				temperature += sim->tempDiff;	// heating
 			}
-			beta=tcalc->calcBeta(temperature,particleContainer->size());
+			else if (temperature > sim->targetTemp) {
+				temperature -= sim->tempDiff;	// cooling
+			}
+			beta = tcalc->calcBeta(temperature, particleContainer->size());
 			//LOG4CXX_DEBUG("molsim",beta<<)
 			vcalc->setBeta(beta);
 		}
@@ -192,6 +196,7 @@ int main(int argc, char* argsv[]) {
 
 		// calculate new v
 		particleContainer->iterate(vcalc);
+
 		iteration++;
 		if (iteration % sim->writeFreq == 0) {
 			plotParticles(iteration);
