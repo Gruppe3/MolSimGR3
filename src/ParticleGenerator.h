@@ -58,7 +58,7 @@ public:
 	 * @param pc ParticleContainer storing created particles */
 	void createSphere(utils::Vector<double, 3>& x, int n,
 			utils::Vector<double, 3>& v, double h, double m, double meanv,
-			int brownDim, ParticleContainer* pc);
+			int brownDim, ParticleContainer* pc, Simulation * sim, int particleType=0);
 
 private:
 	/** 3 dimensional position of the cuboid (lower left front-side corner) */
