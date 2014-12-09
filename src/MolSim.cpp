@@ -20,6 +20,7 @@
 #include "test/ParticleContainerLCTest.h"
 #include "test/ParticleGeneratorTest.h"
 #include "test/XMLInputTest.h"
+#include "test/ThermostatTest.h"
 
 #include "Logger.h"
 
@@ -91,6 +92,7 @@ int main(int argc, char* argsv[]) {
 				if (strcmp(argsv[2], "ParticleContainerLC") == 0) {run(ParticleContainerLCTest::suite());}
 				if (strcmp(argsv[2], "ParticleGenerator") == 0) {run(ParticleGeneratorTest::suite());}
 				if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
+				if (strcmp(argsv[2], "Thermostat") == 0) {run(ThermostatTest::suite());}
 				return 0;
 			}
 			else {
