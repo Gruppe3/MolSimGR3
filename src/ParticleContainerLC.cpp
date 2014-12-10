@@ -390,6 +390,28 @@ void ParticleContainerLC::applyBoundaryConds(BoundaryConds::Boundary bd, PCApply
 		}
 #endif
 	}
+	else if (bd == BoundaryConds::PERIODIC){
+			if ((domainBoundary[BoundaryConds::LEFT] == BoundaryConds::PERIODIC) &&
+					(domainBoundary[BoundaryConds::RIGHT] == BoundaryConds::PERIODIC)){	// left and right
+			bindOppositeWalls(0,0);
+			bindOppositeWalls(0,allCellNums[0]-1);
+			}
+	#if 1<DIM
+			if ((domainBoundary[BoundaryConds::BOTTOM] == BoundaryConds::PERIODIC) &&
+					(domainBoundary[BoundaryConds::TOP] == BoundaryConds::PERIODIC)){	// bottom and top
+			bindOppositeWalls(1, 0);
+			bindOppositeWalls(1, allCellNums[1]-1);
+			}
+	#endif
+	#if 3==DIM
+			if ((domainBoundary[BoundaryConds::FRONT] == BoundaryConds::PERIODIC) &&
+					(domainBoundary[BoundaryConds::BACK] == BoundaryConds::PERIODIC)){	// front and backt
+			bindOppositeWalls(2,0);
+			bindOppositeWalls(2,allCellNums[2]-1);
+			}
+	#endif
+			moveParticles();
+		}
 
 }
 
@@ -431,5 +453,42 @@ void ParticleContainerLC::applyToBoundaryWall(int fixedDim, int fixedVal, PCAppl
 				}
 				pl = pl->next;
 			}
+		}
+}
+
+//looks like it works by debugging, not by running the whole programm, to remove if another version exists
+void ParticleContainerLC::bindOppositeWalls(int fixedDim,int fixedVal){
+	int idx[DIM];
+	idx[fixedDim] = fixedVal;
+#if 1<DIM
+	const int nextDim = (fixedDim+1) % DIM;
+#endif
+#if 3==DIM
+	const int lastDim = (fixedDim+2) % DIM;
+#endif
+	// iterate over wall cells
+#if 1<DIM
+	for (idx[nextDim] = 0; idx[nextDim] < allCellNums[nextDim]; idx[nextDim]++)
+#endif
+#if 3==DIM
+		for (idx[lastDim] = 0; idx[lastDim] < allCellNums[lastDim]; idx[lastDim]++)
+#endif
+		{
+	ParticleList *pl = allCells[calcIndex(idx, allCellNums)]->root;
+				while (pl != NULL) {	// iterate over all particles in the cell
+					Particle& p = *pl->p;
+					utils::Vector<double, 3>& x = p.getX();
+					if (fixedVal == 0) {
+						//LOG4CXX_DEBUG(particlelog, "x before (fixedVal=0)  " <<allCells[calcIndex(idx, allCellNums)]->root->p->getX().toString());
+						x[fixedDim]+=domainSize[fixedDim];
+						//LOG4CXX_DEBUG(particlelog, "x after (fixedVal=0)  " <<allCells[calcIndex(idx, allCellNums)]->root->p->getX().toString());
+						//cout<<"x value:"<<cells[calcIndex(idx, cellNums)].root->p->toString()<<endl;
+					} else {
+						//LOG4CXX_DEBUG(particlelog, "x before (fixedVal=cellNums)  " <<allCells[calcIndex(idx, allCellNums)]->root->p->getX().toString());
+						x[fixedDim]-=domainSize[fixedDim];
+						//LOG4CXX_DEBUG(particlelog, "x after (fixedVal=cellNums)  " <<allCells[calcIndex(idx, allCellNums)]->root->p->getX().toString());
+					}
+					pl = pl->next;
+				}
 		}
 }

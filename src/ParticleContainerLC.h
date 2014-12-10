@@ -140,6 +140,12 @@ private:
 	 * @param fixedValue Dimension fixed is set to this;  common values: 0 or cellNums[fixed]-1 */
 	Particle* nextBoundaryWall(int fixed, int fixedValue);
 
+	/**moves halo particles to opposite boundary
+	 * NOTE: to call before emptyHalo()
+	 * @param fixed Dimension of the wall which doesn't change
+	 * @param fixedValue Dimension fixed is set to this;  common values: 0 or cellNums[fixed]-1 */
+	void bindOppositeWalls(int fixedDim, int fixedVal);
+
 	/** 3D implementation of hasNextBoundary() */
 	bool hasNextBoundary3D();
 

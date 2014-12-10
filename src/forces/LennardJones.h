@@ -10,7 +10,7 @@
 
 #include "../Particle.h"
 #include "ForceHandler.h"
-#include "../Simulation.h"
+//#include "../Simulation.h"
 
 /** A force calculator using the Lennard-Jones potential */
 class LennardJones : public ForceHandler {

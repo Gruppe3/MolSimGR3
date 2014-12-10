@@ -22,16 +22,6 @@ LennardJones::~LennardJones() {
 }
 
 void LennardJones::calc(Particle&p1, Particle& p2) {
-	if((p1.getType()==0)&&(p2.getType()==0)){
-		sigma=sim->sigma11;
-		epsilon=sim->epsilon11;
-	}else if((p1.getType()==1)&&(p2.getType()==1)){
-		sigma=sim->sigma22;
-		epsilon=sim->epsilon22;
-	}else if(p1.getType()!=p2.getType()){
-		sigma=sim->sigma12;
-		epsilon=sim->epsilon12;
-	}
 	utils::Vector<double, 3>& f1 = p1.getF();
 	utils::Vector<double, 3>& f2 = p2.getF();
 	utils::Vector<double, 3> diff = p2.getX() - p1.getX();
@@ -52,6 +42,16 @@ LennardJonesLC::~LennardJonesLC() {
 }
 
 void LennardJonesLC::calc(Particle&p1, Particle& p2) {
+		/*if((p1.getType()==0)&&(p2.getType()==0)){
+		sigma=sim->sigma11;
+		epsilon=sim->epsilon11;
+	}else if((p1.getType()==1)&&(p2.getType()==1)){
+		sigma=sim->sigma22;
+		epsilon=sim->epsilon22;
+	}else if(p1.getType()!=p2.getType()){
+		sigma=sim->sigma12;
+		epsilon=sim->epsilon12;
+	}*/
 	//LOG4CXX_DEBUG(forcelog, "force calc LC");
 	utils::Vector<double, 3>& f1 = p1.getF();
 	utils::Vector<double, 3>& f2 = p2.getF();
