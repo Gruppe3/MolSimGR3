@@ -28,6 +28,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
+#include <sys/time.h>
 
 using namespace log4cxx;
 using namespace log4cxx::helpers;
@@ -162,6 +163,21 @@ int main(int argc, char* argsv[]) {
 	double beta = 1.0;
 	 // for this loop, we assume: current x, current f and current v are known
 	double temperature = sim->initTemp;
+
+	/**
+ 	* set up the timeval structures for performance measurement
+ 	*/
+	struct timeval performance_timer_start;
+	struct timeval performance_timer_current;
+
+	/**
+ 	* Get the starting time for performance measurement & declare double variables.
+ 	*/
+	gettimeofday(&performance_timer_start, NULL);
+	double performance_timer_start_double = (double)performance_timer_start.tv_sec + (double)performance_timer_start.tv_usec / 1000000.0;
+	double performance_timer_current_double = 0.0;
+	double performance_timer_average = 0.0;
+
 	while (current_time < sim->end_time) {
 		// calculate new x
 		particleContainer->iterate(xcalc);
@@ -205,8 +221,15 @@ int main(int argc, char* argsv[]) {
 
 		iteration++;
 		if (iteration % sim->writeFreq == 0) {
+			/**
+ 			* Get the elapsed time by subtracting the start time from the current time. Then, divide it by the number of elapsed iterations.
+ 			*/
+			gettimeofday(&performance_timer_current, NULL);
+			performance_timer_current_double = (double)performance_timer_current.tv_sec + (double)performance_timer_current.tv_usec / 1000000.0;
+			performance_timer_average = (performance_timer_current_double - performance_timer_start_double) / (double)iteration;
+
 			plotParticles(iteration);
-			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished.");
+			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Average: " << performance_timer_average << " sec./Iter.");
 			//LOG4CXX_DEBUG(molsimlog,"beta"<<beta);
 		}
 
