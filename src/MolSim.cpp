@@ -145,16 +145,21 @@ int main(int argc, char* argsv[]) {
 		#endif
 	}
 
+	forceType->setSimulation(sim);
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 
 	// the forces are needed to calculate x, but are not given in the input file.
 	// copies F to oldF of particles and sets F to 0
 	particleContainer->iterate(forceType);
+
+	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
 	// calculates new F
 	particleContainer->iteratePair(forceType);
+	particleContainer->iterate(gravity);
 	#ifdef LC
 	// add reflecting force to boundary particles according to domainBoundaries[]
 	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
+	((ParticleContainerLC*)particleContainer)->emptyHalo();
 	#endif
 
 	double current_time = sim->start_time;
@@ -180,9 +185,12 @@ int main(int argc, char* argsv[]) {
 
 	while (current_time < sim->end_time) {
 		// calculate new x
+		//LOG4CXX_DEBUG(molsimlog, "before x");
 		particleContainer->iterate(xcalc);
+		//LOG4CXX_DEBUG(molsimlog, "after x");
 		#ifdef LC
 		((ParticleContainerLC*)particleContainer)->moveParticles();
+		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
 		#endif
 
 		// copies F to oldF of particles and sets F to 0
@@ -237,7 +245,9 @@ int main(int argc, char* argsv[]) {
 #ifdef LC
 		// remove halo particles
 		((ParticleContainerLC*)particleContainer)->emptyHalo();
+		//((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::OUTFLOW, forceType);
 #endif
+
 		current_time += sim->delta_t;
 	}
 

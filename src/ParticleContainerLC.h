@@ -83,6 +83,9 @@ private:
 	/**number of all cells in each dimension inclusive halo particles*/
 	int allCellNums[DIM];
 
+	/** size of cell per dimension */
+	double cellSize[DIM];
+
 	/**number of all halo cells*/
 	int haloAllCellNums;
 
@@ -160,6 +163,9 @@ private:
 
 	/** applies fnc on all particles of a boundary wall (e.g. left domain side) */
 	void applyToBoundaryWall(int fixedDim, int fixedVal, PCApply *fnc);
+
+	/** removes particles from given boundary wall */
+	void emptyHaloSide(int fixedDim, int fixedVal);
 
 	bool hasNextInHaloCell();
 

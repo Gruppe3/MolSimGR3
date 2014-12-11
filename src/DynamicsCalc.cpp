@@ -38,7 +38,7 @@ void CalcT::iterateFunc(Particle& p) {
 	energy = energy + p.getM() * vnorm*vnorm;
 }
 
-double CalcT::calcBeta(double tD,int numParticles){
+double CalcT::calcBeta(double tD, int numParticles){
 	double T = energy / (DIM * numParticles * sim->boltzmannConst);
 	//cout<<"Temperature:   "<<T<<endl;
 	return sqrt(tD / T);

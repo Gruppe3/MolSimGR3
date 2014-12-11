@@ -40,8 +40,9 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 			sim->domainSize[2] = 1;
 		sim->cutoff = molsim->domain()->cutoff();
 		LOG4CXX_DEBUG(iolog, "out: " << sim->out_name << ", wFq: " << sim->writeFreq << ", delta t: " <<
-				sim->delta_t << ", end: " << sim->end_time << ", cutoff: " << sim->cutoff << ", domain: " <<
-				sim->domainSize[0] << " x " << sim->domainSize[1] << " x " << sim->domainSize[2]);
+				sim->delta_t << ", end: " << sim->end_time << ", cutoff: " << sim->cutoff <<
+				", gravity:" << sim->gravity << ", domain: " << sim->domainSize[0] << " x " <<
+				sim->domainSize[1] << " x " << sim->domainSize[2]);
 
 		// get boundary conditions
 		BoundaryConds *bc = sim->boundaries;
@@ -73,6 +74,11 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 		sim->tempFreq = thermo.interval();
 		sim->thermostatStart = thermo.starttime();
 
+		int typeSize = molsim->particleTypes().type().size();
+		sim->typesNum = typeSize;
+		sim->epsilons = new double[typeSize];
+		sim->sigmas = new double[typeSize];
+
 		LOG4CXX_INFO(iolog, "reading object data...");
 		objectlist objects = molsim->objectlist();
 
@@ -102,18 +108,23 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 			sim->meshWidth = i->meshwidth();
 	    	ParticleGenerator pg;
 	    	int type = 0;
-	    	sim->epsilon11 = molsim->particleTypes().type()[0].epsilon();
-	    	sim->sigma11=molsim->particleTypes().type()[0].sigma();
-	    	if (i->type().present()){
+	    	//sim->epsilon11 = molsim->particleTypes().type()[0].epsilon();
+
+	    	//sim->sigma11=molsim->particleTypes().type()[0].sigma();
+	    	if (i->type().present()) {
 	    		type = i->type().get();
-	    		sim->epsilon11 = molsim->particleTypes().type()[0].epsilon();
+	    		if (type >= typeSize) {
+	    			LOG4CXX_ERROR(iolog, "type " << type << "doesn't exist");
+	    			exit(-1);
+	    		}
+	    		/*sim->epsilon11 = molsim->particleTypes().type()[0].epsilon();
 	    		sim->epsilon22 = molsim->particleTypes().type()[1].epsilon();
 	    		sim->sigma11 = molsim->particleTypes().type()[0].sigma();
-	    		sim->sigma22 = molsim->particleTypes().type()[1].sigma();
+	    		sim->sigma22 = molsim->particleTypes().type()[1].sigma();*/
 	    		/*LOG4CXX_DEBUG(iolog, "epsilon11:  "<< sim->epsilon11 << "  epsilon22:  "<< sim->epsilon22
 	    				<< "  sigma11:  "<<sim->sigma11 << "  sigma22:  "<<sim->sigma22);*/
-	    		sim->sigma12=(sim->sigma11+sim->sigma22)/2;
-	    		sim->epsilon12=sqrt(sim->epsilon11*sim->epsilon22);
+	    		/*sim->sigma12=(sim->sigma11+sim->sigma22)/2;
+	    		sim->epsilon12=sqrt(sim->epsilon11*sim->epsilon22);*/
 	    	}
 	    	pg.createCuboid(x, n, v, i->meshwidth(), i->mass(), brownian, pc, sim, type);
 	    }
@@ -138,7 +149,14 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 			sim->meshWidth = i->meshwidth();
 			ParticleGenerator pg;
 			int type = 0;
-			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), 1.0, brownian, 2, pc, sim, type);
+			if (i->type().present()) {
+				type = i->type().get();
+				if (type >= typeSize) {
+					LOG4CXX_ERROR(iolog, "type " << type << "doesn't exist");
+					exit(-1);
+				}
+			}
+			pg.createSphere(x, i->numparticles(), v, i->meshwidth(), i->mass(), brownian, 2, pc, sim, type);
 		}
 
 		// iterating over particles
@@ -158,9 +176,24 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 			v[1] = i->velocity().y();
 			v[2] = i->velocity().z();
 
+			int type = 0;
+			if (i->type().present()) {
+				type = i->type().get();
+				if (type >= typeSize) {
+					LOG4CXX_ERROR(iolog, "type " << type << "doesn't exist");
+					exit(-1);
+				}
+			}
 			Particle p(x, v, i->mass(), 0);
 			pc->add(p);
 		}
+
+		// set sigma and epsilon values for given types
+		for (int i = 0; i < molsim->particleTypes().type().size(); i++) {
+			sim->epsilons[i] = molsim->particleTypes().type()[i].epsilon();
+			sim->sigmas[i] = molsim->particleTypes().type()[i].sigma();
+		}
+
 		LOG4CXX_INFO(iolog, "reading done...");
 	}
 	catch (const xml_schema::exception& e) {

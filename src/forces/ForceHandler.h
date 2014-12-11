@@ -33,6 +33,13 @@ public:
 		f_old = f;
 		f = 0.0;
 	}
+
+	virtual void setSimulation(Simulation *s) {
+		sim = s;
+	}
+
+protected:
+	Simulation *sim;
 };
 
 #endif /* SRC_FORCECALC_H_ */

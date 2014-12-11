@@ -12,16 +12,41 @@
 const LoggerPtr forcelog(log4cxx::Logger::getLogger("molsim.particle.force"));
 
 LennardJones::LennardJones() {
-	sigma = 1.0;
-	epsilon = 5.0;
-	coeff = 24 * epsilon;
+	sigma11 = 1.0;
+	epsilon11 = 5.0;
+
+}
+
+LennardJones::LennardJones(Simulation *s) {
+	sigma11 = sim->sigmas[0];
+	sigma22 = sim->sigmas[1];
+	sigma12 = (sigma11 + sigma22) / 2;
+
+	epsilon11 = sim->epsilons[0];
+	epsilon22 = sim->epsilons[1];
+	epsilon12 = sqrt(epsilon11 * epsilon22);
 }
 
 LennardJones::~LennardJones() {
 
 }
 
-void LennardJones::calc(Particle&p1, Particle& p2) {
+void LennardJones::calc(Particle& p1, Particle& p2) {
+	double sigma, epsilon;
+	if ((p1.getType() == 0) && (p2.getType() == 0)) {
+		sigma = sigma11;
+		epsilon = epsilon11;
+	}
+	else if ((p1.getType() == 1) && (p2.getType() == 1)) {
+		sigma = sigma22;
+		epsilon = epsilon22;
+	}
+	else if (p1.getType() != p2.getType()) {
+		sigma = sigma12;
+		epsilon = epsilon12;
+	}
+	double coeff = 24 * epsilon;
+
 	utils::Vector<double, 3>& f1 = p1.getF();
 	utils::Vector<double, 3>& f2 = p2.getF();
 	utils::Vector<double, 3> diff = p2.getX() - p1.getX();
@@ -34,24 +59,38 @@ void LennardJones::calc(Particle&p1, Particle& p2) {
 	f2 = f2 - f;
 }
 
+void LennardJones::setSimulation(Simulation *s) {
+	sim = s;
+	sigma11 = sim->sigmas[0];
+	sigma22 = sim->sigmas[1];
+	sigma12 = (sigma11 + sigma22) / 2;
 
+	epsilon11 = sim->epsilons[0];
+	epsilon22 = sim->epsilons[1];
+	epsilon12 = sqrt(epsilon11 * epsilon22);
+}
 
 
 LennardJonesLC::~LennardJonesLC() {
 
 }
 
-void LennardJonesLC::calc(Particle&p1, Particle& p2) {
-		/*if((p1.getType()==0)&&(p2.getType()==0)){
-		sigma=sim->sigma11;
-		epsilon=sim->epsilon11;
-	}else if((p1.getType()==1)&&(p2.getType()==1)){
-		sigma=sim->sigma22;
-		epsilon=sim->epsilon22;
-	}else if(p1.getType()!=p2.getType()){
-		sigma=sim->sigma12;
-		epsilon=sim->epsilon12;
-	}*/
+void LennardJonesLC::calc(Particle& p1, Particle& p2) {
+	double sigma, epsilon;
+	if ((p1.getType() == 0) && (p2.getType() == 0)) {
+		sigma = sigma11;
+		epsilon = epsilon11;
+	}
+	else if ((p1.getType() == 1) && (p2.getType() == 1)) {
+		sigma = sigma22;
+		epsilon = epsilon22;
+	}
+	else if (p1.getType() != p2.getType()) {
+		sigma = sigma12;
+		epsilon = epsilon12;
+	}
+	double coeff = 24 * epsilon;
+
 	//LOG4CXX_DEBUG(forcelog, "force calc LC");
 	utils::Vector<double, 3>& f1 = p1.getF();
 	utils::Vector<double, 3>& f2 = p2.getF();
