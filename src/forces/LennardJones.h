@@ -18,30 +18,31 @@ public:
 	/** constructor */
 	LennardJones();
 
+	LennardJones(Simulation *s);
+
 	/** destructor */
 	virtual ~LennardJones();
 
 	/** calculates the LJ force between the particles and adds it to their total forces
 	 * @param p1,p2 Particles for LJ force */
 	virtual void calc(Particle& p1, Particle& p2);
-//protected:
-	double sigma;
-	double epsilon;
-	double coeff;
-};
 
-/** A force calculator using the Lennard-Jones potential for the LC algorithm (no Newton III) */
-class LennardJonesLC : public LennardJones {
-private:
+	/** get sigma and epsilon from s */
+	virtual void setSimulation(Simulation *s);
+
+protected:
 	double sigma11;
 	double sigma22;
 	double epsilon11;
 	double epsilon22;
 	double sigma12;
 	double epsilon12;
+};
+
+/** A force calculator using the Lennard-Jones potential for the LC algorithm (no Newton III) */
+class LennardJonesLC : public LennardJones {
 public:
 	//LennardJonesLC();
-	LennardJonesLC(Simulation * sim);
 	/** constructor */
 
 	/** destructor */

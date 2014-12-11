@@ -28,3 +28,4 @@ src/test/ParticleContainerLCTest.cpp\
 src/test/LennardJonesTest.cpp\
 src/test/ParticleGeneratorTest.cpp\
 src/test/ThermostatTest.cpp\
+src/test/XMLInputTest.cpp\

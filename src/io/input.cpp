@@ -43,7 +43,7 @@
 namespace input
 {
   // decimalvector
-  // 
+  //
 
   const decimalvector::x_type& decimalvector::
   x () const
@@ -101,7 +101,7 @@ namespace input
 
 
   // integervector
-  // 
+  //
 
   const integervector::x_type& integervector::
   x () const
@@ -159,7 +159,7 @@ namespace input
 
 
   // boundarytype
-  // 
+  //
 
   boundarytype::
   boundarytype (value v)
@@ -196,7 +196,7 @@ namespace input
   boundarytype& boundarytype::
   operator= (value v)
   {
-    static_cast< ::xml_schema::string& > (*this) = 
+    static_cast< ::xml_schema::string& > (*this) =
     ::xml_schema::string (_xsd_boundarytype_literals_[v]);
 
     return *this;
@@ -204,7 +204,7 @@ namespace input
 
 
   // molsimdata
-  // 
+  //
 
   const molsimdata::outputbasename_type& molsimdata::
   outputbasename () const
@@ -406,7 +406,7 @@ namespace input
 
 
   // domain
-  // 
+  //
 
   const domain::size_type& domain::
   size () const
@@ -476,7 +476,7 @@ namespace input
 
 
   // thermostat
-  // 
+  //
 
   const thermostat::brownian_optional& thermostat::
   brownian () const
@@ -594,7 +594,7 @@ namespace input
 
 
   // objectlist
-  // 
+  //
 
   const objectlist::cuboid_sequence& objectlist::
   cuboid () const
@@ -652,7 +652,7 @@ namespace input
 
 
   // particleTypes
-  // 
+  //
 
   const particleTypes::type_sequence& particleTypes::
   type () const
@@ -674,7 +674,7 @@ namespace input
 
 
   // boundaries
-  // 
+  //
 
   const boundaries::front_type& boundaries::
   front () const
@@ -822,7 +822,7 @@ namespace input
 
 
   // cuboid
-  // 
+  //
 
   const cuboid::location_type& cuboid::
   location () const
@@ -958,7 +958,7 @@ namespace input
 
 
   // sphere
-  // 
+  //
 
   const sphere::location_type& sphere::
   location () const
@@ -1088,7 +1088,7 @@ namespace input
 
 
   // particle
-  // 
+  //
 
   const particle::location_type& particle::
   location () const
@@ -1182,7 +1182,7 @@ namespace input
 
 
   // type
-  // 
+  //
 
   const type::id_type& type::
   id () const

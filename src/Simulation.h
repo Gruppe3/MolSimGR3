@@ -26,30 +26,32 @@ public:
 		writeFreq = 10;
 
 		meshWidth = 1.1225;
-		thermostatStart=100;
-		meanVelocityTypeFlag=1;
-		initTemp=5.0;
+		thermostatStart = 100;
+		meanVelocityTypeFlag = 1;
+		initTemp = 5.0;
 		//diffTargetTempFlag=true;
-		targetTemp=500.0;
-		tempDiff=2;
-		tempFreq=1;
-		sigma11=1.0;
-		sigma22=0.9412;
-		sigma12=1.0;
-		cutoff = 2.5*sigma12;
+		targetTemp = 500.0;
+		tempDiff = 2;
+		tempFreq = 1;
+
+		sigmas = new double[1];
+		sigmas[0] = 1.0;
+		epsilons = new double[1];
+		epsilons[0] = 5.0;
+		cutoff = 2.5 * sigmas[0];
 		//sigma21=sigma12;
-		epsilon11=1.0;
-		epsilon22=1.0;
-		epsilon12=1.0;
-		gravity=-9.807;
+		gravity = -9.807;
 		//epsilon21=epsilon12;
 		//boltzmannConst=1.3806488E-23;
-		boltzmannConst = 1.5;
+		boltzmannConst = 1.0;
 		boundaries = new BoundaryConds;
 	}
 
 	/** destructor */
-	virtual ~Simulation() {};
+	virtual ~Simulation() {
+		delete [] sigmas;
+		delete [] epsilons;
+	};
 
 	/** start time of the simulation */
 	double start_time;
@@ -91,14 +93,14 @@ public:
 	/** step size in which temperature should be changed */
 	double tempDiff;
 
-	double sigma11;
-	double sigma12;
-	//double sigma21;
-	double sigma22;
-	double epsilon11;
-	double epsilon12;
-	//double epsilon21;
-	double epsilon22;
+	/** type a + type b = index for sigma between types a and b */
+	double *sigmas;
+
+	/** type a + type b = index for epsilon between types a and b */
+	double *epsilons;
+
+	/** number of particle types */
+	int typesNum;
 
 	/**1 - initialize temperature for thermostat problem, 0 - initialize temperature only with Maxwell-Boltzmann*/
 	int meanVelocityTypeFlag;

@@ -20,7 +20,7 @@
 #include "test/ParticleContainerTest.h"
 #include "test/ParticleContainerLCTest.h"
 #include "test/ParticleGeneratorTest.h"
-//#include "test/XMLInputTest.h"
+#include "test/XMLInputTest.h"
 #include "test/ThermostatTest.h"
 
 #include "Logger.h"
@@ -93,7 +93,7 @@ int main(int argc, char* argsv[]) {
 				if (strcmp(argsv[2], "ParticleContainer") == 0) {run(ParticleContainerTest::suite());}
 				if (strcmp(argsv[2], "ParticleContainerLC") == 0) {run(ParticleContainerLCTest::suite());}
 				if (strcmp(argsv[2], "ParticleGenerator") == 0) {run(ParticleGeneratorTest::suite());}
-				//if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
+				if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
 				if (strcmp(argsv[2], "Thermostat") == 0) {run(ThermostatTest::suite());}
 				return 0;
 			}
@@ -128,7 +128,7 @@ int main(int argc, char* argsv[]) {
 	else if (strcmp(argsv[1], "-xml") == 0) {	// xml file according to molsim-input.xsd
 		inputhandler = new XMLInput;
 		#ifdef LC
-		forceType = new LennardJonesLC(sim);
+		forceType = new LennardJonesLC();
 		#endif
 	}
 	else {
@@ -148,14 +148,19 @@ int main(int argc, char* argsv[]) {
 
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 
+	forceType->setSimulation(sim);
 	// the forces are needed to calculate x, but are not given in the input file.
 	// copies F to oldF of particles and sets F to 0
 	particleContainer->iterate(forceType);
+
+	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
 	// calculates new F
 	particleContainer->iteratePair(forceType);
+	particleContainer->iterate(gravity);
 	#ifdef LC
 	// add reflecting force to boundary particles according to domainBoundaries[]
 	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
+	((ParticleContainerLC*)particleContainer)->emptyHalo();
 	#endif
 
 	double current_time = sim->start_time;
@@ -180,10 +185,12 @@ int main(int argc, char* argsv[]) {
 
 	while (current_time < sim->end_time) {
 		// calculate new x
+		//LOG4CXX_DEBUG(molsimlog, "before x");
 		particleContainer->iterate(xcalc);
-
+		//LOG4CXX_DEBUG(molsimlog, "after x");
 		#ifdef LC
 		((ParticleContainerLC*)particleContainer)->moveParticles();
+		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
 		#endif
 
 		// copies F to oldF of particles and sets F to 0
@@ -193,8 +200,6 @@ int main(int argc, char* argsv[]) {
 		particleContainer->iterate(gravity);
 
 		#ifdef LC
-		// binds opposite walls according to sim->domainBoundaries[]
-		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
 		// add reflecting force to boundary particles according to sim->domainBoundaries[]
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
 		#endif
@@ -232,7 +237,7 @@ int main(int argc, char* argsv[]) {
 			performance_timer_average = (performance_timer_current_double - performance_timer_start_double) / (double)iteration;
 
 			plotParticles(iteration);
-			LOG4CXX_INFO(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Average: " << performance_timer_average << " sec./Iter.");
+			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Average: " << performance_timer_average << " sec./Iter.");
 			//LOG4CXX_DEBUG(molsimlog, "Size ot Particles : " << particleContainer->size() );
 			//LOG4CXX_DEBUG(molsimlog,"beta"<<beta);
 		}
@@ -241,9 +246,7 @@ int main(int argc, char* argsv[]) {
 #ifdef LC
 		// remove halo particles
 		((ParticleContainerLC*)particleContainer)->emptyHalo();
-
-		
-
+		//((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::OUTFLOW, forceType);
 #endif
 		current_time += sim->delta_t;
 	}
