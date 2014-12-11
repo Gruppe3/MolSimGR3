@@ -11,10 +11,10 @@
 <boundaries>
 <front>outflow</front>
 <back>outflow</back>
-<left>outflow</left>
-<right>outflow</right>
-<top>outflow</top>
-<bottom>outflow</bottom>
+<left>periodic</left>
+<right>periodic</right>
+<top>reflecting</top>
+<bottom>reflecting</bottom>
 </boundaries>
 </domain>
 <thermostat>

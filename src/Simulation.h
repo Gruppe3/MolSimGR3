@@ -44,7 +44,7 @@ public:
 		gravity=-9.807;
 		//epsilon21=epsilon12;
 		//boltzmannConst=1.3806488E-23;
-		boltzmannConst = 1.0;
+		boltzmannConst = 1.5;
 		boundaries = new BoundaryConds;
 	}
 
@@ -93,11 +93,11 @@ public:
 
 	double sigma11;
 	double sigma12;
-	double sigma21;
+	//double sigma21;
 	double sigma22;
 	double epsilon11;
 	double epsilon12;
-	double epsilon21;
+	//double epsilon21;
 	double epsilon22;
 
 	/**1 - initialize temperature for thermostat problem, 0 - initialize temperature only with Maxwell-Boltzmann*/

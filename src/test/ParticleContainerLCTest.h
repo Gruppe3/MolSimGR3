@@ -37,12 +37,16 @@ public:
 	/** tests if moving particle stays still in the domain after multiple iterations */
 	void testReflection();
 
+	/** tests if moving particle stays still in the domain after multiple iterations */
+	void testPeriodicBoundary();
+
 	static Test *suite ()  {
 		TestSuite *suiteOfTests = new TestSuite;
 		suiteOfTests->addTest (new TestCaller<ParticleContainerLCTest>("testSize", &ParticleContainerLCTest::testSize));
 		suiteOfTests->addTest (new TestCaller<ParticleContainerLCTest>("testAdd", &ParticleContainerLCTest::testAdd));
 		suiteOfTests->addTest (new TestCaller<ParticleContainerLCTest>("testMove", &ParticleContainerLCTest::testMove));
 		suiteOfTests->addTest (new TestCaller<ParticleContainerLCTest>("testReflection", &ParticleContainerLCTest::testReflection));
+		suiteOfTests->addTest (new TestCaller<ParticleContainerLCTest>("testPeriodicBoundary", &ParticleContainerLCTest::testReflection));
 		return suiteOfTests;
 	}
 

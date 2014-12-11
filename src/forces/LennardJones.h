@@ -32,8 +32,16 @@ public:
 
 /** A force calculator using the Lennard-Jones potential for the LC algorithm (no Newton III) */
 class LennardJonesLC : public LennardJones {
+private:
+	double sigma11;
+	double sigma22;
+	double epsilon11;
+	double epsilon22;
+	double sigma12;
+	double epsilon12;
 public:
 	//LennardJonesLC();
+	LennardJonesLC(Simulation * sim);
 	/** constructor */
 
 	/** destructor */

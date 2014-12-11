@@ -19,7 +19,7 @@
 #include "test/ParticleContainerTest.h"
 #include "test/ParticleContainerLCTest.h"
 #include "test/ParticleGeneratorTest.h"
-#include "test/XMLInputTest.h"
+//#include "test/XMLInputTest.h"
 #include "test/ThermostatTest.h"
 
 #include "Logger.h"
@@ -92,7 +92,7 @@ int main(int argc, char* argsv[]) {
 				if (strcmp(argsv[2], "ParticleContainer") == 0) {run(ParticleContainerTest::suite());}
 				if (strcmp(argsv[2], "ParticleContainerLC") == 0) {run(ParticleContainerLCTest::suite());}
 				if (strcmp(argsv[2], "ParticleGenerator") == 0) {run(ParticleGeneratorTest::suite());}
-				if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
+				//if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
 				if (strcmp(argsv[2], "Thermostat") == 0) {run(ThermostatTest::suite());}
 				return 0;
 			}
@@ -127,7 +127,7 @@ int main(int argc, char* argsv[]) {
 	else if (strcmp(argsv[1], "-xml") == 0) {	// xml file according to molsim-input.xsd
 		inputhandler = new XMLInput;
 		#ifdef LC
-		forceType = new LennardJonesLC;
+		forceType = new LennardJonesLC(sim);
 		#endif
 	}
 	else {
@@ -162,8 +162,7 @@ int main(int argc, char* argsv[]) {
 	int count_iterations = sim->end_time / sim->delta_t;
 	double beta = 1.0;
 	 // for this loop, we assume: current x, current f and current v are known
-	double temperature = sim->initTemp;
-
+	double temperature = sim->initTemp;	
 	/**
  	* set up the timeval structures for performance measurement
  	*/
@@ -181,6 +180,7 @@ int main(int argc, char* argsv[]) {
 	while (current_time < sim->end_time) {
 		// calculate new x
 		particleContainer->iterate(xcalc);
+
 		#ifdef LC
 		((ParticleContainerLC*)particleContainer)->moveParticles();
 		#endif
@@ -192,6 +192,8 @@ int main(int argc, char* argsv[]) {
 		particleContainer->iterate(gravity);
 
 		#ifdef LC
+		// binds opposite walls according to sim->domainBoundaries[]
+		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
 		// add reflecting force to boundary particles according to sim->domainBoundaries[]
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
 		#endif
@@ -230,6 +232,7 @@ int main(int argc, char* argsv[]) {
 
 			plotParticles(iteration);
 			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Average: " << performance_timer_average << " sec./Iter.");
+			//LOG4CXX_DEBUG(molsimlog, "Size ot Particles : " << particleContainer->size() );
 			//LOG4CXX_DEBUG(molsimlog,"beta"<<beta);
 		}
 

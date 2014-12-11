@@ -69,7 +69,7 @@ void ParticleContainerLCTest::testReflection() {
 	LOG4CXX_INFO(testlog, "container size start:" << pc->size());
 	CPPUNIT_ASSERT(pc->size() == 2);
 
-	ForceHandler* forceType = new LennardJonesLC();
+	ForceHandler* forceType = new LennardJonesLC(sim);
 	CalcX *xcalc = new CalcX(sim);
 	CalcV *vcalc = new CalcV(sim);
 
@@ -100,6 +100,43 @@ void ParticleContainerLCTest::testReflection() {
 	LOG4CXX_INFO(testlog, "p: " << pc->next().toString());
 }
 
+void ParticleContainerLCTest::testPeriodicBoundary() {
+	sim->boundaries->setBoundary(BoundaryConds::TOP, BoundaryConds::PERIODIC);
+	sim->boundaries->setBoundary(BoundaryConds::BOTTOM, BoundaryConds::PERIODIC);
+	LOG4CXX_INFO(testlog, "testing reflection...");
+	LOG4CXX_INFO(testlog, "container size start:" << pc->size());
+	CPPUNIT_ASSERT(pc->size() == 2);
+
+	ForceHandler* forceType = new LennardJonesLC(sim);
+	CalcX *xcalc = new CalcX(sim);
+	CalcV *vcalc = new CalcV(sim);
+
+	pc->iteratePair(forceType);
+	pc->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
+
+	for (int i = 0; i < 10000; i++) {
+		pc->iterate(xcalc);
+		pc->moveParticles();
+
+		// copies F to oldF of particles and sets F to 0
+		pc->iterate(forceType);
+		// calculate new f
+		pc->iteratePair(forceType);
+		// add reflecting force to boundary particles according to sim->domainBoundaries[]
+		pc->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
+
+		// calculate new v
+		pc->iterate(vcalc);
+		pc->emptyHalo();
+
+	}
+
+	LOG4CXX_INFO(testlog, "container size end:" << pc->size());
+	CPPUNIT_ASSERT(pc->size() == 2);
+
+	pc->resetIterator();
+	LOG4CXX_INFO(testlog, "p: " << pc->next().toString());
+}
 
 
 void ParticleContainerLCTest::testMove(){
