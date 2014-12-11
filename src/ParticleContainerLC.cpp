@@ -34,7 +34,7 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc, Simulation *sim)
 
 	for (int d = 0; d < DIM; d++) {
 		cellSize[d] = domainSize[d] / radius;
-		int expansion = domainSize[d] / radius;
+		int expansion = domainSize[d] / radius + 1;
 		cellNums[d] = expansion > 0 ? expansion : 1;	// expansion in dimension d must be at least 1 for correct numcell()
 		allCellNums[d] = cellNums[d] + 2;
 	}
