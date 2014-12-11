@@ -93,7 +93,6 @@ void LennardJonesLC::calc(Particle& p1, Particle& p2) {
 
 	//LOG4CXX_DEBUG(forcelog, "force calc LC");
 	utils::Vector<double, 3>& f1 = p1.getF();
-	utils::Vector<double, 3>& f2 = p2.getF();
 
 	utils::Vector<double, 3> diff = p2.getX() - p1.getX();
 	double norm_inverse = 1 / diff.L2Norm();

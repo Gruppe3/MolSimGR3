@@ -339,14 +339,14 @@ void ParticleContainerLC::iteratePair(PCApply *fnc) {
 		selectCell(idx);
 		while (pl != NULL) {
 			int tmp[DIM];
-			int other[DIM];
-			numToIndex(calcIndex(otherCellIndex, allCellNums), other, allCellNums);	// next cell
-			for (tmp[0] = other[0]; tmp[0] < idx[0]+3; tmp[0]++)	// incl. +1 for centralCellIndex to allCells coords.
+			//int other[DIM];
+			//numToIndex(calcIndex(otherCellIndex, allCellNums), other, allCellNums);	// next cell
+			for (tmp[0] = otherCellIndex[0]; tmp[0] < idx[0]+3; tmp[0]++)	// incl. +1 for centralCellIndex to allCells coords.
 #if 1<DIM
-				for (tmp[1] = other[1]; tmp[1] < idx[1]+3; tmp[1]++)
+				for (tmp[1] = otherCellIndex[1]; tmp[1] < idx[1]+3; tmp[1]++)
 #endif
 #if 3==DIM
-					for (tmp[2] = other[2]; tmp[2] < idx[2]+3; tmp[2]++)
+					for (tmp[2] = otherCellIndex[2]; tmp[2] < idx[2]+3; tmp[2]++)
 #endif
 					{
 						ParticleList *pl2 = allCells[calcIndex(tmp, allCellNums)]->root;
@@ -354,7 +354,23 @@ void ParticleContainerLC::iteratePair(PCApply *fnc) {
 							if (pl != pl2) {
 								Particle& p1 = *pl->p;
 								Particle& p2 = *pl2->p;
-								fnc->iteratePairFunc(p1, p2);
+								Particle p(p2);
+								//LOG4CXX_DEBUG(particlelog, p1.getX().toString());
+								// correct position of halo particles for periodic boundaries
+								for (int d = 0; d < DIM; d++) {
+									utils::Vector<double, 3>& x = p.getX();
+									if (cellNums[d] > 1) {
+										if (tmp[d] == 0)
+											x[d] -= radius*cellNums[d];
+										else if (tmp[d] == cellNums[d])
+											x[d] += radius*cellNums[d];
+									}
+								}
+								//LOG4CXX_DEBUG(particlelog, "p:" << p.getX().toString());
+								//LOG4CXX_DEBUG(particlelog, "p2" << p2.getX().toString());
+
+								fnc->iteratePairFunc(p1, p);
+								//LOG4CXX_DEBUG(particlelog, "f after:" << p1.getF().toString());
 							}
 							pl2 = pl2->next;
 						}
@@ -413,24 +429,24 @@ void ParticleContainerLC::applyBoundaryConds(BoundaryConds::Boundary bd, PCApply
 #endif
 	}
 	else if (bd == BoundaryConds::OUTFLOW) {
-		if (domainBoundary[BoundaryConds::LEFT] == BoundaryConds::REFLECTING) {	// left
+		if (domainBoundary[BoundaryConds::LEFT] == BoundaryConds::OUTFLOW) {	// left
 			emptyHaloSide(0, 0);
 		}
-		if (domainBoundary[BoundaryConds::RIGHT] == BoundaryConds::REFLECTING) {	// right
+		if (domainBoundary[BoundaryConds::RIGHT] == BoundaryConds::OUTFLOW) {	// right
 			emptyHaloSide(0, cellNums[0]-1);
 		}
 
-		if (domainBoundary[BoundaryConds::BOTTOM] == BoundaryConds::REFLECTING) {	// bottom
+		if (domainBoundary[BoundaryConds::BOTTOM] == BoundaryConds::OUTFLOW) {	// bottom
 			emptyHaloSide(1, 0);
 		}
-		if (domainBoundary[BoundaryConds::TOP] == BoundaryConds::REFLECTING) {	// top
+		if (domainBoundary[BoundaryConds::TOP] == BoundaryConds::OUTFLOW) {	// top
 			emptyHaloSide(1, cellNums[1]-1);
 		}
 
-		if (domainBoundary[BoundaryConds::FRONT] == BoundaryConds::REFLECTING) {	// front
+		if (domainBoundary[BoundaryConds::FRONT] == BoundaryConds::OUTFLOW) {	// front
 			emptyHaloSide(2, 0);
 		}
-		if (domainBoundary[BoundaryConds::BACK] == BoundaryConds::REFLECTING) {	// back
+		if (domainBoundary[BoundaryConds::BACK] == BoundaryConds::OUTFLOW) {	// back
 			emptyHaloSide(2, cellNums[2]-1);
 		}
 	}
@@ -497,7 +513,8 @@ void ParticleContainerLC::bindOppositeWalls(int fixedDim, int fixedVal) {
 #endif
 		{
 			int index = calcIndex(idx, allCellNums);
-			ParticleList *pl = allCells[index]->root;
+			ParticleList **pl = &allCells[index]->root;
+			ParticleList *i = *pl;
 
 			// set index of opposite boundary wall
 			int idx_n[DIM];
@@ -509,11 +526,11 @@ void ParticleContainerLC::bindOppositeWalls(int fixedDim, int fixedVal) {
 				idx_n[fixedDim] = 1;
 			int oppositeIndex = calcIndex(idx_n, allCellNums);
 
-			while (pl != NULL) {	// iterate over all particles in the cell
-				Particle& p = *pl->p;
+			while (i != NULL) {	// iterate over all particles in the cell
+				Particle& p = *i->p;
 				utils::Vector<double, 3>& x = p.getX();
-				ParticleList *cpy = pl;
-				pl = pl->next;
+				//ParticleList *cpy = pl;
+				//pl = pl->next;
 				if (fixedVal == 0) {
 					//LOG4CXX_DEBUG(particlelog, "x before (fixedVal=0)  " <<allCells[calcIndex(idx, allCellNums)]->root->p->getX().toString());
 					x[fixedDim] += radius*cellNums[fixedDim];
@@ -526,13 +543,33 @@ void ParticleContainerLC::bindOppositeWalls(int fixedDim, int fixedVal) {
 					//LOG4CXX_DEBUG(particlelog, "x after (fixedVal=cellNums)  " << p.getX().toString());
 				}
 				//LOG4CXX_DEBUG(particlelog, "opposite cell" << oppositeIndex);
-				insertList(&allCells[oppositeIndex]->root, cpy);
+				deleteList(pl);
+				insertList(&allCells[oppositeIndex]->root, i);
+				i = *pl;
 			}
 			//LOG4CXX_DEBUG(particlelog, "cell finished");
 			//LOG4CXX_DEBUG(particlelog, "index:" << idx[0] << "," << idx[1] << "," << idx[2]);
 			//LOG4CXX_DEBUG(particlelog, "index_n:" << idx_n[0] << "," << idx_n[1] << "," << idx_n[2]);
-			// set own content to opposite boundary cell's content
+
+			// set own content to copy of opposite boundary cell's content
 			allCells[index]->root = allCells[oppositeIndex]->root;
+
+			/*ParticleList *pl2 = allCells[oppositeIndex]->root;
+			while (pl2 != NULL) {
+				Particle& p = *pl2->p;
+				Particle *ghost = new Particle;
+				utils::Vector<double, 3>& x = ghost->getX();
+				x = p.getX();
+				if (fixedVal == 0)
+					x[fixedDim] -= radius*cellNums[fixedDim];
+				else
+					x[fixedDim] += radius*cellNums[fixedDim];
+				ParticleList *pl_n = new ParticleList;
+				pl_n->next = NULL;
+				pl_n->p = ghost;
+				insertList(&allCells[index]->root, pl_n);
+				pl2 = pl2->next;
+			}*/
 		}
 	//LOG4CXX_DEBUG(particlelog, "end periodic");
 }

@@ -6,7 +6,7 @@
 <endtime>25</endtime>
 <gravity>-12.44</gravity>
 <domain>
-<size x="63" y="37" z="0"/>
+<size x="63" y="36" z="0"/>
 <cutoff>2.4265</cutoff>
 <boundaries>
 	<front>outflow</front>
