@@ -22,6 +22,7 @@ src/forces/EarthGravitation.cpp\
 src/forces/LennardJones.cpp\
 src/MaxwellBoltzmannDistribution.cpp\
 src/ParticleGenerator.cpp\
+src/PhaseSpaceOutput.cpp\
 src/test/ParticleContainerTest.cpp\
 src/test/ParticleContainerLCTest.cpp\
 src/test/LennardJonesTest.cpp\

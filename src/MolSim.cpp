@@ -3,6 +3,7 @@
 #include <forces/Gravitation.h>
 #include <forces/LennardJones.h>
 #include <ParticleContainerLC.h>
+#include "PhaseSpaceOutput.h"
 #include "forces/EarthGravitation.h"
 #include "MaxwellBoltzmannDistribution.h"
 #include "ParticleContainer.h"
@@ -231,7 +232,7 @@ int main(int argc, char* argsv[]) {
 			performance_timer_average = (performance_timer_current_double - performance_timer_start_double) / (double)iteration;
 
 			plotParticles(iteration);
-			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Average: " << performance_timer_average << " sec./Iter.");
+			LOG4CXX_INFO(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Average: " << performance_timer_average << " sec./Iter.");
 			//LOG4CXX_DEBUG(molsimlog, "Size ot Particles : " << particleContainer->size() );
 			//LOG4CXX_DEBUG(molsimlog,"beta"<<beta);
 		}
@@ -240,11 +241,22 @@ int main(int argc, char* argsv[]) {
 #ifdef LC
 		// remove halo particles
 		((ParticleContainerLC*)particleContainer)->emptyHalo();
+
+		
+
 #endif
 		current_time += sim->delta_t;
 	}
 
-	LOG4CXX_INFO(molsimlog, "output written. Terminating...");
+	LOG4CXX_INFO(molsimlog,"Starting PhaseSpaceOutput...");
+	PSO *pso = new PSO();
+	pso->openFile();
+	particleContainer->iterate(pso);
+	pso->closeFile();
+	LOG4CXX_INFO(molsimlog,"PhaseSpaceOutput finished.");
+
+
+	LOG4CXX_INFO(molsimlog, "Output written. Terminating...");
 	return 0;
 }
 
