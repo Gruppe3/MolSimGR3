@@ -99,24 +99,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define SRC_FORCECALC_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../Particle.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">/* based on strategy pattern */</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classForceHandler.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="classForceHandler.html">ForceHandler</a> {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classForceHandler.html#ab373c2093bf7dbdf0bcfcc1c5e1c4967">~ForceHandler</a>();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classForceHandler.html#a8aba17d6565f6082c3e088d0abc46e0e">calc</a>(<a class="code" href="classParticle.html">Particle</a>&amp; p1, <a class="code" href="classParticle.html">Particle</a>&amp; p2) = 0;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;};</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;../ParticleContainer.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">/* based on strategy pattern */</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classForceHandler.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classForceHandler.html">ForceHandler</a> : <span class="keyword">public</span> <a class="code" href="classPCApply.html">PCApply</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classForceHandler.html#ab373c2093bf7dbdf0bcfcc1c5e1c4967">~ForceHandler</a>();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classForceHandler.html#a8aba17d6565f6082c3e088d0abc46e0e">calc</a>(<a class="code" href="classParticle.html">Particle</a>&amp; p1, <a class="code" href="classParticle.html">Particle</a>&amp; p2) = 0;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SRC_FORCECALC_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classForceHandler.html#a8974dc0a3d98a01f5302c57506e73035">   26</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classForceHandler.html#a8974dc0a3d98a01f5302c57506e73035">iteratePairFunc</a>(<a class="code" href="classParticle.html">Particle</a>&amp; p1, <a class="code" href="classParticle.html">Particle</a>&amp; p2) {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                <a class="code" href="classForceHandler.html#a8aba17d6565f6082c3e088d0abc46e0e">calc</a>(p1, p2);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        }</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classForceHandler.html#af9a651cd9d00c73632f2bfa60646f5e6">   30</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classForceHandler.html#af9a651cd9d00c73632f2bfa60646f5e6">iterateFunc</a>(<a class="code" href="classParticle.html">Particle</a>&amp; p) {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;                <a class="code" href="singletonutils_1_1Vector.html">utils::Vector&lt;double, 3&gt;</a>&amp; f = p.<a class="code" href="classParticle.html#acd84c445e2bd5f5280a00e76cfe73fe0">getF</a>();</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                <a class="code" href="singletonutils_1_1Vector.html">utils::Vector&lt;double, 3&gt;</a>&amp; f_old = p.<a class="code" href="classParticle.html#a1204435fc08c697b0fea230616d1bbdf">getOldF</a>();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                f_old = f;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                f = 0.0;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classForceHandler.html#a7ddd675fc52eccfef232fd1b4c73807d">   37</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classForceHandler.html#a7ddd675fc52eccfef232fd1b4c73807d">setSimulation</a>(<a class="code" href="classSimulation.html">Simulation</a> *s) {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                <a class="code" href="classForceHandler.html#a61ce3cffa0cf14c9aa49f0244d5be042">sim</a> = s;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classForceHandler.html#a61ce3cffa0cf14c9aa49f0244d5be042">   42</a></span>&#160;        <a class="code" href="classSimulation.html">Simulation</a> *<a class="code" href="classForceHandler.html#a61ce3cffa0cf14c9aa49f0244d5be042">sim</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;};</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SRC_FORCECALC_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="classParticle_html_acd84c445e2bd5f5280a00e76cfe73fe0"><div class="ttname"><a href="classParticle.html#acd84c445e2bd5f5280a00e76cfe73fe0">Particle::getF</a></div><div class="ttdeci">utils::Vector&lt; double, 3 &gt; &amp; getF()</div><div class="ttdef"><b>Definition:</b> Particle.cpp:59</div></div>
+<div class="ttc" id="classParticle_html_a1204435fc08c697b0fea230616d1bbdf"><div class="ttname"><a href="classParticle.html#a1204435fc08c697b0fea230616d1bbdf">Particle::getOldF</a></div><div class="ttdeci">utils::Vector&lt; double, 3 &gt; &amp; getOldF()</div><div class="ttdef"><b>Definition:</b> Particle.cpp:63</div></div>
+<div class="ttc" id="singletonutils_1_1Vector_html"><div class="ttname"><a href="singletonutils_1_1Vector.html">utils::Vector&lt; double, 3 &gt;</a></div></div>
+<div class="ttc" id="classForceHandler_html_a61ce3cffa0cf14c9aa49f0244d5be042"><div class="ttname"><a href="classForceHandler.html#a61ce3cffa0cf14c9aa49f0244d5be042">ForceHandler::sim</a></div><div class="ttdeci">Simulation * sim</div><div class="ttdef"><b>Definition:</b> ForceHandler.h:42</div></div>
+<div class="ttc" id="classForceHandler_html_af9a651cd9d00c73632f2bfa60646f5e6"><div class="ttname"><a href="classForceHandler.html#af9a651cd9d00c73632f2bfa60646f5e6">ForceHandler::iterateFunc</a></div><div class="ttdeci">void iterateFunc(Particle &amp;p)</div><div class="ttdef"><b>Definition:</b> ForceHandler.h:30</div></div>
+<div class="ttc" id="classSimulation_html"><div class="ttname"><a href="classSimulation.html">Simulation</a></div><div class="ttdef"><b>Definition:</b> Simulation.h:19</div></div>
+<div class="ttc" id="classForceHandler_html_a7ddd675fc52eccfef232fd1b4c73807d"><div class="ttname"><a href="classForceHandler.html#a7ddd675fc52eccfef232fd1b4c73807d">ForceHandler::setSimulation</a></div><div class="ttdeci">virtual void setSimulation(Simulation *s)</div><div class="ttdef"><b>Definition:</b> ForceHandler.h:37</div></div>
 <div class="ttc" id="classForceHandler_html_a8aba17d6565f6082c3e088d0abc46e0e"><div class="ttname"><a href="classForceHandler.html#a8aba17d6565f6082c3e088d0abc46e0e">ForceHandler::calc</a></div><div class="ttdeci">virtual void calc(Particle &amp;p1, Particle &amp;p2)=0</div></div>
 <div class="ttc" id="classForceHandler_html_ab373c2093bf7dbdf0bcfcc1c5e1c4967"><div class="ttname"><a href="classForceHandler.html#ab373c2093bf7dbdf0bcfcc1c5e1c4967">ForceHandler::~ForceHandler</a></div><div class="ttdeci">virtual ~ForceHandler()</div><div class="ttdef"><b>Definition:</b> ForceHandler.cpp:10</div></div>
-<div class="ttc" id="classForceHandler_html"><div class="ttname"><a href="classForceHandler.html">ForceHandler</a></div><div class="ttdef"><b>Definition:</b> ForceHandler.h:15</div></div>
-<div class="ttc" id="classParticle_html"><div class="ttname"><a href="classParticle.html">Particle</a></div><div class="ttdef"><b>Definition:</b> Particle.h:17</div></div>
+<div class="ttc" id="classForceHandler_html"><div class="ttname"><a href="classForceHandler.html">ForceHandler</a></div><div class="ttdef"><b>Definition:</b> ForceHandler.h:16</div></div>
+<div class="ttc" id="classParticle_html"><div class="ttname"><a href="classParticle.html">Particle</a></div><div class="ttdef"><b>Definition:</b> Particle.h:14</div></div>
+<div class="ttc" id="classForceHandler_html_a8974dc0a3d98a01f5302c57506e73035"><div class="ttname"><a href="classForceHandler.html#a8974dc0a3d98a01f5302c57506e73035">ForceHandler::iteratePairFunc</a></div><div class="ttdeci">virtual void iteratePairFunc(Particle &amp;p1, Particle &amp;p2)</div><div class="ttdef"><b>Definition:</b> ForceHandler.h:26</div></div>
+<div class="ttc" id="classPCApply_html"><div class="ttname"><a href="classPCApply.html">PCApply</a></div><div class="ttdef"><b>Definition:</b> ParticleContainer.h:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 15 2014 01:48:33 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 11 2014 16:44:26 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -82,15 +82,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="classVTKFile__t-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">VTKFile_t Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Class corresponding to the VTKFile_t schema type.  
- <a href="classVTKFile__t.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="vtk-unstructured_8h_source.html">vtk-unstructured.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -102,160 +104,129 @@ Inheritance diagram for VTKFile_t:</div>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:ac5cf95c81660088dbb3c9ab6cd78dede"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ac5cf95c81660088dbb3c9ab6cd78dede">~VTKFile_t</a> ()</td></tr>
-<tr class="memdesc:ac5cf95c81660088dbb3c9ab6cd78dede"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ac5cf95c81660088dbb3c9ab6cd78dede">More...</a><br /></td></tr>
-<tr class="separator:ac5cf95c81660088dbb3c9ab6cd78dede"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-UnstructuredGrid</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp51267337395fceec37fec7e87b9a53e5"></a>Accessor and modifier functions for the UnstructuredGrid optional element. </p>
-</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
 <tr class="memitem:a34ea02f6804e701657f11a8dc3851951"><td class="memItemLeft" align="right" valign="top">typedef ::<a class="el" href="classUnstructuredGrid__t.html">UnstructuredGrid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a34ea02f6804e701657f11a8dc3851951">UnstructuredGrid_type</a></td></tr>
-<tr class="memdesc:a34ea02f6804e701657f11a8dc3851951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element type.  <a href="#a34ea02f6804e701657f11a8dc3851951">More...</a><br /></td></tr>
 <tr class="separator:a34ea02f6804e701657f11a8dc3851951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada5bb5a706e03ef1ab2ed1513ea83833"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak" />
 ::xsd::cxx::tree::optional<br class="typebreak" />
 &lt; <a class="el" href="classVTKFile__t.html#a34ea02f6804e701657f11a8dc3851951">UnstructuredGrid_type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ada5bb5a706e03ef1ab2ed1513ea83833">UnstructuredGrid_optional</a></td></tr>
-<tr class="memdesc:ada5bb5a706e03ef1ab2ed1513ea83833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element optional container type.  <a href="#ada5bb5a706e03ef1ab2ed1513ea83833">More...</a><br /></td></tr>
 <tr class="separator:ada5bb5a706e03ef1ab2ed1513ea83833"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02772a5f713678f02e94188d6a552528"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak" />
 ::xsd::cxx::tree::traits<br class="typebreak" />
 &lt; <a class="el" href="classVTKFile__t.html#a34ea02f6804e701657f11a8dc3851951">UnstructuredGrid_type</a>, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a02772a5f713678f02e94188d6a552528">UnstructuredGrid_traits</a></td></tr>
-<tr class="memdesc:a02772a5f713678f02e94188d6a552528"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element traits type.  <a href="#a02772a5f713678f02e94188d6a552528">More...</a><br /></td></tr>
 <tr class="separator:a02772a5f713678f02e94188d6a552528"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a118852d8ec1f8039d1fd5c914282351a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classVTKFile__t.html#ada5bb5a706e03ef1ab2ed1513ea83833">UnstructuredGrid_optional</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a118852d8ec1f8039d1fd5c914282351a">UnstructuredGrid</a> () const </td></tr>
-<tr class="memdesc:a118852d8ec1f8039d1fd5c914282351a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a read-only (constant) reference to the element container.  <a href="#a118852d8ec1f8039d1fd5c914282351a">More...</a><br /></td></tr>
-<tr class="separator:a118852d8ec1f8039d1fd5c914282351a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4746d4a723076d4643b8ef16a9c3890"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVTKFile__t.html#ada5bb5a706e03ef1ab2ed1513ea83833">UnstructuredGrid_optional</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#aa4746d4a723076d4643b8ef16a9c3890">UnstructuredGrid</a> ()</td></tr>
-<tr class="memdesc:aa4746d4a723076d4643b8ef16a9c3890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a read-write reference to the element container.  <a href="#aa4746d4a723076d4643b8ef16a9c3890">More...</a><br /></td></tr>
-<tr class="separator:aa4746d4a723076d4643b8ef16a9c3890"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c2b1b2ff487c7e61bcd2875db8747be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a2c2b1b2ff487c7e61bcd2875db8747be">UnstructuredGrid</a> (const <a class="el" href="classVTKFile__t.html#a34ea02f6804e701657f11a8dc3851951">UnstructuredGrid_type</a> &amp;x)</td></tr>
-<tr class="memdesc:a2c2b1b2ff487c7e61bcd2875db8747be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the element value.  <a href="#a2c2b1b2ff487c7e61bcd2875db8747be">More...</a><br /></td></tr>
-<tr class="separator:a2c2b1b2ff487c7e61bcd2875db8747be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae33d9781bddb747f9255570b1af2dfeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ae33d9781bddb747f9255570b1af2dfeb">UnstructuredGrid</a> (const <a class="el" href="classVTKFile__t.html#ada5bb5a706e03ef1ab2ed1513ea83833">UnstructuredGrid_optional</a> &amp;x)</td></tr>
-<tr class="memdesc:ae33d9781bddb747f9255570b1af2dfeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the element value.  <a href="#ae33d9781bddb747f9255570b1af2dfeb">More...</a><br /></td></tr>
-<tr class="separator:ae33d9781bddb747f9255570b1af2dfeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af19a966f55acb5f03299af922bd9dd75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#af19a966f55acb5f03299af922bd9dd75">UnstructuredGrid</a> (::std::auto_ptr&lt; <a class="el" href="classVTKFile__t.html#a34ea02f6804e701657f11a8dc3851951">UnstructuredGrid_type</a> &gt; p)</td></tr>
-<tr class="memdesc:af19a966f55acb5f03299af922bd9dd75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the element value without copying.  <a href="#af19a966f55acb5f03299af922bd9dd75">More...</a><br /></td></tr>
-<tr class="separator:af19a966f55acb5f03299af922bd9dd75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-PolyData</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrpf4abb74983d657d0185d4dd07cff9b2c"></a>Accessor and modifier functions for the PolyData optional element. </p>
-</td></tr>
 <tr class="memitem:a4588b4f0e28ba09aa219bda7e1fc6c97"><td class="memItemLeft" align="right" valign="top">typedef ::<a class="el" href="classPolyData__t.html">PolyData_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a4588b4f0e28ba09aa219bda7e1fc6c97">PolyData_type</a></td></tr>
-<tr class="memdesc:a4588b4f0e28ba09aa219bda7e1fc6c97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element type.  <a href="#a4588b4f0e28ba09aa219bda7e1fc6c97">More...</a><br /></td></tr>
 <tr class="separator:a4588b4f0e28ba09aa219bda7e1fc6c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacb796775ae228cd61726a23b809f3e4"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak" />
 ::xsd::cxx::tree::optional<br class="typebreak" />
 &lt; <a class="el" href="classVTKFile__t.html#a4588b4f0e28ba09aa219bda7e1fc6c97">PolyData_type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#aacb796775ae228cd61726a23b809f3e4">PolyData_optional</a></td></tr>
-<tr class="memdesc:aacb796775ae228cd61726a23b809f3e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element optional container type.  <a href="#aacb796775ae228cd61726a23b809f3e4">More...</a><br /></td></tr>
 <tr class="separator:aacb796775ae228cd61726a23b809f3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5ad98f5709c1e9beec3804a7f42b5f6"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak" />
 ::xsd::cxx::tree::traits<br class="typebreak" />
 &lt; <a class="el" href="classVTKFile__t.html#a4588b4f0e28ba09aa219bda7e1fc6c97">PolyData_type</a>, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#aa5ad98f5709c1e9beec3804a7f42b5f6">PolyData_traits</a></td></tr>
-<tr class="memdesc:aa5ad98f5709c1e9beec3804a7f42b5f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element traits type.  <a href="#aa5ad98f5709c1e9beec3804a7f42b5f6">More...</a><br /></td></tr>
 <tr class="separator:aa5ad98f5709c1e9beec3804a7f42b5f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d728d7f31157fc80117c2f80978344c"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classVTKFile__t.html#aacb796775ae228cd61726a23b809f3e4">PolyData_optional</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a7d728d7f31157fc80117c2f80978344c">PolyData</a> () const </td></tr>
-<tr class="memdesc:a7d728d7f31157fc80117c2f80978344c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a read-only (constant) reference to the element container.  <a href="#a7d728d7f31157fc80117c2f80978344c">More...</a><br /></td></tr>
-<tr class="separator:a7d728d7f31157fc80117c2f80978344c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f87118c1898bc43619fa0bade52e921"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVTKFile__t.html#aacb796775ae228cd61726a23b809f3e4">PolyData_optional</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a0f87118c1898bc43619fa0bade52e921">PolyData</a> ()</td></tr>
-<tr class="memdesc:a0f87118c1898bc43619fa0bade52e921"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a read-write reference to the element container.  <a href="#a0f87118c1898bc43619fa0bade52e921">More...</a><br /></td></tr>
-<tr class="separator:a0f87118c1898bc43619fa0bade52e921"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0a3f2aa2894d0384a89a6e5490c9372"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ab0a3f2aa2894d0384a89a6e5490c9372">PolyData</a> (const <a class="el" href="classVTKFile__t.html#a4588b4f0e28ba09aa219bda7e1fc6c97">PolyData_type</a> &amp;x)</td></tr>
-<tr class="memdesc:ab0a3f2aa2894d0384a89a6e5490c9372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the element value.  <a href="#ab0a3f2aa2894d0384a89a6e5490c9372">More...</a><br /></td></tr>
-<tr class="separator:ab0a3f2aa2894d0384a89a6e5490c9372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c2a800d41431c04965c863220a3b1b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a1c2a800d41431c04965c863220a3b1b5">PolyData</a> (const <a class="el" href="classVTKFile__t.html#aacb796775ae228cd61726a23b809f3e4">PolyData_optional</a> &amp;x)</td></tr>
-<tr class="memdesc:a1c2a800d41431c04965c863220a3b1b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the element value.  <a href="#a1c2a800d41431c04965c863220a3b1b5">More...</a><br /></td></tr>
-<tr class="separator:a1c2a800d41431c04965c863220a3b1b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ae292e04bf2c955d8f50cdeb60f9369"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a8ae292e04bf2c955d8f50cdeb60f9369">PolyData</a> (::std::auto_ptr&lt; <a class="el" href="classVTKFile__t.html#a4588b4f0e28ba09aa219bda7e1fc6c97">PolyData_type</a> &gt; p)</td></tr>
-<tr class="memdesc:a8ae292e04bf2c955d8f50cdeb60f9369"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the element value without copying.  <a href="#a8ae292e04bf2c955d8f50cdeb60f9369">More...</a><br /></td></tr>
-<tr class="separator:a8ae292e04bf2c955d8f50cdeb60f9369"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-type</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp599dcce2998a6b40b1e38e8c6006cb0a"></a>Accessor and modifier functions for the type required attribute. </p>
-</td></tr>
-<tr class="memitem:ac1f3484e4fde414849ede43a00955f76"><td class="memItemLeft" align="right" valign="top">typedef ::<a class="el" href="namespacexml__schema.html#aefbaf353f9a0043af46d23d9040ef268">xml_schema::string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a></td></tr>
-<tr class="memdesc:ac1f3484e4fde414849ede43a00955f76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attribute type.  <a href="#ac1f3484e4fde414849ede43a00955f76">More...</a><br /></td></tr>
+<tr class="memitem:ac1f3484e4fde414849ede43a00955f76"><td class="memItemLeft" align="right" valign="top">typedef ::<a class="el" href="namespacexml__schema.html#ac0cec83a330f0024e4e318b3deac5104">xml_schema::string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a></td></tr>
 <tr class="separator:ac1f3484e4fde414849ede43a00955f76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee4ac167e843e9def1be4f43ad930391"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak" />
 ::xsd::cxx::tree::traits<br class="typebreak" />
 &lt; <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a>, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#aee4ac167e843e9def1be4f43ad930391">type_traits</a></td></tr>
-<tr class="memdesc:aee4ac167e843e9def1be4f43ad930391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attribute traits type.  <a href="#aee4ac167e843e9def1be4f43ad930391">More...</a><br /></td></tr>
 <tr class="separator:aee4ac167e843e9def1be4f43ad930391"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c23301c79cc6a376fe2abce533b2cf7"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a5c23301c79cc6a376fe2abce533b2cf7">type</a> () const </td></tr>
-<tr class="memdesc:a5c23301c79cc6a376fe2abce533b2cf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a read-only (constant) reference to the attribute.  <a href="#a5c23301c79cc6a376fe2abce533b2cf7">More...</a><br /></td></tr>
-<tr class="separator:a5c23301c79cc6a376fe2abce533b2cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcc8ab822fa4f9e5e5294f5d8cff05c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#abcc8ab822fa4f9e5e5294f5d8cff05c2">type</a> ()</td></tr>
-<tr class="memdesc:abcc8ab822fa4f9e5e5294f5d8cff05c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a read-write reference to the attribute.  <a href="#abcc8ab822fa4f9e5e5294f5d8cff05c2">More...</a><br /></td></tr>
-<tr class="separator:abcc8ab822fa4f9e5e5294f5d8cff05c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6423eb2dc7fa367417df87de4921301e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a6423eb2dc7fa367417df87de4921301e">type</a> (const <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &amp;x)</td></tr>
-<tr class="memdesc:a6423eb2dc7fa367417df87de4921301e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the attribute value.  <a href="#a6423eb2dc7fa367417df87de4921301e">More...</a><br /></td></tr>
-<tr class="separator:a6423eb2dc7fa367417df87de4921301e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a380c8628fd1095c88a80a1804837c213"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a380c8628fd1095c88a80a1804837c213">type</a> (::std::auto_ptr&lt; <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &gt; p)</td></tr>
-<tr class="memdesc:a380c8628fd1095c88a80a1804837c213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the attribute value without copying.  <a href="#a380c8628fd1095c88a80a1804837c213">More...</a><br /></td></tr>
-<tr class="separator:a380c8628fd1095c88a80a1804837c213"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-version</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp2af72f100c356273d46284f6fd1dfc08"></a>Accessor and modifier functions for the version required attribute. </p>
-</td></tr>
-<tr class="memitem:a7db6f6d11f363380d6361446f5dede7b"><td class="memItemLeft" align="right" valign="top">typedef ::<a class="el" href="namespacexml__schema.html#aefbaf353f9a0043af46d23d9040ef268">xml_schema::string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a></td></tr>
-<tr class="memdesc:a7db6f6d11f363380d6361446f5dede7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attribute type.  <a href="#a7db6f6d11f363380d6361446f5dede7b">More...</a><br /></td></tr>
+<tr class="memitem:a7db6f6d11f363380d6361446f5dede7b"><td class="memItemLeft" align="right" valign="top">typedef ::<a class="el" href="namespacexml__schema.html#ac0cec83a330f0024e4e318b3deac5104">xml_schema::string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a></td></tr>
 <tr class="separator:a7db6f6d11f363380d6361446f5dede7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a343e08417564e5db3f48859b1a0c5f"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak" />
 ::xsd::cxx::tree::traits<br class="typebreak" />
 &lt; <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a>, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a5a343e08417564e5db3f48859b1a0c5f">version_traits</a></td></tr>
-<tr class="memdesc:a5a343e08417564e5db3f48859b1a0c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attribute traits type.  <a href="#a5a343e08417564e5db3f48859b1a0c5f">More...</a><br /></td></tr>
 <tr class="separator:a5a343e08417564e5db3f48859b1a0c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0f1ed9d44019ad1fab6495b6ae71a47"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#af0f1ed9d44019ad1fab6495b6ae71a47">version</a> () const </td></tr>
-<tr class="memdesc:af0f1ed9d44019ad1fab6495b6ae71a47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a read-only (constant) reference to the attribute.  <a href="#af0f1ed9d44019ad1fab6495b6ae71a47">More...</a><br /></td></tr>
-<tr class="separator:af0f1ed9d44019ad1fab6495b6ae71a47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0eb5afa9ec6125c0519a891578f31521"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a0eb5afa9ec6125c0519a891578f31521">version_default_value</a> ()</td></tr>
-<tr class="memdesc:a0eb5afa9ec6125c0519a891578f31521"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the default value for the attribute.  <a href="#a0eb5afa9ec6125c0519a891578f31521">More...</a><br /></td></tr>
-<tr class="separator:a0eb5afa9ec6125c0519a891578f31521"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-byte_order</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp4d85380f9aa2c7bfea4b497dbb3373af"></a>Accessor and modifier functions for the byte_order required attribute. </p>
-</td></tr>
-<tr class="memitem:ab08dd45c560dd0635d0e5c0a5e42d2e8"><td class="memItemLeft" align="right" valign="top">typedef ::<a class="el" href="namespacexml__schema.html#aefbaf353f9a0043af46d23d9040ef268">xml_schema::string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">byte_order_type</a></td></tr>
-<tr class="memdesc:ab08dd45c560dd0635d0e5c0a5e42d2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attribute type.  <a href="#ab08dd45c560dd0635d0e5c0a5e42d2e8">More...</a><br /></td></tr>
+<tr class="memitem:ab08dd45c560dd0635d0e5c0a5e42d2e8"><td class="memItemLeft" align="right" valign="top">typedef ::<a class="el" href="namespacexml__schema.html#ac0cec83a330f0024e4e318b3deac5104">xml_schema::string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">byte_order_type</a></td></tr>
 <tr class="separator:ab08dd45c560dd0635d0e5c0a5e42d2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0b8c254bc373d9218ea9eab406b7b98"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak" />
 ::xsd::cxx::tree::traits<br class="typebreak" />
 &lt; <a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">byte_order_type</a>, char &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ae0b8c254bc373d9218ea9eab406b7b98">byte_order_traits</a></td></tr>
-<tr class="memdesc:ae0b8c254bc373d9218ea9eab406b7b98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attribute traits type.  <a href="#ae0b8c254bc373d9218ea9eab406b7b98">More...</a><br /></td></tr>
 <tr class="separator:ae0b8c254bc373d9218ea9eab406b7b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a118852d8ec1f8039d1fd5c914282351a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classVTKFile__t.html#ada5bb5a706e03ef1ab2ed1513ea83833">UnstructuredGrid_optional</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a118852d8ec1f8039d1fd5c914282351a">UnstructuredGrid</a> () const </td></tr>
+<tr class="separator:a118852d8ec1f8039d1fd5c914282351a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4746d4a723076d4643b8ef16a9c3890"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVTKFile__t.html#ada5bb5a706e03ef1ab2ed1513ea83833">UnstructuredGrid_optional</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#aa4746d4a723076d4643b8ef16a9c3890">UnstructuredGrid</a> ()</td></tr>
+<tr class="separator:aa4746d4a723076d4643b8ef16a9c3890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c2b1b2ff487c7e61bcd2875db8747be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a2c2b1b2ff487c7e61bcd2875db8747be">UnstructuredGrid</a> (const <a class="el" href="classVTKFile__t.html#a34ea02f6804e701657f11a8dc3851951">UnstructuredGrid_type</a> &amp;x)</td></tr>
+<tr class="separator:a2c2b1b2ff487c7e61bcd2875db8747be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae33d9781bddb747f9255570b1af2dfeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ae33d9781bddb747f9255570b1af2dfeb">UnstructuredGrid</a> (const <a class="el" href="classVTKFile__t.html#ada5bb5a706e03ef1ab2ed1513ea83833">UnstructuredGrid_optional</a> &amp;x)</td></tr>
+<tr class="separator:ae33d9781bddb747f9255570b1af2dfeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af19a966f55acb5f03299af922bd9dd75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#af19a966f55acb5f03299af922bd9dd75">UnstructuredGrid</a> (::std::auto_ptr&lt; <a class="el" href="classVTKFile__t.html#a34ea02f6804e701657f11a8dc3851951">UnstructuredGrid_type</a> &gt; p)</td></tr>
+<tr class="separator:af19a966f55acb5f03299af922bd9dd75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d728d7f31157fc80117c2f80978344c"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classVTKFile__t.html#aacb796775ae228cd61726a23b809f3e4">PolyData_optional</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a7d728d7f31157fc80117c2f80978344c">PolyData</a> () const </td></tr>
+<tr class="separator:a7d728d7f31157fc80117c2f80978344c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f87118c1898bc43619fa0bade52e921"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVTKFile__t.html#aacb796775ae228cd61726a23b809f3e4">PolyData_optional</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a0f87118c1898bc43619fa0bade52e921">PolyData</a> ()</td></tr>
+<tr class="separator:a0f87118c1898bc43619fa0bade52e921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0a3f2aa2894d0384a89a6e5490c9372"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ab0a3f2aa2894d0384a89a6e5490c9372">PolyData</a> (const <a class="el" href="classVTKFile__t.html#a4588b4f0e28ba09aa219bda7e1fc6c97">PolyData_type</a> &amp;x)</td></tr>
+<tr class="separator:ab0a3f2aa2894d0384a89a6e5490c9372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c2a800d41431c04965c863220a3b1b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a1c2a800d41431c04965c863220a3b1b5">PolyData</a> (const <a class="el" href="classVTKFile__t.html#aacb796775ae228cd61726a23b809f3e4">PolyData_optional</a> &amp;x)</td></tr>
+<tr class="separator:a1c2a800d41431c04965c863220a3b1b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ae292e04bf2c955d8f50cdeb60f9369"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a8ae292e04bf2c955d8f50cdeb60f9369">PolyData</a> (::std::auto_ptr&lt; <a class="el" href="classVTKFile__t.html#a4588b4f0e28ba09aa219bda7e1fc6c97">PolyData_type</a> &gt; p)</td></tr>
+<tr class="separator:a8ae292e04bf2c955d8f50cdeb60f9369"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c23301c79cc6a376fe2abce533b2cf7"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a5c23301c79cc6a376fe2abce533b2cf7">type</a> () const </td></tr>
+<tr class="separator:a5c23301c79cc6a376fe2abce533b2cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcc8ab822fa4f9e5e5294f5d8cff05c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#abcc8ab822fa4f9e5e5294f5d8cff05c2">type</a> ()</td></tr>
+<tr class="separator:abcc8ab822fa4f9e5e5294f5d8cff05c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6423eb2dc7fa367417df87de4921301e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a6423eb2dc7fa367417df87de4921301e">type</a> (const <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &amp;x)</td></tr>
+<tr class="separator:a6423eb2dc7fa367417df87de4921301e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a380c8628fd1095c88a80a1804837c213"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a380c8628fd1095c88a80a1804837c213">type</a> (::std::auto_ptr&lt; <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &gt; p)</td></tr>
+<tr class="separator:a380c8628fd1095c88a80a1804837c213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0f1ed9d44019ad1fab6495b6ae71a47"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#af0f1ed9d44019ad1fab6495b6ae71a47">version</a> () const </td></tr>
+<tr class="separator:af0f1ed9d44019ad1fab6495b6ae71a47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad87b4f45ca18139b1ffae8ce08dc2e27"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">byte_order_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ad87b4f45ca18139b1ffae8ce08dc2e27">byte_order</a> () const </td></tr>
-<tr class="memdesc:ad87b4f45ca18139b1ffae8ce08dc2e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a read-only (constant) reference to the attribute.  <a href="#ad87b4f45ca18139b1ffae8ce08dc2e27">More...</a><br /></td></tr>
 <tr class="separator:ad87b4f45ca18139b1ffae8ce08dc2e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76547340cb91ad0019d45889ca69fda0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a76547340cb91ad0019d45889ca69fda0">VTKFile_t</a> (const <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &amp;)</td></tr>
+<tr class="separator:a76547340cb91ad0019d45889ca69fda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d1c8c263c9865fe6f4b6ae1446efcaf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a5d1c8c263c9865fe6f4b6ae1446efcaf">VTKFile_t</a> (const ::xercesc::DOMElement &amp;e,::<a class="el" href="namespacexml__schema.html#a0612287d030cb2732d31a45b258fdc87">xml_schema::flags</a> f=0,::<a class="el" href="namespacexml__schema.html#ada9aa30dc722e93ee2ed7243085402a5">xml_schema::container</a> *c=0)</td></tr>
+<tr class="separator:a5d1c8c263c9865fe6f4b6ae1446efcaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af239970202f0aee8392cb0af61863f62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#af239970202f0aee8392cb0af61863f62">VTKFile_t</a> (const <a class="el" href="classVTKFile__t.html">VTKFile_t</a> &amp;x,::<a class="el" href="namespacexml__schema.html#a0612287d030cb2732d31a45b258fdc87">xml_schema::flags</a> f=0,::<a class="el" href="namespacexml__schema.html#ada9aa30dc722e93ee2ed7243085402a5">xml_schema::container</a> *c=0)</td></tr>
+<tr class="separator:af239970202f0aee8392cb0af61863f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad39ce94f7390685f9717fd521bac36e3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classVTKFile__t.html">VTKFile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ad39ce94f7390685f9717fd521bac36e3">_clone</a> (::<a class="el" href="namespacexml__schema.html#a0612287d030cb2732d31a45b258fdc87">xml_schema::flags</a> f=0,::<a class="el" href="namespacexml__schema.html#ada9aa30dc722e93ee2ed7243085402a5">xml_schema::container</a> *c=0) const </td></tr>
+<tr class="separator:ad39ce94f7390685f9717fd521bac36e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f2e74c4753d5c47f9e358ed50b4d2a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVTKFile__t.html">VTKFile_t</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a0f2e74c4753d5c47f9e358ed50b4d2a3">operator=</a> (const <a class="el" href="classVTKFile__t.html">VTKFile_t</a> &amp;x)</td></tr>
+<tr class="separator:a0f2e74c4753d5c47f9e358ed50b4d2a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5cf95c81660088dbb3c9ab6cd78dede"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ac5cf95c81660088dbb3c9ab6cd78dede">~VTKFile_t</a> ()</td></tr>
+<tr class="separator:ac5cf95c81660088dbb3c9ab6cd78dede"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a0eb5afa9ec6125c0519a891578f31521"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a0eb5afa9ec6125c0519a891578f31521">version_default_value</a> ()</td></tr>
+<tr class="separator:a0eb5afa9ec6125c0519a891578f31521"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4538fe428d79eff40025d874e200bec1"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">byte_order_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a4538fe428d79eff40025d874e200bec1">byte_order_default_value</a> ()</td></tr>
-<tr class="memdesc:a4538fe428d79eff40025d874e200bec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the default value for the attribute.  <a href="#a4538fe428d79eff40025d874e200bec1">More...</a><br /></td></tr>
 <tr class="separator:a4538fe428d79eff40025d874e200bec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Constructors</h2></td></tr>
-<tr class="memitem:a76547340cb91ad0019d45889ca69fda0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a76547340cb91ad0019d45889ca69fda0">VTKFile_t</a> (const <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &amp;)</td></tr>
-<tr class="memdesc:a76547340cb91ad0019d45889ca69fda0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an instance from the ultimate base and initializers for required elements and attributes.  <a href="#a76547340cb91ad0019d45889ca69fda0">More...</a><br /></td></tr>
-<tr class="separator:a76547340cb91ad0019d45889ca69fda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d1c8c263c9865fe6f4b6ae1446efcaf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a5d1c8c263c9865fe6f4b6ae1446efcaf">VTKFile_t</a> (const ::xercesc::DOMElement &amp;e,::<a class="el" href="namespacexml__schema.html#a8d981c127a1f5106d04ad5853e707361">xml_schema::flags</a> f=0,::<a class="el" href="namespacexml__schema.html#a395f5179c5fc4643909d66e9ff28d8ca">xml_schema::container</a> *c=0)</td></tr>
-<tr class="memdesc:a5d1c8c263c9865fe6f4b6ae1446efcaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an instance from a DOM element.  <a href="#a5d1c8c263c9865fe6f4b6ae1446efcaf">More...</a><br /></td></tr>
-<tr class="separator:a5d1c8c263c9865fe6f4b6ae1446efcaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af239970202f0aee8392cb0af61863f62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#af239970202f0aee8392cb0af61863f62">VTKFile_t</a> (const <a class="el" href="classVTKFile__t.html">VTKFile_t</a> &amp;x,::<a class="el" href="namespacexml__schema.html#a8d981c127a1f5106d04ad5853e707361">xml_schema::flags</a> f=0,::<a class="el" href="namespacexml__schema.html#a395f5179c5fc4643909d66e9ff28d8ca">xml_schema::container</a> *c=0)</td></tr>
-<tr class="memdesc:af239970202f0aee8392cb0af61863f62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#af239970202f0aee8392cb0af61863f62">More...</a><br /></td></tr>
-<tr class="separator:af239970202f0aee8392cb0af61863f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad39ce94f7390685f9717fd521bac36e3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classVTKFile__t.html">VTKFile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ad39ce94f7390685f9717fd521bac36e3">_clone</a> (::<a class="el" href="namespacexml__schema.html#a8d981c127a1f5106d04ad5853e707361">xml_schema::flags</a> f=0,::<a class="el" href="namespacexml__schema.html#a395f5179c5fc4643909d66e9ff28d8ca">xml_schema::container</a> *c=0) const </td></tr>
-<tr class="memdesc:ad39ce94f7390685f9717fd521bac36e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy the instance polymorphically.  <a href="#ad39ce94f7390685f9717fd521bac36e3">More...</a><br /></td></tr>
-<tr class="separator:ad39ce94f7390685f9717fd521bac36e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:abce5eb0ea7f326f97fdbd8eeafc69dac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#abce5eb0ea7f326f97fdbd8eeafc69dac">parse</a> (::xsd::cxx::xml::dom::parser&lt; char &gt; &amp;,::<a class="el" href="namespacexml__schema.html#a0612287d030cb2732d31a45b258fdc87">xml_schema::flags</a>)</td></tr>
+<tr class="separator:abce5eb0ea7f326f97fdbd8eeafc69dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a8ff0a1326731c3a73403f6a6fb46e0ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVTKFile__t.html#ada5bb5a706e03ef1ab2ed1513ea83833">UnstructuredGrid_optional</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a8ff0a1326731c3a73403f6a6fb46e0ac">UnstructuredGrid_</a></td></tr>
+<tr class="separator:a8ff0a1326731c3a73403f6a6fb46e0ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7de0b4fb3566ea6b7e4270c4f6560ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVTKFile__t.html#aacb796775ae228cd61726a23b809f3e4">PolyData_optional</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#ae7de0b4fb3566ea6b7e4270c4f6560ef">PolyData_</a></td></tr>
+<tr class="separator:ae7de0b4fb3566ea6b7e4270c4f6560ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59decd8a5c8e51b1b18e2e1b4f13f622"><td class="memItemLeft" align="right" valign="top">::xsd::cxx::tree::one&lt; <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a59decd8a5c8e51b1b18e2e1b4f13f622">type_</a></td></tr>
+<tr class="separator:a59decd8a5c8e51b1b18e2e1b4f13f622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2698aeeae7e59df2c508025a8ef306ae"><td class="memItemLeft" align="right" valign="top">::xsd::cxx::tree::one<br class="typebreak" />
+&lt; <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a2698aeeae7e59df2c508025a8ef306ae">version_</a></td></tr>
+<tr class="separator:a2698aeeae7e59df2c508025a8ef306ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84278fcf4e780a361b9b4622e0fbcd13"><td class="memItemLeft" align="right" valign="top">::xsd::cxx::tree::one<br class="typebreak" />
+&lt; <a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">byte_order_type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a84278fcf4e780a361b9b4622e0fbcd13">byte_order_</a></td></tr>
+<tr class="separator:a84278fcf4e780a361b9b4622e0fbcd13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
+Static Protected Attributes</h2></td></tr>
+<tr class="memitem:a014a015095591737663a8d8513aca931"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#a014a015095591737663a8d8513aca931">version_default_value_</a></td></tr>
+<tr class="separator:a014a015095591737663a8d8513aca931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8272f99cd398033e3db5dbd752f3305"><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">byte_order_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVTKFile__t.html#aa8272f99cd398033e3db5dbd752f3305">byte_order_default_value_</a></td></tr>
+<tr class="separator:aa8272f99cd398033e3db5dbd752f3305"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class corresponding to the VTKFile_t schema type. </p>
-<p>The hello_t type consists of a greeting phrase and a collection of names to which this greeting applies. </p>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="ae0b8c254bc373d9218ea9eab406b7b98"></a>
 <div class="memitem">
 <div class="memproto">
@@ -266,8 +237,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Attribute traits type. </p>
-
 </div>
 </div>
 <a class="anchor" id="ab08dd45c560dd0635d0e5c0a5e42d2e8"></a>
@@ -275,12 +244,10 @@ Constructors</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef ::<a class="el" href="namespacexml__schema.html#aefbaf353f9a0043af46d23d9040ef268">xml_schema::string</a> <a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">VTKFile_t::byte_order_type</a></td>
+          <td class="memname">typedef ::<a class="el" href="namespacexml__schema.html#ac0cec83a330f0024e4e318b3deac5104">xml_schema::string</a> <a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">VTKFile_t::byte_order_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Attribute type. </p>
 
 </div>
 </div>
@@ -294,8 +261,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Element optional container type. </p>
-
 </div>
 </div>
 <a class="anchor" id="aa5ad98f5709c1e9beec3804a7f42b5f6"></a>
@@ -307,8 +272,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Element traits type. </p>
 
 </div>
 </div>
@@ -322,8 +285,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Element type. </p>
-
 </div>
 </div>
 <a class="anchor" id="aee4ac167e843e9def1be4f43ad930391"></a>
@@ -336,8 +297,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Attribute traits type. </p>
-
 </div>
 </div>
 <a class="anchor" id="ac1f3484e4fde414849ede43a00955f76"></a>
@@ -345,12 +304,10 @@ Constructors</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef ::<a class="el" href="namespacexml__schema.html#aefbaf353f9a0043af46d23d9040ef268">xml_schema::string</a> <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">VTKFile_t::type_type</a></td>
+          <td class="memname">typedef ::<a class="el" href="namespacexml__schema.html#ac0cec83a330f0024e4e318b3deac5104">xml_schema::string</a> <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">VTKFile_t::type_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Attribute type. </p>
 
 </div>
 </div>
@@ -364,8 +321,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Element optional container type. </p>
-
 </div>
 </div>
 <a class="anchor" id="a02772a5f713678f02e94188d6a552528"></a>
@@ -377,8 +332,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Element traits type. </p>
 
 </div>
 </div>
@@ -392,8 +345,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Element type. </p>
-
 </div>
 </div>
 <a class="anchor" id="a5a343e08417564e5db3f48859b1a0c5f"></a>
@@ -406,8 +357,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Attribute traits type. </p>
-
 </div>
 </div>
 <a class="anchor" id="a7db6f6d11f363380d6361446f5dede7b"></a>
@@ -415,12 +364,10 @@ Constructors</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef ::<a class="el" href="namespacexml__schema.html#aefbaf353f9a0043af46d23d9040ef268">xml_schema::string</a> <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">VTKFile_t::version_type</a></td>
+          <td class="memname">typedef ::<a class="el" href="namespacexml__schema.html#ac0cec83a330f0024e4e318b3deac5104">xml_schema::string</a> <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">VTKFile_t::version_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Attribute type. </p>
 
 </div>
 </div>
@@ -439,8 +386,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Create an instance from the ultimate base and initializers for required elements and attributes. </p>
-
 </div>
 </div>
 <a class="anchor" id="a5d1c8c263c9865fe6f4b6ae1446efcaf"></a>
@@ -456,13 +401,13 @@ Constructors</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a8d981c127a1f5106d04ad5853e707361">xml_schema::flags</a>&#160;</td>
+          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a0612287d030cb2732d31a45b258fdc87">xml_schema::flags</a>&#160;</td>
           <td class="paramname"><em>f</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a395f5179c5fc4643909d66e9ff28d8ca">xml_schema::container</a> *&#160;</td>
+          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#ada9aa30dc722e93ee2ed7243085402a5">xml_schema::container</a> *&#160;</td>
           <td class="paramname"><em>c</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -472,16 +417,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Create an instance from a DOM element. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">e</td><td>A DOM element to extract the data from. </td></tr>
-    <tr><td class="paramname">f</td><td>Flags to create the new instance with. </td></tr>
-    <tr><td class="paramname">c</td><td>A pointer to the object that will contain the new instance. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -498,13 +433,13 @@ Constructors</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a8d981c127a1f5106d04ad5853e707361">xml_schema::flags</a>&#160;</td>
+          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a0612287d030cb2732d31a45b258fdc87">xml_schema::flags</a>&#160;</td>
           <td class="paramname"><em>f</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a395f5179c5fc4643909d66e9ff28d8ca">xml_schema::container</a> *&#160;</td>
+          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#ada9aa30dc722e93ee2ed7243085402a5">xml_schema::container</a> *&#160;</td>
           <td class="paramname"><em>c</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -514,17 +449,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Copy constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>An instance to make a copy of. </td></tr>
-    <tr><td class="paramname">f</td><td>Flags to create the copy with. </td></tr>
-    <tr><td class="paramname">c</td><td>A pointer to the object that will contain the copy.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>For polymorphic object models use the <code>_clone</code> function instead. </p>
 
 </div>
 </div>
@@ -549,8 +473,6 @@ Constructors</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Destructor. </p>
-
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -564,13 +486,13 @@ Constructors</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classVTKFile__t.html">VTKFile_t</a> * VTKFile_t::_clone </td>
           <td>(</td>
-          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a8d981c127a1f5106d04ad5853e707361">xml_schema::flags</a>&#160;</td>
+          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a0612287d030cb2732d31a45b258fdc87">xml_schema::flags</a>&#160;</td>
           <td class="paramname"><em>f</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a395f5179c5fc4643909d66e9ff28d8ca">xml_schema::container</a> *&#160;</td>
+          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#ada9aa30dc722e93ee2ed7243085402a5">xml_schema::container</a> *&#160;</td>
           <td class="paramname"><em>c</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -586,17 +508,6 @@ Constructors</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Copy the instance polymorphically. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">f</td><td>Flags to create the copy with. </td></tr>
-    <tr><td class="paramname">c</td><td>A pointer to the object that will contain the copy. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the dynamically allocated copy.</dd></dl>
-<p>This function ensures that the dynamic type of the instance is used for copying and should be used for polymorphic object models instead of the copy constructor. </p>
-
 </div>
 </div>
 <a class="anchor" id="ad87b4f45ca18139b1ffae8ce08dc2e27"></a>
@@ -611,9 +522,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Return a read-only (constant) reference to the attribute. </p>
-<dl class="section return"><dt>Returns</dt><dd>A constant reference to the attribute. </dd></dl>
 
 </div>
 </div>
@@ -638,8 +546,55 @@ Constructors</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return the default value for the attribute. </p>
-<dl class="section return"><dt>Returns</dt><dd>A read-only (constant) reference to the attribute's default value. </dd></dl>
+</div>
+</div>
+<a class="anchor" id="a0f2e74c4753d5c47f9e358ed50b4d2a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classVTKFile__t.html">VTKFile_t</a> &amp; VTKFile_t::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classVTKFile__t.html">VTKFile_t</a> &amp;&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="abce5eb0ea7f326f97fdbd8eeafc69dac"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VTKFile_t::parse </td>
+          <td>(</td>
+          <td class="paramtype">::xsd::cxx::xml::dom::parser&lt; char &gt; &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">::<a class="el" href="namespacexml__schema.html#a0612287d030cb2732d31a45b258fdc87">xml_schema::flags</a>&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -656,9 +611,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Return a read-only (constant) reference to the element container. </p>
-<dl class="section return"><dt>Returns</dt><dd>A constant reference to the optional container. </dd></dl>
-
 </div>
 </div>
 <a class="anchor" id="a0f87118c1898bc43619fa0bade52e921"></a>
@@ -673,9 +625,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Return a read-write reference to the element container. </p>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the optional container. </dd></dl>
 
 </div>
 </div>
@@ -693,15 +642,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the element value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>A new value to set.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function makes a copy of its argument and sets it as the new value of the element. </p>
-
 </div>
 </div>
 <a class="anchor" id="a1c2a800d41431c04965c863220a3b1b5"></a>
@@ -717,15 +657,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Set the element value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>An optional container with the new value to set.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>If the value is present in <em>x</em> then this function makes a copy of this value and sets it as the new value of the element. Otherwise the element container is set the 'not present' state. </p>
 
 </div>
 </div>
@@ -743,15 +674,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the element value without copying. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p</td><td>A new value to use.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function will try to use the passed value directly instead of making a copy. </p>
-
 </div>
 </div>
 <a class="anchor" id="a5c23301c79cc6a376fe2abce533b2cf7"></a>
@@ -767,9 +689,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Return a read-only (constant) reference to the attribute. </p>
-<dl class="section return"><dt>Returns</dt><dd>A constant reference to the attribute. </dd></dl>
-
 </div>
 </div>
 <a class="anchor" id="abcc8ab822fa4f9e5e5294f5d8cff05c2"></a>
@@ -784,9 +703,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Return a read-write reference to the attribute. </p>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the attribute. </dd></dl>
 
 </div>
 </div>
@@ -804,15 +720,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the attribute value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>A new value to set.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function makes a copy of its argument and sets it as the new value of the attribute. </p>
-
 </div>
 </div>
 <a class="anchor" id="a380c8628fd1095c88a80a1804837c213"></a>
@@ -829,15 +736,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the attribute value without copying. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p</td><td>A new value to use.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function will try to use the passed value directly instead of making a copy. </p>
-
 </div>
 </div>
 <a class="anchor" id="a118852d8ec1f8039d1fd5c914282351a"></a>
@@ -853,9 +751,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Return a read-only (constant) reference to the element container. </p>
-<dl class="section return"><dt>Returns</dt><dd>A constant reference to the optional container. </dd></dl>
-
 </div>
 </div>
 <a class="anchor" id="aa4746d4a723076d4643b8ef16a9c3890"></a>
@@ -870,9 +765,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Return a read-write reference to the element container. </p>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the optional container. </dd></dl>
 
 </div>
 </div>
@@ -890,15 +782,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the element value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>A new value to set.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function makes a copy of its argument and sets it as the new value of the element. </p>
-
 </div>
 </div>
 <a class="anchor" id="ae33d9781bddb747f9255570b1af2dfeb"></a>
@@ -914,15 +797,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Set the element value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>An optional container with the new value to set.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>If the value is present in <em>x</em> then this function makes a copy of this value and sets it as the new value of the element. Otherwise the element container is set the 'not present' state. </p>
 
 </div>
 </div>
@@ -940,15 +814,6 @@ Constructors</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the element value without copying. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p</td><td>A new value to use.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function will try to use the passed value directly instead of making a copy. </p>
-
 </div>
 </div>
 <a class="anchor" id="af0f1ed9d44019ad1fab6495b6ae71a47"></a>
@@ -963,9 +828,6 @@ Constructors</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Return a read-only (constant) reference to the attribute. </p>
-<dl class="section return"><dt>Returns</dt><dd>A constant reference to the attribute. </dd></dl>
 
 </div>
 </div>
@@ -990,8 +852,146 @@ Constructors</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return the default value for the attribute. </p>
-<dl class="section return"><dt>Returns</dt><dd>A read-only (constant) reference to the attribute's default value. </dd></dl>
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a84278fcf4e780a361b9b4622e0fbcd13"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">::xsd::cxx::tree::one&lt; <a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">byte_order_type</a> &gt; VTKFile_t::byte_order_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa8272f99cd398033e3db5dbd752f3305"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classVTKFile__t.html#ab08dd45c560dd0635d0e5c0a5e42d2e8">VTKFile_t::byte_order_type</a> VTKFile_t::byte_order_default_value_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae7de0b4fb3566ea6b7e4270c4f6560ef"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classVTKFile__t.html#aacb796775ae228cd61726a23b809f3e4">PolyData_optional</a> VTKFile_t::PolyData_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a59decd8a5c8e51b1b18e2e1b4f13f622"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">::xsd::cxx::tree::one&lt; <a class="el" href="classVTKFile__t.html#ac1f3484e4fde414849ede43a00955f76">type_type</a> &gt; VTKFile_t::type_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8ff0a1326731c3a73403f6a6fb46e0ac"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classVTKFile__t.html#ada5bb5a706e03ef1ab2ed1513ea83833">UnstructuredGrid_optional</a> VTKFile_t::UnstructuredGrid_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2698aeeae7e59df2c508025a8ef306ae"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">::xsd::cxx::tree::one&lt; <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">version_type</a> &gt; VTKFile_t::version_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a014a015095591737663a8d8513aca931"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classVTKFile__t.html#a7db6f6d11f363380d6361446f5dede7b">VTKFile_t::version_type</a> VTKFile_t::version_default_value_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1002,7 +1002,7 @@ Constructors</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 15 2014 01:48:33 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 11 2014 16:44:27 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

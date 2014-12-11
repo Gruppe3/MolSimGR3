@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classLennardJones-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">LennardJones Class Reference</div>  </div>
@@ -97,7 +97,9 @@ Inheritance diagram for LennardJones:</div>
  <div class="center">
   <img src="classLennardJones.png" usemap="#LennardJones_map" alt=""/>
   <map id="LennardJones_map" name="LennardJones_map">
-<area href="classForceHandler.html" alt="ForceHandler" shape="rect" coords="0,0,93,24"/>
+<area href="classForceHandler.html" alt="ForceHandler" shape="rect" coords="0,56,109,80"/>
+<area href="classPCApply.html" alt="PCApply" shape="rect" coords="0,0,109,24"/>
+<area href="classLennardJonesLC.html" alt="LennardJonesLC" shape="rect" coords="0,168,109,192"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -105,22 +107,49 @@ Inheritance diagram for LennardJones:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a80a661408c0326ee29438b80059468c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a80a661408c0326ee29438b80059468c3">LennardJones</a> ()</td></tr>
 <tr class="separator:a80a661408c0326ee29438b80059468c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58ad09d4fdd75465fbddb23a9b758f12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a58ad09d4fdd75465fbddb23a9b758f12">LennardJones</a> (<a class="el" href="classSimulation.html">Simulation</a> *s)</td></tr>
+<tr class="separator:a58ad09d4fdd75465fbddb23a9b758f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f748761b13b3bbdbe6ba1382b768b51"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a5f748761b13b3bbdbe6ba1382b768b51">~LennardJones</a> ()</td></tr>
 <tr class="separator:a5f748761b13b3bbdbe6ba1382b768b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afea581125d54b69b58c41382314fd95e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#afea581125d54b69b58c41382314fd95e">calc</a> (<a class="el" href="classParticle.html">Particle</a> &amp;p1, <a class="el" href="classParticle.html">Particle</a> &amp;p2)</td></tr>
+<tr class="memitem:afea581125d54b69b58c41382314fd95e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#afea581125d54b69b58c41382314fd95e">calc</a> (<a class="el" href="classParticle.html">Particle</a> &amp;p1, <a class="el" href="classParticle.html">Particle</a> &amp;p2)</td></tr>
 <tr class="separator:afea581125d54b69b58c41382314fd95e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36fcb85bfe2a571920477a61ca5de0f7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a36fcb85bfe2a571920477a61ca5de0f7">setSimulation</a> (<a class="el" href="classSimulation.html">Simulation</a> *s)</td></tr>
+<tr class="separator:a36fcb85bfe2a571920477a61ca5de0f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classForceHandler"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classForceHandler')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classForceHandler.html">ForceHandler</a></td></tr>
 <tr class="memitem:ab373c2093bf7dbdf0bcfcc1c5e1c4967 inherit pub_methods_classForceHandler"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classForceHandler.html#ab373c2093bf7dbdf0bcfcc1c5e1c4967">~ForceHandler</a> ()</td></tr>
 <tr class="separator:ab373c2093bf7dbdf0bcfcc1c5e1c4967 inherit pub_methods_classForceHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8974dc0a3d98a01f5302c57506e73035 inherit pub_methods_classForceHandler"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classForceHandler.html#a8974dc0a3d98a01f5302c57506e73035">iteratePairFunc</a> (<a class="el" href="classParticle.html">Particle</a> &amp;p1, <a class="el" href="classParticle.html">Particle</a> &amp;p2)</td></tr>
+<tr class="separator:a8974dc0a3d98a01f5302c57506e73035 inherit pub_methods_classForceHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9a651cd9d00c73632f2bfa60646f5e6 inherit pub_methods_classForceHandler"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classForceHandler.html#af9a651cd9d00c73632f2bfa60646f5e6">iterateFunc</a> (<a class="el" href="classParticle.html">Particle</a> &amp;p)</td></tr>
+<tr class="separator:af9a651cd9d00c73632f2bfa60646f5e6 inherit pub_methods_classForceHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classPCApply"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classPCApply')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classPCApply.html">PCApply</a></td></tr>
+<tr class="memitem:a26309604dab645560908ce51fba3d096 inherit pub_methods_classPCApply"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPCApply.html#a26309604dab645560908ce51fba3d096">PCApply</a> ()</td></tr>
+<tr class="separator:a26309604dab645560908ce51fba3d096 inherit pub_methods_classPCApply"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcaab2eacc5146c665200b874925c9b1 inherit pub_methods_classPCApply"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPCApply.html#adcaab2eacc5146c665200b874925c9b1">PCApply</a> (<a class="el" href="classSimulation.html">Simulation</a> *s)</td></tr>
+<tr class="separator:adcaab2eacc5146c665200b874925c9b1 inherit pub_methods_classPCApply"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaf2c8ad37ef3b80eb62c198d03a40ea inherit pub_methods_classPCApply"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPCApply.html#adaf2c8ad37ef3b80eb62c198d03a40ea">~PCApply</a> ()</td></tr>
+<tr class="separator:adaf2c8ad37ef3b80eb62c198d03a40ea inherit pub_methods_classPCApply"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
-<tr class="memitem:a2101a01b7e63f01fab2c535bcfe08a74"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a2101a01b7e63f01fab2c535bcfe08a74">sigma</a></td></tr>
-<tr class="separator:a2101a01b7e63f01fab2c535bcfe08a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff900d31ba58d734ed32b03e004dcf03"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#aff900d31ba58d734ed32b03e004dcf03">epsilon</a></td></tr>
-<tr class="separator:aff900d31ba58d734ed32b03e004dcf03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23c80acc9a392671175565025e03b2e2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a23c80acc9a392671175565025e03b2e2">coeff</a></td></tr>
-<tr class="separator:a23c80acc9a392671175565025e03b2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a5b531bd8ec4c3fcfc0828fae2ad7e13f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a5b531bd8ec4c3fcfc0828fae2ad7e13f">sigma11</a></td></tr>
+<tr class="separator:a5b531bd8ec4c3fcfc0828fae2ad7e13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74582a1a3df89adc2c21f35c0255d5bb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a74582a1a3df89adc2c21f35c0255d5bb">sigma22</a></td></tr>
+<tr class="separator:a74582a1a3df89adc2c21f35c0255d5bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7403d1c9db4607f92dbf1ff3d089de50"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a7403d1c9db4607f92dbf1ff3d089de50">epsilon11</a></td></tr>
+<tr class="separator:a7403d1c9db4607f92dbf1ff3d089de50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefdb11c1f2063fa8a77d0fee83136b2a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#aefdb11c1f2063fa8a77d0fee83136b2a">epsilon22</a></td></tr>
+<tr class="separator:aefdb11c1f2063fa8a77d0fee83136b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4688b1adb202c2a1573b81e7b1a9d869"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a4688b1adb202c2a1573b81e7b1a9d869">sigma12</a></td></tr>
+<tr class="separator:a4688b1adb202c2a1573b81e7b1a9d869"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46fde8af9ad87be5b6be984334e8d442"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLennardJones.html#a46fde8af9ad87be5b6be984334e8d442">epsilon12</a></td></tr>
+<tr class="separator:a46fde8af9ad87be5b6be984334e8d442"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classForceHandler"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classForceHandler')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classForceHandler.html">ForceHandler</a></td></tr>
+<tr class="memitem:a61ce3cffa0cf14c9aa49f0244d5be042 inherit pro_attribs_classForceHandler"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSimulation.html">Simulation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classForceHandler.html#a61ce3cffa0cf14c9aa49f0244d5be042">sim</a></td></tr>
+<tr class="separator:a61ce3cffa0cf14c9aa49f0244d5be042 inherit pro_attribs_classForceHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classPCApply"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classPCApply')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classPCApply.html">PCApply</a></td></tr>
+<tr class="memitem:a414e1cab8ee0a7420dd1bcd655fb90fa inherit pro_attribs_classPCApply"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSimulation.html">Simulation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPCApply.html#a414e1cab8ee0a7420dd1bcd655fb90fa">sim</a></td></tr>
+<tr class="separator:a414e1cab8ee0a7420dd1bcd655fb90fa inherit pro_attribs_classPCApply"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A force calculator using the Lennard-Jones potential </p>
@@ -133,6 +162,23 @@ Private Attributes</h2></td></tr>
           <td class="memname">LennardJones::LennardJones </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>constructor </p>
+
+</div>
+</div>
+<a class="anchor" id="a58ad09d4fdd75465fbddb23a9b758f12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">LennardJones::LennardJones </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classSimulation.html">Simulation</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -206,10 +252,39 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classForceHandler.html#a8aba17d6565f6082c3e088d0abc46e0e">ForceHandler</a>.</p>
 
+<p>Reimplemented in <a class="el" href="classLennardJonesLC.html#a99bf4eae43f8db299cc2014e6bb45e12">LennardJonesLC</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a36fcb85bfe2a571920477a61ca5de0f7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LennardJones::setSimulation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classSimulation.html">Simulation</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>get sigma and epsilon from s </p>
+
+<p>Reimplemented from <a class="el" href="classForceHandler.html#a7ddd675fc52eccfef232fd1b4c73807d">ForceHandler</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a23c80acc9a392671175565025e03b2e2"></a>
+<a class="anchor" id="a7403d1c9db4607f92dbf1ff3d089de50"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -217,19 +292,19 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double LennardJones::coeff</td>
+          <td class="memname">double LennardJones::epsilon11</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aff900d31ba58d734ed32b03e004dcf03"></a>
+<a class="anchor" id="a46fde8af9ad87be5b6be984334e8d442"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -237,19 +312,19 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double LennardJones::epsilon</td>
+          <td class="memname">double LennardJones::epsilon12</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2101a01b7e63f01fab2c535bcfe08a74"></a>
+<a class="anchor" id="aefdb11c1f2063fa8a77d0fee83136b2a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -257,12 +332,72 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double LennardJones::sigma</td>
+          <td class="memname">double LennardJones::epsilon22</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5b531bd8ec4c3fcfc0828fae2ad7e13f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double LennardJones::sigma11</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4688b1adb202c2a1573b81e7b1a9d869"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double LennardJones::sigma12</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a74582a1a3df89adc2c21f35c0255d5bb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double LennardJones::sigma22</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -276,7 +411,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 15 2014 01:48:33 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 11 2014 16:44:26 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

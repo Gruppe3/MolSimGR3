@@ -105,14 +105,21 @@ Inheritance diagram for ParticleGenerator:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a66cee361b12e3294bc7a2259d401fe02"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#a66cee361b12e3294bc7a2259d401fe02">ParticleGenerator</a> ()</td></tr>
 <tr class="separator:a66cee361b12e3294bc7a2259d401fe02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50dda6873c9f7889c7a1ad2efad65e37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#a50dda6873c9f7889c7a1ad2efad65e37">getFileInput</a> (char *fileName, <a class="el" href="classParticleContainer.html">ParticleContainer</a> &amp;pc)</td></tr>
-<tr class="separator:a50dda6873c9f7889c7a1ad2efad65e37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b66165bc0ca4b29ae070a9667767684"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#a8b66165bc0ca4b29ae070a9667767684">getFileInput</a> (char *fileName, <a class="el" href="classParticleContainer.html">ParticleContainer</a> *pc, <a class="el" href="classSimulation.html">Simulation</a> *<a class="el" href="MolSim_8cpp.html#aba72a1c098a920bc3fbab71e600ecab0">sim</a>)</td></tr>
+<tr class="separator:a8b66165bc0ca4b29ae070a9667767684"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae02c12cf87cf295a6fca3688262bb492"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#ae02c12cf87cf295a6fca3688262bb492">ParticleGenerator</a> (<a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;<a class="el" href="classParticleGenerator.html#aaf7df826188798efb4f9ae55daa54a5a">X</a>, <a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; int, 3 &gt; &amp;n, <a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;v, double h, double m, double mean_v)</td></tr>
 <tr class="separator:ae02c12cf87cf295a6fca3688262bb492"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37a629906f87d7200989d6bb2dff796d"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#a37a629906f87d7200989d6bb2dff796d">~ParticleGenerator</a> ()</td></tr>
 <tr class="separator:a37a629906f87d7200989d6bb2dff796d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56ccab8ea522ff904ed23b92e678211b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#a56ccab8ea522ff904ed23b92e678211b">createParticles</a> (<a class="el" href="classParticleContainer.html">ParticleContainer</a> &amp;pc)</td></tr>
-<tr class="separator:a56ccab8ea522ff904ed23b92e678211b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75379c7ea9edbb40c665264baba802fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#a75379c7ea9edbb40c665264baba802fc">createParticles</a> (<a class="el" href="classParticleContainer.html">ParticleContainer</a> *pc)</td></tr>
+<tr class="separator:a75379c7ea9edbb40c665264baba802fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a076b9069bd7773c98fcfd8d1b23d2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#a1a076b9069bd7773c98fcfd8d1b23d2d">createCuboid</a> (<a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;x, <a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; int, 3 &gt; &amp;n, <a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;v, double h, double m, double meanv, <a class="el" href="classParticleContainer.html">ParticleContainer</a> *pc, <a class="el" href="classSimulation.html">Simulation</a> *<a class="el" href="MolSim_8cpp.html#aba72a1c098a920bc3fbab71e600ecab0">sim</a>, int particleType=0)</td></tr>
+<tr class="separator:a1a076b9069bd7773c98fcfd8d1b23d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a873d66ee162541c7871a91bd1037e334"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#a873d66ee162541c7871a91bd1037e334">createSphere</a> (<a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;x, int n, <a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;v, double h, double m, double meanv, int brownDim, <a class="el" href="classParticleContainer.html">ParticleContainer</a> *pc, <a class="el" href="classSimulation.html">Simulation</a> *<a class="el" href="MolSim_8cpp.html#aba72a1c098a920bc3fbab71e600ecab0">sim</a>, int particleType=0)</td></tr>
+<tr class="separator:a873d66ee162541c7871a91bd1037e334"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classInputHandler"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classInputHandler')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classInputHandler.html">InputHandler</a></td></tr>
+<tr class="memitem:ac1f7efb54b34d433d6ffba62627452b6 inherit pub_methods_classInputHandler"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInputHandler.html#ac1f7efb54b34d433d6ffba62627452b6">~InputHandler</a> ()</td></tr>
+<tr class="separator:ac1f7efb54b34d433d6ffba62627452b6 inherit pub_methods_classInputHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -128,12 +135,6 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a692c7f5fd0509035f0a1a225996021e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae399ed7c0cc1e2a6f467f2fd2a8d96ad"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParticleGenerator.html#ae399ed7c0cc1e2a6f467f2fd2a8d96ad">meanV</a></td></tr>
 <tr class="separator:ae399ed7c0cc1e2a6f467f2fd2a8d96ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_methods_classInputHandler"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classInputHandler')"><img src="closed.png" alt="-"/>&#160;Private Member Functions inherited from <a class="el" href="classInputHandler.html">InputHandler</a></td></tr>
-<tr class="memitem:ac1f7efb54b34d433d6ffba62627452b6 inherit pub_methods_classInputHandler"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInputHandler.html#ac1f7efb54b34d433d6ffba62627452b6">~InputHandler</a> ()</td></tr>
-<tr class="separator:ac1f7efb54b34d433d6ffba62627452b6 inherit pub_methods_classInputHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generates particle containers from cuboid data </p>
@@ -230,14 +231,94 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a56ccab8ea522ff904ed23b92e678211b"></a>
+<a class="anchor" id="a1a076b9069bd7773c98fcfd8d1b23d2d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ParticleGenerator::createCuboid </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; int, 3 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>meanv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classParticleContainer.html">ParticleContainer</a> *&#160;</td>
+          <td class="paramname"><em>pc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classSimulation.html">Simulation</a> *&#160;</td>
+          <td class="paramname"><em>sim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>particleType</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>creates particles due to cuboid parameters </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>3 dimensional location vector of the cuboid </td></tr>
+    <tr><td class="paramname">n</td><td>3 dimensional vector defining number of particles per dimension of the cuboid </td></tr>
+    <tr><td class="paramname">v</td><td>3 dimensional velocity vector of the cuboid </td></tr>
+    <tr><td class="paramname">h</td><td>meshwidth/ distance between two particles </td></tr>
+    <tr><td class="paramname">m</td><td>mass of each particle </td></tr>
+    <tr><td class="paramname">meanv</td><td>mean value of Brownian Motion </td></tr>
+    <tr><td class="paramname">pc</td><td><a class="el" href="classParticleContainer.html">ParticleContainer</a> storing created particles </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a75379c7ea9edbb40c665264baba802fc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void ParticleGenerator::createParticles </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classParticleContainer.html">ParticleContainer</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classParticleContainer.html">ParticleContainer</a> *&#160;</td>
           <td class="paramname"><em>pc</em></td><td>)</td>
           <td></td>
         </tr>
@@ -252,7 +333,94 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a50dda6873c9f7889c7a1ad2efad65e37"></a>
+<a class="anchor" id="a873d66ee162541c7871a91bd1037e334"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ParticleGenerator::createSphere </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="singletonutils_1_1Vector.html">utils::Vector</a>&lt; double, 3 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>h</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>meanv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>brownDim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classParticleContainer.html">ParticleContainer</a> *&#160;</td>
+          <td class="paramname"><em>pc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classSimulation.html">Simulation</a> *&#160;</td>
+          <td class="paramname"><em>sim</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>particleType</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>creates particles due to sphere parameters </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>3 dimensional location vector of the sphere's center </td></tr>
+    <tr><td class="paramname">n</td><td>number of particles along the sphere's radius </td></tr>
+    <tr><td class="paramname">v</td><td>3 dimensional velocity vector of the sphere </td></tr>
+    <tr><td class="paramname">h</td><td>meshwidth/ distance between two particles </td></tr>
+    <tr><td class="paramname">m</td><td>mass of each particle </td></tr>
+    <tr><td class="paramname">meanv</td><td>mean value of Brownian Motion </td></tr>
+    <tr><td class="paramname">brownDim</td><td>dimension of Brownian Motion </td></tr>
+    <tr><td class="paramname">pc</td><td><a class="el" href="classParticleContainer.html">ParticleContainer</a> storing created particles </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8b66165bc0ca4b29ae070a9667767684"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -268,8 +436,14 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classParticleContainer.html">ParticleContainer</a> &amp;&#160;</td>
-          <td class="paramname"><em>pc</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classParticleContainer.html">ParticleContainer</a> *&#160;</td>
+          <td class="paramname"><em>pc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classSimulation.html">Simulation</a> *&#160;</td>
+          <td class="paramname"><em>sim</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -291,7 +465,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classInputHandler.html#a3df9656547550dc55ecf8400ff03307d">InputHandler</a>.</p>
+<p>Implements <a class="el" href="classInputHandler.html#a82874e2d734e17de864c67d46ce7c456">InputHandler</a>.</p>
 
 </div>
 </div>
@@ -429,7 +603,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 15 2014 01:48:33 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 11 2014 16:44:27 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

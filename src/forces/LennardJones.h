@@ -18,6 +18,7 @@ public:
 	/** constructor */
 	LennardJones();
 
+	/** constructor */
 	LennardJones(Simulation *s);
 
 	/** destructor */
@@ -42,8 +43,11 @@ protected:
 /** A force calculator using the Lennard-Jones potential for the LC algorithm (no Newton III) */
 class LennardJonesLC : public LennardJones {
 public:
-	//LennardJonesLC();
 	/** constructor */
+	LennardJonesLC() {};
+	/** constructor */
+	LennardJonesLC(Simulation * sim);
+
 
 	/** destructor */
 	virtual ~LennardJonesLC();

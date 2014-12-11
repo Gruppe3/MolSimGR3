@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['gravitation_2ecpp',['Gravitation.cpp',['../Gravitation_8cpp.html',1,'']]],
-  ['gravitation_2eh',['Gravitation.h',['../Gravitation_8h.html',1,'']]]
+  ['dynamicscalc_2ecpp',['DynamicsCalc.cpp',['../DynamicsCalc_8cpp.html',1,'']]],
+  ['dynamicscalc_2eh',['DynamicsCalc.h',['../DynamicsCalc_8h.html',1,'']]]
 ];

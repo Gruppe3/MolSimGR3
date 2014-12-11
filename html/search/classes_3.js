@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gravitation',['Gravitation',['../classGravitation.html',1,'']]]
+  ['earthgravitation',['EarthGravitation',['../classEarthGravitation.html',1,'']]]
 ];

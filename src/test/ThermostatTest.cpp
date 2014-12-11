@@ -27,7 +27,7 @@ void ThermostatTest::setUp() {
 	ParticleContainer pc1;
 	pc = new ParticleContainerLC(&pc1, sim);
 	utils::Vector<double, 3> x(1.1);
-	utils::Vector<double, 3> v(0.0);
+	utils::Vector<double, 3> v(1.0);
 
 	p = new Particle(x, v, 1.0, 0);
 	LOG4CXX_INFO(testlog, "p:" << p->toString());
@@ -48,9 +48,9 @@ void ThermostatTest::testT() {
 
 	pc->iterate(tcalc);
 
-	Beta = tcalc->calcBeta(10.0, 1);
+	Beta = tcalc->calcBeta(1.0, 1);
 
-	LOG4CXX_INFO(testlog, "Beta: " << Beta);
+	LOG4CXX_INFO(testlog, "Berechnung der kinetischen Energie, der Temperatur und des Betafaktors wird geprueft. Beta: " << Beta);
 	CPPUNIT_ASSERT(Beta == 1.0);
 }
 

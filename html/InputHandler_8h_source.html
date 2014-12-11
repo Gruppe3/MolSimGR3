@@ -99,23 +99,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define SRC_IO_INPUTHANDLER_H_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;../ParticleContainer.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classInputHandler.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classInputHandler.html">InputHandler</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classInputHandler.html#ac1f7efb54b34d433d6ffba62627452b6">~InputHandler</a>();</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classInputHandler.html#a3df9656547550dc55ecf8400ff03307d">getFileInput</a>(<span class="keywordtype">char</span>* fileName, <a class="code" href="classParticleContainer.html">ParticleContainer</a>&amp; pc) = 0;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SRC_IO_INPUTHANDLER_H_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="classParticleContainer_html"><div class="ttname"><a href="classParticleContainer.html">ParticleContainer</a></div><div class="ttdef"><b>Definition:</b> ParticleContainer.h:20</div></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;../Simulation.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classInputHandler.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="classInputHandler.html">InputHandler</a> {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classInputHandler.html#ac1f7efb54b34d433d6ffba62627452b6">~InputHandler</a>();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classInputHandler.html#a82874e2d734e17de864c67d46ce7c456">getFileInput</a>(<span class="keywordtype">char</span>* fileName, <a class="code" href="classParticleContainer.html">ParticleContainer</a>* pc, <a class="code" href="classSimulation.html">Simulation</a> *<a class="code" href="MolSim_8cpp.html#aba72a1c098a920bc3fbab71e600ecab0">sim</a>) = 0;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;};</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* SRC_IO_INPUTHANDLER_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="classParticleContainer_html"><div class="ttname"><a href="classParticleContainer.html">ParticleContainer</a></div><div class="ttdef"><b>Definition:</b> ParticleContainer.h:44</div></div>
+<div class="ttc" id="classSimulation_html"><div class="ttname"><a href="classSimulation.html">Simulation</a></div><div class="ttdef"><b>Definition:</b> Simulation.h:19</div></div>
 <div class="ttc" id="classInputHandler_html_ac1f7efb54b34d433d6ffba62627452b6"><div class="ttname"><a href="classInputHandler.html#ac1f7efb54b34d433d6ffba62627452b6">InputHandler::~InputHandler</a></div><div class="ttdeci">virtual ~InputHandler()</div><div class="ttdef"><b>Definition:</b> InputHandler.cpp:10</div></div>
-<div class="ttc" id="classInputHandler_html_a3df9656547550dc55ecf8400ff03307d"><div class="ttname"><a href="classInputHandler.html#a3df9656547550dc55ecf8400ff03307d">InputHandler::getFileInput</a></div><div class="ttdeci">virtual void getFileInput(char *fileName, ParticleContainer &amp;pc)=0</div></div>
-<div class="ttc" id="classInputHandler_html"><div class="ttname"><a href="classInputHandler.html">InputHandler</a></div><div class="ttdef"><b>Definition:</b> InputHandler.h:14</div></div>
+<div class="ttc" id="classInputHandler_html_a82874e2d734e17de864c67d46ce7c456"><div class="ttname"><a href="classInputHandler.html#a82874e2d734e17de864c67d46ce7c456">InputHandler::getFileInput</a></div><div class="ttdeci">virtual void getFileInput(char *fileName, ParticleContainer *pc, Simulation *sim)=0</div></div>
+<div class="ttc" id="MolSim_8cpp_html_aba72a1c098a920bc3fbab71e600ecab0"><div class="ttname"><a href="MolSim_8cpp.html#aba72a1c098a920bc3fbab71e600ecab0">sim</a></div><div class="ttdeci">Simulation * sim</div><div class="ttdef"><b>Definition:</b> MolSim.cpp:79</div></div>
+<div class="ttc" id="classInputHandler_html"><div class="ttname"><a href="classInputHandler.html">InputHandler</a></div><div class="ttdef"><b>Definition:</b> InputHandler.h:15</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 15 2014 01:48:33 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 11 2014 16:44:26 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

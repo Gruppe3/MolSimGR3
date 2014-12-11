@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['xyzoutput',['XYZOutput',['../classXYZOutput.html',1,'']]],
-  ['xyzwriter',['XYZWriter',['../classoutputWriter_1_1XYZWriter.html',1,'outputWriter']]]
+  ['simulation',['Simulation',['../classSimulation.html',1,'']]],
+  ['sphere',['sphere',['../classinput_1_1sphere.html',1,'input']]]
 ];

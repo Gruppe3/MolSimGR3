@@ -9,6 +9,7 @@
 <size x="300" y="54" z="0"/>
 <cutoff>2.875</cutoff>
 <boundaries>
+<<<<<<< HEAD
 	<front>outflow</front>
 	<back>outflow</back>
 	<left>periodic</left>

@@ -98,6 +98,7 @@ Inheritance diagram for InputHandler:</div>
   <map id="InputHandler_map" name="InputHandler_map">
 <area href="classParticleGenerator.html" alt="ParticleGenerator" shape="rect" coords="0,56,112,80"/>
 <area href="classParticlesInput.html" alt="ParticlesInput" shape="rect" coords="122,56,234,80"/>
+<area href="classXMLInput.html" alt="XMLInput" shape="rect" coords="244,56,356,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -105,8 +106,8 @@ Inheritance diagram for InputHandler:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac1f7efb54b34d433d6ffba62627452b6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInputHandler.html#ac1f7efb54b34d433d6ffba62627452b6">~InputHandler</a> ()</td></tr>
 <tr class="separator:ac1f7efb54b34d433d6ffba62627452b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3df9656547550dc55ecf8400ff03307d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInputHandler.html#a3df9656547550dc55ecf8400ff03307d">getFileInput</a> (char *fileName, <a class="el" href="classParticleContainer.html">ParticleContainer</a> &amp;pc)=0</td></tr>
-<tr class="separator:a3df9656547550dc55ecf8400ff03307d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82874e2d734e17de864c67d46ce7c456"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInputHandler.html#a82874e2d734e17de864c67d46ce7c456">getFileInput</a> (char *fileName, <a class="el" href="classParticleContainer.html">ParticleContainer</a> *pc, <a class="el" href="classSimulation.html">Simulation</a> *<a class="el" href="MolSim_8cpp.html#aba72a1c098a920bc3fbab71e600ecab0">sim</a>)=0</td></tr>
+<tr class="separator:a82874e2d734e17de864c67d46ce7c456"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>An abstract class every input type (e.g.ParticlesInput) has to implement </p>
@@ -136,7 +137,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a3df9656547550dc55ecf8400ff03307d"></a>
+<a class="anchor" id="a82874e2d734e17de864c67d46ce7c456"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -152,8 +153,14 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classParticleContainer.html">ParticleContainer</a> &amp;&#160;</td>
-          <td class="paramname"><em>pc</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classParticleContainer.html">ParticleContainer</a> *&#160;</td>
+          <td class="paramname"><em>pc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classSimulation.html">Simulation</a> *&#160;</td>
+          <td class="paramname"><em>sim</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -169,7 +176,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>abstract input method </p>
 
-<p>Implemented in <a class="el" href="classParticleGenerator.html#a50dda6873c9f7889c7a1ad2efad65e37">ParticleGenerator</a>, and <a class="el" href="classParticlesInput.html#a19a48cbd51962a2aea1909e8a6dbb358">ParticlesInput</a>.</p>
+<p>Implemented in <a class="el" href="classParticleGenerator.html#a8b66165bc0ca4b29ae070a9667767684">ParticleGenerator</a>, <a class="el" href="classXMLInput.html#ab4d4e59dc5e810861cbbeb0eb5dde756">XMLInput</a>, and <a class="el" href="classParticlesInput.html#ad4e89bbdc61c1f1738db96a1169561cc">ParticlesInput</a>.</p>
 
 </div>
 </div>
@@ -180,7 +187,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 15 2014 01:48:33 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Dec 11 2014 16:44:26 for MolSim by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

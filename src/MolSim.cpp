@@ -3,6 +3,7 @@
 #include <forces/Gravitation.h>
 #include <forces/LennardJones.h>
 #include <ParticleContainerLC.h>
+#include "PhaseSpaceOutput.h"
 #include "forces/EarthGravitation.h"
 #include "MaxwellBoltzmannDistribution.h"
 #include "ParticleContainer.h"
@@ -19,7 +20,7 @@
 #include "test/ParticleContainerTest.h"
 #include "test/ParticleContainerLCTest.h"
 #include "test/ParticleGeneratorTest.h"
-#include "test/XMLInputTest.h"
+//#include "test/XMLInputTest.h"
 #include "test/ThermostatTest.h"
 
 #include "Logger.h"
@@ -92,7 +93,7 @@ int main(int argc, char* argsv[]) {
 				if (strcmp(argsv[2], "ParticleContainer") == 0) {run(ParticleContainerTest::suite());}
 				if (strcmp(argsv[2], "ParticleContainerLC") == 0) {run(ParticleContainerLCTest::suite());}
 				if (strcmp(argsv[2], "ParticleGenerator") == 0) {run(ParticleGeneratorTest::suite());}
-				if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
+				//if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
 				if (strcmp(argsv[2], "Thermostat") == 0) {run(ThermostatTest::suite());}
 				return 0;
 			}
@@ -167,8 +168,7 @@ int main(int argc, char* argsv[]) {
 	int count_iterations = sim->end_time / sim->delta_t;
 	double beta = 1.0;
 	 // for this loop, we assume: current x, current f and current v are known
-	double temperature = sim->initTemp;
-
+	double temperature = sim->initTemp;	
 	/**
  	* set up the timeval structures for performance measurement
  	*/
@@ -187,7 +187,7 @@ int main(int argc, char* argsv[]) {
 		// calculate new x
 		//LOG4CXX_DEBUG(molsimlog, "before x");
 		particleContainer->iterate(xcalc);
-		//LOG4CXX_DEBUG(molsimlog, "after x");
+
 		#ifdef LC
 		((ParticleContainerLC*)particleContainer)->moveParticles();
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
@@ -237,7 +237,8 @@ int main(int argc, char* argsv[]) {
 			performance_timer_average = (performance_timer_current_double - performance_timer_start_double) / (double)iteration;
 
 			plotParticles(iteration);
-			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Average: " << performance_timer_average << " sec./Iter.");
+			LOG4CXX_INFO(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Avg.: " << performance_timer_average << " sec./Iter.");
+			//LOG4CXX_DEBUG(molsimlog, "Size ot Particles : " << particleContainer->size() );
 			//LOG4CXX_DEBUG(molsimlog,"beta"<<beta);
 		}
 
@@ -251,7 +252,15 @@ int main(int argc, char* argsv[]) {
 		current_time += sim->delta_t;
 	}
 
-	LOG4CXX_INFO(molsimlog, "output written. Terminating...");
+	LOG4CXX_INFO(molsimlog,"Starting PhaseSpaceOutput...");
+	PSO *pso = new PSO();
+	pso->openFile();
+	particleContainer->iterate(pso);
+	pso->closeFile();
+	LOG4CXX_INFO(molsimlog,"PhaseSpaceOutput finished.");
+
+
+	LOG4CXX_INFO(molsimlog, "Output written. Terminating...");
 	return 0;
 }
 

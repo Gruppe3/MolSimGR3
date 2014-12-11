@@ -18,13 +18,7 @@ LennardJones::LennardJones() {
 }
 
 LennardJones::LennardJones(Simulation *s) {
-	sigma11 = sim->sigmas[0];
-	sigma22 = sim->sigmas[1];
-	sigma12 = (sigma11 + sigma22) / 2;
-
-	epsilon11 = sim->epsilons[0];
-	epsilon22 = sim->epsilons[1];
-	epsilon12 = sqrt(epsilon11 * epsilon22);
+	setSimulation(s);
 }
 
 LennardJones::~LennardJones() {
@@ -70,6 +64,9 @@ void LennardJones::setSimulation(Simulation *s) {
 	epsilon12 = sqrt(epsilon11 * epsilon22);
 }
 
+LennardJonesLC::LennardJonesLC(Simulation *s) {
+	setSimulation(s);
+}
 
 LennardJonesLC::~LennardJonesLC() {
 
@@ -90,7 +87,6 @@ void LennardJonesLC::calc(Particle& p1, Particle& p2) {
 		epsilon = epsilon12;
 	}
 	double coeff = 24 * epsilon;
-
 	//LOG4CXX_DEBUG(forcelog, "force calc LC");
 	utils::Vector<double, 3>& f1 = p1.getF();
 
@@ -99,6 +95,6 @@ void LennardJonesLC::calc(Particle& p1, Particle& p2) {
 	norm_inverse *= norm_inverse;	// square
 	double field_pow = pow(sigma, 6) * pow(norm_inverse, 3);	// (sigma / norm)^6
 	utils::Vector<double, 3> f = coeff * norm_inverse * field_pow * (1 - 2*field_pow) * diff;
-
+	//LOG4CXX_DEBUG(forcelog, "coeff(24*epsilon) is: "<<coeff);
 	f1 = f1 + f;
 }

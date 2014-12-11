@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['float32',['Float32',['../classtype.html#a83781d700ce124b4224c316326a5a975a1b5e448b6fc2bafbc9b5f8e4cc582834',1,'type']]],
-  ['float64',['Float64',['../classtype.html#a83781d700ce124b4224c316326a5a975a72818204734582235e144a1e64563947',1,'type']]]
+  ['back',['BACK',['../classBoundaryConds.html#a38a8dda964cc1c45fb3f4de7b8a555f0a716b8ca3a362c21c3f064dc4b4b1d79d',1,'BoundaryConds']]],
+  ['bottom',['BOTTOM',['../classBoundaryConds.html#a38a8dda964cc1c45fb3f4de7b8a555f0a13a08fc21df3284bc967a54507604256',1,'BoundaryConds']]]
 ];
