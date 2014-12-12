@@ -236,6 +236,7 @@ namespace input
   class cuboid;
   class sphere;
   class particle;
+  class inputfiles;
   class type;
 }
 
@@ -960,6 +961,27 @@ namespace input
     void
     particle (const particle_sequence& s);
 
+    // inputfiles
+    //
+    typedef ::input::inputfiles inputfiles_type;
+    typedef ::xsd::cxx::tree::optional< inputfiles_type > inputfiles_optional;
+    typedef ::xsd::cxx::tree::traits< inputfiles_type, char > inputfiles_traits;
+
+    const inputfiles_optional&
+    inputfiles () const;
+
+    inputfiles_optional&
+    inputfiles ();
+
+    void
+    inputfiles (const inputfiles_type& x);
+
+    void
+    inputfiles (const inputfiles_optional& x);
+
+    void
+    inputfiles (::std::auto_ptr< inputfiles_type > p);
+
     // Constructors.
     //
     objectlist ();
@@ -993,6 +1015,7 @@ namespace input
     cuboid_sequence cuboid_;
     sphere_sequence sphere_;
     particle_sequence particle_;
+    inputfiles_optional inputfiles_;
   };
 
   class particleTypes: public ::xml_schema::type
@@ -1598,6 +1621,59 @@ namespace input
     ::xsd::cxx::tree::one< velocity_type > velocity_;
     ::xsd::cxx::tree::one< mass_type > mass_;
     type_optional type_;
+  };
+
+  class inputfiles: public ::xml_schema::type
+  {
+    public:
+    // particles
+    //
+    typedef ::xml_schema::string particles_type;
+    typedef ::xsd::cxx::tree::sequence< particles_type > particles_sequence;
+    typedef particles_sequence::iterator particles_iterator;
+    typedef particles_sequence::const_iterator particles_const_iterator;
+    typedef ::xsd::cxx::tree::traits< particles_type, char > particles_traits;
+
+    const particles_sequence&
+    particles () const;
+
+    particles_sequence&
+    particles ();
+
+    void
+    particles (const particles_sequence& s);
+
+    // Constructors.
+    //
+    inputfiles ();
+
+    inputfiles (const ::xercesc::DOMElement& e,
+                ::xml_schema::flags f = 0,
+                ::xml_schema::container* c = 0);
+
+    inputfiles (const inputfiles& x,
+                ::xml_schema::flags f = 0,
+                ::xml_schema::container* c = 0);
+
+    virtual inputfiles*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    inputfiles&
+    operator= (const inputfiles& x);
+
+    virtual
+    ~inputfiles ();
+
+    // Implementation.
+    //
+    protected:
+    void
+    parse (::xsd::cxx::xml::dom::parser< char >&,
+           ::xml_schema::flags);
+
+    protected:
+    particles_sequence particles_;
   };
 
   class type: public ::xml_schema::type

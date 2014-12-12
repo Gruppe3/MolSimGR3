@@ -17,27 +17,25 @@ ParticleContainerLC::ParticleContainerLC() {
 }
 
 ParticleContainerLC::~ParticleContainerLC() {
-	delete[] cells;
-	delete[] haloCells;
-	delete[] allCells;
+	delete [] cells;
+	delete [] haloCells;
+	delete [] allCells;
 }
 
-ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc,
-		Simulation *sim) {
+ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc, Simulation *sim) {
 	for (int i = 0; i < 3; i++) {
 		domainSize[i] = sim->domainSize[i];
 	}
 	radius = sim->cutoff;
 	distance = sim->meshWidth;
 	for (int i = 0; i < 6; i++) {
-		domainBoundary[i] = sim->boundaries->getBoundary(
-				(BoundaryConds::Side) i);
+		domainBoundary[i] = sim->boundaries->getBoundary((BoundaryConds::Side)i);
 	}
 
 	for (int d = 0; d < DIM; d++) {
-		cellSize[d] = domainSize[d] / radius;
 		int expansion = domainSize[d] / radius;
 		cellNums[d] = expansion > 0 ? expansion : 1;	// expansion in dimension d must be at least 1 for correct numcell()
+		cellsSize[d] = domainSize[d] / cellNums[d];
 		allCellNums[d] = cellNums[d] + 2;
 	}
 
@@ -46,8 +44,7 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc,
 #elif 2==DIM
 	haloAllCellNums= (cellNums[0] + 2) * (cellNums[1] + 2) - cellNums[0]*cellNums[1];
 #elif 3==DIM
-	haloAllCellNums = (cellNums[0] + 2) * (cellNums[1] + 2) * (cellNums[2] + 2)
-			- cellNums[0] * cellNums[1] * cellNums[2];
+	haloAllCellNums = (cellNums[0] + 2) * (cellNums[1] + 2) * (cellNums[2] + 2) - cellNums[0]*cellNums[1]*cellNums[2];
 #endif
 	cells = new Cell[numcell(cellNums)];
 	haloCells = new Cell[haloAllCellNums];
@@ -63,29 +60,28 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc,
 #if 3==DIM
 			for (ic[2] = 0; ic[2] < allCellNums[2]; ic[2]++)
 #endif
-					{
+			{
 				bool isHalo = false;
 				for (int d = 0; d < DIM; d++) {
-					isHalo = isHalo || ic[d] == 0
-							|| ic[d] == allCellNums[d] - 1;
+					isHalo = isHalo || ic[d] == 0 || ic[d] == allCellNums[d]-1;
 				}
 				if (isHalo) {
 					haloCells[i].root = NULL;
 					allCells[calcIndex(ic, allCellNums)] = &haloCells[i];
 					i++;
 					//LOG4CXX_DEBUG(particlelog, "halo " << i << "of " << haloAllCellNums << " all:" << numcell(allCellNums) << " inner:" << numcell(cellNums));
-				} else {
+				}
+				else {
 #if 1==DIM
 					int tmp[DIM] = {ic[0]-1};
 #elif 2==DIM
 					int tmp[DIM] = {ic[0]-1, ic[1]-1};
 
 #elif 3==DIM
-					int tmp[DIM] = { ic[0] - 1, ic[1] - 1, ic[2] - 1 };
+					int tmp[DIM] = {ic[0]-1, ic[1]-1, ic[2]-1};
 #endif
 					cells[calcIndex(tmp, cellNums)].root = NULL;
-					allCells[calcIndex(ic, allCellNums)] = &cells[calcIndex(tmp,
-							cellNums)];
+					allCells[calcIndex(ic, allCellNums)] = &cells[calcIndex(tmp, cellNums)];
 				}
 			}
 	int count = 0;
@@ -99,18 +95,14 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc,
 		pc->resetIterator();
 		while (pc->hasNext()) {
 			Particle& p = pc->next();
-
-
 #if 1==DIM
 			int particleIndex[]= {p.getX()[0] / radius, 0, 0};
 #elif 2==DIM
 			int particleIndex[]= {p.getX()[0] / radius, p.getX()[1] / radius, p.getX()[2] / radius};
 #elif 3==DIM
-
-			int particleIndex[] = {p.getX()[0] / radius,
-					p.getX()[1] / radius, p.getX()[2] / radius};
+			int particleIndex[] = { p.getX()[0] / cellsSize[0], p.getX()[1] / cellsSize[1],
+					p.getX()[2] / cellsSize[2] };
 #endif
-
 			// skip particles that don't suite into the domain
 			//LOG4CXX_DEBUG(particlelog, "add p: " << p.getX().toString() << ", domain:" << domainSize[0] << "," << domainSize[1] << "," << domainSize[2]);
 			bool outofbound = false;
@@ -126,18 +118,15 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc,
 			ParticleList* pl = new ParticleList;
 			pl->p = &p;
 			pl->next = NULL;
-			insertList(
-					(ParticleList**) &(cells[calcIndex(particleIndex, cellNums)].root),
-					pl);
+			insertList((ParticleList**)&(cells[calcIndex(particleIndex, cellNums)].root), pl);
 			//LOG4CXX_DEBUG(particlelog, "add p: " << p.getX().toString() << " to index " << particleIndex[0] << "," << particleIndex[1] << "," << particleIndex[2]);
 			//LOG4CXX_DEBUG(particlelog, "root: " << cells[calcIndex(particleIndex, cellNums)].root->p->getX().toString());
 		}
 	}
-	LOG4CXX_DEBUG(particlelog,
-			"grid: " << cellNums[0] << " x " << cellNums[1] <<
-#if 3==DIM
+	LOG4CXX_DEBUG(particlelog, "grid: " << cellNums[0] << " x " << cellNums[1] <<
+		#if 3==DIM
 			" x " << cellNums[2] <<
-#endif
+		#endif
 			", inserted count:" << count << ", size() delivers:" << size());
 }
 
@@ -163,9 +152,10 @@ void ParticleContainerLC::add(Particle& p) {
 #elif 2==DIM
 	int particleIndex[]= {p.getX()[0]/radius, p.getX()[1]/radius, p.getX()[2] / radius};
 #elif 3==DIM
-	int particleIndex[] = {p.getX()[0] / radius,
-			p.getX()[1] / radius, p.getX()[2] / radius};
+	int particleIndex[] = { p.getX()[0] / cellsSize[0], p.getX()[1] / cellsSize[1],
+			p.getX()[2] / cellsSize[2] };
 #endif
+
 	// skip particles that don't suite into the domain
 	bool outofbound = false;
 	for (int d = 0; d < 3; d++) {
@@ -176,12 +166,10 @@ void ParticleContainerLC::add(Particle& p) {
 	if (outofbound)
 		return;
 
-	ParticleList* pl = new ParticleList;
+	ParticleList* pl = new ParticleList;;
 	pl->p = &p;
 	pl->next = NULL;
-	insertList(
-			(ParticleList**) &(cells[calcIndex(particleIndex, cellNums)].root),
-			pl);
+	insertList((ParticleList**)&(cells[calcIndex(particleIndex, cellNums)].root), pl);
 }
 
 void ParticleContainerLC::selectCell(int celli[]) {
@@ -192,8 +180,7 @@ void ParticleContainerLC::selectCell(int celli[]) {
 		}
 		otherCellIndex[i] = beginningOtherCellIndex[i];
 	}
-	otherCurrentCell =
-			allCells[calcIndex(beginningOtherCellIndex, allCellNums)];
+	otherCurrentCell = allCells[calcIndex(beginningOtherCellIndex, allCellNums)];
 	otherParticleIteratorInCell = otherCurrentCell->root;
 	//LOG4CXX_DEBUG(particlelog, "select cell before, root:" << cells[calcIndex(celli, cellNums)].root);
 	centralCell = &cells[calcIndex(celli, cellNums)];
@@ -206,12 +193,14 @@ void ParticleContainerLC::selectCell(int celli[]) {
 bool ParticleContainerLC::hasNext() {
 	// test for next particle in same cell
 	if (hasNextInCell()) {
-		//LOG4CXX_DEBUG(particlelog, "next in cell:" << particleIteratorInCell->p->getX().toString() << ", current:"  << returnedParticleIteratorInCell->p->getX().toString() << ", cell:" << centralCellIndex[0] << "," << centralCellIndex[1] << "," << centralCellIndex[2]);
+		/*LOG4CXX_DEBUG(particlelog, "next in cell:" << particleIteratorInCell->p->getX().toString() <<
+		", current:"  << returnedParticleIteratorInCell->p->getX().toString() << ", cell:" <<
+				centralCellIndex[0] << "," << centralCellIndex[1] << "," << centralCellIndex[2]);*/
 		return true;
 	}
-	//LOG4CXX_DEBUG(particlelog, "has no next in cell " << centralCellIndex[0] << "," << centralCellIndex[1] << "," << centralCellIndex[2]);
+
 	// test following cells for particles
-	int idx = calcIndex(centralCellIndex, cellNums) + 1;// index of next cell in cells[]
+	int idx = calcIndex(centralCellIndex, cellNums)+1;	// index of next cell in cells[]
 	while (idx < numcell(cellNums)) {
 		if (cells[idx].root != NULL)
 			return true;
@@ -231,9 +220,9 @@ void ParticleContainerLC::resetIterator() { //resetDomainIterator
 }
 
 Particle& ParticleContainerLC::next() { //nextInDomain
-	while (!hasNextInCell()) { // switch to next cell if no particles left in centralCell
-		int idx = calcIndex(centralCellIndex, cellNums) + 1; // 1D index of next cell
-		numToIndex(idx, centralCellIndex, cellNums); // convert 1D to 3D index
+	while (!hasNextInCell()) {	// switch to next cell if no particles left in centralCell
+		int idx = calcIndex(centralCellIndex, cellNums) + 1;	// 1D index of next cell
+		numToIndex(idx, centralCellIndex, cellNums);	// convert 1D to 3D index
 		neighborCells = 0;
 		selectCell(centralCellIndex);
 	}
@@ -251,7 +240,8 @@ Particle& ParticleContainerLC::nextInCell() {
 	return p;
 }
 
-void ParticleContainerLC::insertList(ParticleList **list, ParticleList *i) {
+void ParticleContainerLC::insertList(ParticleList **list,
+		ParticleList *i) {
 	i->next = *list;
 	*list = i;
 }
@@ -271,7 +261,7 @@ void ParticleContainerLC::moveParticles_LC(Cell** cell_arr, int *nc,
 #endif
 					{
 				//LOG4CXX_DEBUG(particlelog, "move() index: " << calcIndex(ic, nc) << " of " << numcell(allCellNums));
-				ParticleList **q = &cell_arr[calcIndex(ic, nc)]->root; // get cell/ first ParticleList at index ic
+				ParticleList **q = &cell_arr[calcIndex(ic, nc)]->root;	// get cell/ first ParticleList at index ic
 				ParticleList *i = *q;
 				//LOG4CXX_DEBUG(particlelog, "got i in move():" << q);
 				while (NULL != i) {
@@ -280,9 +270,8 @@ void ParticleContainerLC::moveParticles_LC(Cell** cell_arr, int *nc,
 					//LOG4CXX_DEBUG(particlelog, "next p in move():" << i->p->getX().toString());
 					utils::Vector<double, 3> X = p.getX();
 					for (int d = 0; d < DIM; d++) {
-						int coord = ((int) floor(X[d] / radius)) + 1;// +1 for transformation from cells[] to allCells[] coords.
-						kc[d] = coord < nc[d] ?
-								(coord < 0 ? 0.0 : coord) : nc[d] - 1;// indices must fit into cell_arr[]
+						int coord = ((int) floor(X[d] / cellsSize[d])) + 1;	// +1 for transformation from cells[] to allCells[] coords.
+						kc[d] = coord < nc[d] ? (coord < 0 ? 0.0 : coord) : nc[d]-1;	// indices must fit into cell_arr[]
 					}
 					if ((ic[0] != kc[0]) || (ic[1] != kc[1])
 #if 3==DIM
@@ -326,6 +315,8 @@ void ParticleContainerLC::numToIndex(int idx, int arr[], int size[]) {
 #endif
 }
 
+
+
 void ParticleContainerLC::iterate(PCApply *fnc) {
 	for (int i = 0; i < numcell(cellNums); i++) {
 		ParticleList *pl = cells[i].root;
@@ -349,40 +340,31 @@ void ParticleContainerLC::iteratePair(PCApply *fnc) {
 		//LOG4CXX_DEBUG(particlelog, "idx: " << idx[0] << "," << idx[1] << "," << idx[2]);
 		selectCell(idx);
 		while (pl != NULL) {
+			Particle& p1 = *pl->p;
+			utils::Vector<double, 3>& x1 = p1.getX();
 			int tmp[DIM];
-			int other[DIM];
-			numToIndex(calcIndex(otherCellIndex, allCellNums), other,
-					allCellNums);	// next cell
-			for (tmp[0] = other[0]; tmp[0] < idx[0] + 3; tmp[0]++)// incl. +1 for centralCellIndex to allCells coords.
+			for (tmp[0] = otherCellIndex[0]; tmp[0] < idx[0]+3; tmp[0]++)	// incl. +1 for centralCellIndex to allCells coords.
 #if 1<DIM
-				for (tmp[1] = other[1]; tmp[1] < idx[1] + 3; tmp[1]++)
+				for (tmp[1] = otherCellIndex[1]; tmp[1] < idx[1]+3; tmp[1]++)
 #endif
 #if 3==DIM
-					for (tmp[2] = other[2]; tmp[2] < idx[2] + 3; tmp[2]++)
+					for (tmp[2] = otherCellIndex[2]; tmp[2] < idx[2]+3; tmp[2]++)
 #endif
-							{
-						ParticleList *pl2 =
-								allCells[calcIndex(tmp, allCellNums)]->root;
+					{
+						ParticleList *pl2 = allCells[calcIndex(tmp, allCellNums)]->root;
 						while (pl2 != NULL) {
 							if (pl != pl2) {
-								Particle& p1 = *pl->p;
-								Particle& p2 = *pl2->p;
-								Particle p(p2);
-								//LOG4CXX_DEBUG(particlelog, p1.getX().toString());
+								Particle p2 = *pl2->p;
+								utils::Vector<double, 3>& x2 = p2.getX();
 								// correct position of halo particles for periodic boundaries
 								for (int d = 0; d < DIM; d++) {
-									utils::Vector<double, 3>& x = p.getX();
-									if (cellNums[d] > 1) {
-										if (tmp[d] == 0)
-											x[d] -= radius*cellNums[d];
-										else if (tmp[d] == cellNums[d])
-											x[d] += radius*cellNums[d];
-									}
+									if (x2[d] - x1[d] > cellsSize[d]+cellsSize[d])
+										x2[d] -= domainSize[d];
+									else if (x1[d] - x2[d] > cellsSize[d]+cellsSize[d])
+										x2[d] += domainSize[d];
 								}
-								//LOG4CXX_DEBUG(particlelog, "p:" << p.getX().toString());
-								//LOG4CXX_DEBUG(particlelog, "p2" << p2.getX().toString());
 
-								fnc->iteratePairFunc(p1, p);
+								fnc->iteratePairFunc(p1, p2);
 								//LOG4CXX_DEBUG(particlelog, "f after:" << p1.getF().toString());
 							}
 							pl2 = pl2->next;
@@ -393,69 +375,86 @@ void ParticleContainerLC::iteratePair(PCApply *fnc) {
 	}
 }
 
-void ParticleContainerLC::applyBoundaryConds(BoundaryConds::Boundary bd,
-		PCApply *fnc) {
+void ParticleContainerLC::applyBoundaryConds(BoundaryConds::Boundary bd, PCApply *fnc) {
 	if (bd == BoundaryConds::REFLECTING) {	// fnc should calculate force
 		if (domainBoundary[BoundaryConds::LEFT] == BoundaryConds::REFLECTING) {	// left
 			applyToBoundaryWall(0, 0, fnc);
 		}
-		if (domainBoundary[BoundaryConds::RIGHT] == BoundaryConds::REFLECTING) {// right
-			applyToBoundaryWall(0, cellNums[0] - 1, fnc);
+		if (domainBoundary[BoundaryConds::RIGHT] == BoundaryConds::REFLECTING) {	// right
+			applyToBoundaryWall(0, cellNums[0]-1, fnc);
 		}
 
 #if 1<DIM
 		if (domainBoundary[BoundaryConds::BOTTOM] == BoundaryConds::REFLECTING) {	// bottom
 			applyToBoundaryWall(1, 0, fnc);
 		}
-		if (domainBoundary[BoundaryConds::TOP] == BoundaryConds::REFLECTING) {// top
-			applyToBoundaryWall(1, cellNums[1] - 1, fnc);
+		if (domainBoundary[BoundaryConds::TOP] == BoundaryConds::REFLECTING) {	// top
+			applyToBoundaryWall(1, cellNums[1]-1, fnc);
 		}
 #endif
 
 #if 3==DIM
-		if (domainBoundary[BoundaryConds::FRONT] == BoundaryConds::REFLECTING) {// front
+		if (domainBoundary[BoundaryConds::FRONT] == BoundaryConds::REFLECTING) {	// front
 			applyToBoundaryWall(2, 0, fnc);
 		}
 		if (domainBoundary[BoundaryConds::BACK] == BoundaryConds::REFLECTING) {	// back
-			applyToBoundaryWall(2, cellNums[2] - 1, fnc);
+			applyToBoundaryWall(2, cellNums[2]-1, fnc);
 		}
 #endif
 	}
 	else if (bd == BoundaryConds::PERIODIC) {
-		if ((domainBoundary[BoundaryConds::LEFT] == BoundaryConds::PERIODIC)
-				&& (domainBoundary[BoundaryConds::RIGHT]
-						== BoundaryConds::PERIODIC)) {	// left and right
+		if ((domainBoundary[BoundaryConds::LEFT] == BoundaryConds::PERIODIC) &&
+				(domainBoundary[BoundaryConds::RIGHT] == BoundaryConds::PERIODIC)){	// left and right
 			bindOppositeWalls(0, 0);
-			bindOppositeWalls(0, allCellNums[0] - 1);
+			bindOppositeWalls(0, allCellNums[0]-1);
 		}
 #if 1<DIM
-		if ((domainBoundary[BoundaryConds::BOTTOM] == BoundaryConds::PERIODIC)
-				&& (domainBoundary[BoundaryConds::TOP]
-						== BoundaryConds::PERIODIC)) {	// bottom and top
+		if ((domainBoundary[BoundaryConds::BOTTOM] == BoundaryConds::PERIODIC) &&
+				(domainBoundary[BoundaryConds::TOP] == BoundaryConds::PERIODIC)){	// bottom and top
 			bindOppositeWalls(1, 0);
-			bindOppositeWalls(1, allCellNums[1] - 1);
+			bindOppositeWalls(1, allCellNums[1]-1);
 		}
 #endif
 #if 3==DIM
-		if ((domainBoundary[BoundaryConds::FRONT] == BoundaryConds::PERIODIC)
-				&& (domainBoundary[BoundaryConds::BACK]
-						== BoundaryConds::PERIODIC)) {	// front and back
+		if ((domainBoundary[BoundaryConds::FRONT] == BoundaryConds::PERIODIC) &&
+				(domainBoundary[BoundaryConds::BACK] == BoundaryConds::PERIODIC)){	// front and backt
 			bindOppositeWalls(2, 0);
-			bindOppositeWalls(2, allCellNums[2] - 1);
+			bindOppositeWalls(2, allCellNums[2]-1);
 		}
 #endif
 	}
+	else if (bd == BoundaryConds::OUTFLOW) {
+		if (domainBoundary[BoundaryConds::LEFT] == BoundaryConds::OUTFLOW) {	// left
+			emptyHaloSide(0, 0);
+		}
+		if (domainBoundary[BoundaryConds::RIGHT] == BoundaryConds::OUTFLOW) {	// right
+			emptyHaloSide(0, cellNums[0]-1);
+		}
+
+		if (domainBoundary[BoundaryConds::BOTTOM] == BoundaryConds::OUTFLOW) {	// bottom
+			emptyHaloSide(1, 0);
+		}
+		if (domainBoundary[BoundaryConds::TOP] == BoundaryConds::OUTFLOW) {	// top
+			emptyHaloSide(1, cellNums[1]-1);
+		}
+
+		if (domainBoundary[BoundaryConds::FRONT] == BoundaryConds::OUTFLOW) {	// front
+			emptyHaloSide(2, 0);
+		}
+		if (domainBoundary[BoundaryConds::BACK] == BoundaryConds::OUTFLOW) {	// back
+			emptyHaloSide(2, cellNums[2]-1);
+		}
+	}
 }
 
-void ParticleContainerLC::applyToBoundaryWall(int fixedDim, int fixedVal,
-		PCApply *fnc) {
+void ParticleContainerLC::applyToBoundaryWall(int fixedDim, int fixedVal, PCApply *fnc) {
 	int idx[DIM];
 	idx[fixedDim] = fixedVal;
 #if 1<DIM
-	const int nextDim = (fixedDim + 1) % DIM;
+	const int nextDim = (fixedDim+1) % DIM;
 #endif
 #if 3==DIM
-	const int lastDim = (fixedDim + 2) % DIM;
+	const int lastDim = (fixedDim+2) % DIM;
 #endif
 
 	// iterate over wall cells
@@ -465,7 +464,7 @@ void ParticleContainerLC::applyToBoundaryWall(int fixedDim, int fixedVal,
 #if 3==DIM
 		for (idx[lastDim] = 0; idx[lastDim] < cellNums[lastDim]; idx[lastDim]++)
 #endif
-				{
+		{
 			ParticleList *pl = cells[calcIndex(idx, cellNums)].root;
 			while (pl != NULL) {	// iterate over all particles in the cell
 				Particle& p = *pl->p;
@@ -477,11 +476,11 @@ void ParticleContainerLC::applyToBoundaryWall(int fixedDim, int fixedVal,
 						x2[fixedDim] = 0.0;
 						fnc->iteratePairFunc(p, ghost);
 					}
-				} else if (/*domainSize[fixedDim]*/radius * cellNums[fixedDim]
-						- x[fixedDim] < distance) {
+				}
+				else if (domainSize[fixedDim]/*radius*cellNums[fixedDim]*/ - x[fixedDim] < distance) {
 					Particle ghost = p;
 					utils::Vector<double, 3>& x2 = ghost.getX();
-					x2[fixedDim] = radius * cellNums[fixedDim];	//domainSize[fixedDim];
+					x2[fixedDim] = /*radius*cellNums[fixedDim];*/domainSize[fixedDim];
 					fnc->iteratePairFunc(p, ghost);
 				}
 				pl = pl->next;
@@ -489,22 +488,23 @@ void ParticleContainerLC::applyToBoundaryWall(int fixedDim, int fixedVal,
 		}
 }
 
+//looks like it works by debugging, not by running the whole programm, to remove if another version exists
 void ParticleContainerLC::bindOppositeWalls(int fixedDim, int fixedVal) {
+	//LOG4CXX_DEBUG(particlelog, "start periodic");
 	int idx[DIM];
 	idx[fixedDim] = fixedVal;
 #if 1<DIM
-	const int nextDim = (fixedDim + 1) % DIM;
+	const int nextDim = (fixedDim+1) % DIM;
 #endif
 #if 3==DIM
-	const int lastDim = (fixedDim + 2) % DIM;
+	const int lastDim = (fixedDim+2) % DIM;
 #endif
 	// iterate over wall cells
 #if 1<DIM
 	for (idx[nextDim] = 0; idx[nextDim] < allCellNums[nextDim]; idx[nextDim]++)
 #endif
 #if 3==DIM
-		for (idx[lastDim] = 0; idx[lastDim] < allCellNums[lastDim];
-				idx[lastDim]++)
+		for (idx[lastDim] = 0; idx[lastDim] < allCellNums[lastDim]; idx[lastDim]++)
 #endif
 		{
 			int index = calcIndex(idx, allCellNums);
@@ -523,30 +523,32 @@ void ParticleContainerLC::bindOppositeWalls(int fixedDim, int fixedVal) {
 			while (pl != NULL) {	// iterate over all particles in the cell
 				Particle& p = *pl->p;
 				utils::Vector<double, 3>& x = p.getX();
-				ParticleList *cpy = pl;
-				pl = pl->next;
+				ParticleList *cpy = pl->next;
 				if (fixedVal == 0) {
 					//LOG4CXX_DEBUG(particlelog, "x before (fixedVal=0)  " <<allCells[calcIndex(idx, allCellNums)]->root->p->getX().toString());
-					x[fixedDim] += radius*cellNums[fixedDim];
+					x[fixedDim] += domainSize[fixedDim];
 					//LOG4CXX_DEBUG(particlelog, "x after (fixedVal=0)  " <<allCells[calcIndex(idx, allCellNums)]->root->p->getX().toString());
 					//cout<<"x value:"<<cells[calcIndex(idx, cellNums)].root->p->toString()<<endl;
 				}
 				else {
 					//LOG4CXX_DEBUG(particlelog, "x before (fixedVal=cellNums)  " << p.getX().toString());
-					x[fixedDim] -= radius*cellNums[fixedDim];
+					x[fixedDim] -= domainSize[fixedDim];
 					//LOG4CXX_DEBUG(particlelog, "x after (fixedVal=cellNums)  " << p.getX().toString());
 				}
-				//LOG4CXX_DEBUG(particlelog, "opposite cell" << oppositeIndex);
-				insertList(&allCells[oppositeIndex]->root, cpy);
+
+				insertList(&allCells[oppositeIndex]->root, pl);
+				pl = cpy;
 			}
-			//LOG4CXX_DEBUG(particlelog, "cell finished");
-			//LOG4CXX_DEBUG(particlelog, "index:" << idx[0] << "," << idx[1] << "," << idx[2]);
-			//LOG4CXX_DEBUG(particlelog, "index_n:" << idx_n[0] << "," << idx_n[1] << "," << idx_n[2]);
 
 			// set own content to copy of opposite boundary cell's content
 			allCells[index]->root = allCells[oppositeIndex]->root;
 
-			/*ParticleList *pl2 = allCells[oppositeIndex]->root;
+			//LOG4CXX_DEBUG(particlelog, "cell finished");
+			//LOG4CXX_DEBUG(particlelog, "index:" << idx[0] << "," << idx[1] << "," << idx[2]);
+			//LOG4CXX_DEBUG(particlelog, "index_n:" << idx_n[0] << "," << idx_n[1] << "," << idx_n[2]);
+
+			/*// should also work, but quite memory consuming
+			ParticleList *pl2 = allCells[oppositeIndex]->root;
 			while (pl2 != NULL) {
 				Particle& p = *pl2->p;
 				Particle *ghost = new Particle;
@@ -585,4 +587,5 @@ void ParticleContainerLC::emptyHaloSide(int fixedDim, int fixedVal) {
 		{
 			allCells[calcIndex(idx, allCellNums)]->root = NULL;
 		}
+	LOG4CXX_DEBUG(particlelog, "end empty halo");
 }

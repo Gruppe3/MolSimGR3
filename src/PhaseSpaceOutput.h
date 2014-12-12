@@ -15,7 +15,7 @@ public:
 
 	virtual ~PSO();
 
-	void openFile();
+	void openFile(int num_particles);
 	void closeFile();
 	void iterateFunc(Particle& p);
 

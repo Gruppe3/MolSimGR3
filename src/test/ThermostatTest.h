@@ -20,11 +20,15 @@ public:
 	void setUp();
 	void tearDown();
 
-	void testT();
+	void testBeta();
+
+	/**tests if velocity changes by constant temperature*/
+	void testConstTemp();
 
 	static Test *suite ()  {
 		TestSuite *suiteOfTests = new TestSuite;
-		suiteOfTests->addTest (new TestCaller<ThermostatTest>("testT", &ThermostatTest::testT));
+		suiteOfTests->addTest (new TestCaller<ThermostatTest>("TestBeta", &ThermostatTest::testBeta));
+		suiteOfTests->addTest (new TestCaller<ThermostatTest>("TestConstTemp", &ThermostatTest::testConstTemp));
 		return suiteOfTests;
 	}
 

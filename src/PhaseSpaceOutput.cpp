@@ -6,9 +6,10 @@ PSO::~PSO() {
 }
 
 
-void PSO::openFile(){
+void PSO::openFile(int num_particles){
 	outFile.open ("PhaseSpaceOutput.txt");
-	outFile << "X	V	F	OldF	M	Type \n";
+	outFile << "# X	V	F	OldF	M	Type \n";
+	outFile << num_particles << "\n";
 }
 
 
@@ -20,7 +21,19 @@ void PSO::iterateFunc(Particle& p) {
 	double M = p.getM();
 	int Type = p.getType();
 
-	outFile << X << "	" << V << "	" << F << "	" << OldF << "	" << M << "	" << Type << "\n";
+	for (int i = 0; i < 3; i++) {
+		outFile << X[i] << " ";
+	}
+	for (int i = 0; i < 3; i++) {
+		outFile << V[i] << " ";
+	}
+	for (int i = 0; i < 3; i++) {
+		outFile << F[i] << " ";
+	}
+	for (int i = 0; i < 3; i++) {
+		outFile << OldF[i] << " ";
+	}
+	outFile << M << " " << Type << "\n";
 }
 
 

@@ -7,6 +7,7 @@
 
 #include <io/input.h>
 #include "XMLInput.h"
+#include "../FileReader.h"
 #include "../Logger.h"
 #include "../ParticleGenerator.h"
 
@@ -192,6 +193,15 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc, Simulation *s
 		for (int i = 0; i < molsim->particleTypes().type().size(); i++) {
 			sim->epsilons[i] = molsim->particleTypes().type()[i].epsilon();
 			sim->sigmas[i] = molsim->particleTypes().type()[i].sigma();
+		}
+
+		if (molsim->objectlist().inputfiles().present()) {
+			LOG4CXX_INFO(iolog, "reading further specified input files...");
+			input::inputfiles ipf = molsim->objectlist().inputfiles().get();
+			FileReader *fr = new FileReader;
+			for (int i = 0; i < ipf.particles().size(); i++) {
+				fr->readFile(pc, (char*)ipf.particles()[i].c_str());
+			}
 		}
 
 		LOG4CXX_INFO(iolog, "reading done...");

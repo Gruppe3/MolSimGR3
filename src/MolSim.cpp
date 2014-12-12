@@ -20,7 +20,7 @@
 #include "test/ParticleContainerTest.h"
 #include "test/ParticleContainerLCTest.h"
 #include "test/ParticleGeneratorTest.h"
-//#include "test/XMLInputTest.h"
+#include "test/XMLInputTest.h"
 #include "test/ThermostatTest.h"
 
 #include "Logger.h"
@@ -93,7 +93,7 @@ int main(int argc, char* argsv[]) {
 				if (strcmp(argsv[2], "ParticleContainer") == 0) {run(ParticleContainerTest::suite());}
 				if (strcmp(argsv[2], "ParticleContainerLC") == 0) {run(ParticleContainerLCTest::suite());}
 				if (strcmp(argsv[2], "ParticleGenerator") == 0) {run(ParticleGeneratorTest::suite());}
-				//if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
+				if (strcmp(argsv[2], "XMLInput") == 0) {run(XMLInputTest::suite());}
 				if (strcmp(argsv[2], "Thermostat") == 0) {run(ThermostatTest::suite());}
 				return 0;
 			}
@@ -149,6 +149,7 @@ int main(int argc, char* argsv[]) {
 	forceType->setSimulation(sim);
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 
+	forceType->setSimulation(sim);
 	// the forces are needed to calculate x, but are not given in the input file.
 	// copies F to oldF of particles and sets F to 0
 	particleContainer->iterate(forceType);
@@ -187,7 +188,7 @@ int main(int argc, char* argsv[]) {
 		// calculate new x
 		//LOG4CXX_DEBUG(molsimlog, "before x");
 		particleContainer->iterate(xcalc);
-
+		//LOG4CXX_DEBUG(molsimlog, "after x");
 		#ifdef LC
 		((ParticleContainerLC*)particleContainer)->moveParticles();
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
@@ -204,20 +205,22 @@ int main(int argc, char* argsv[]) {
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
 		#endif
 
-		vcalc->setBeta(1.0);
-		if ((iteration > sim->thermostatStart) && (iteration % sim->tempFreq == 0)){
-			tcalc->resetEnergy();
-			//calculates sum to get T
-			particleContainer->iterate(tcalc);
-			if (temperature < sim->targetTemp){
-				temperature += sim->tempDiff;	// heating
+		if (sim->tempFreq > 0) {
+			vcalc->setBeta(1.0);
+			if ((iteration > sim->thermostatStart) && (iteration % sim->tempFreq == 0)){
+				tcalc->resetEnergy();
+				//calculates sum to get T
+				particleContainer->iterate(tcalc);
+				if (temperature < sim->targetTemp){
+					temperature += sim->tempDiff;	// heating
+				}
+				else if (temperature > sim->targetTemp) {
+					temperature -= sim->tempDiff;	// cooling
+				}
+				beta = tcalc->calcBeta(temperature, particleContainer->size());
+				//LOG4CXX_DEBUG("molsim",beta<<)
+				vcalc->setBeta(beta);
 			}
-			else if (temperature > sim->targetTemp) {
-				temperature -= sim->tempDiff;	// cooling
-			}
-			beta = tcalc->calcBeta(temperature, particleContainer->size());
-			//LOG4CXX_DEBUG("molsim",beta<<)
-			vcalc->setBeta(beta);
 		}
 		/*particleContainer->resetIterator();
 		while(particleContainer->hasNext()){
@@ -237,7 +240,7 @@ int main(int argc, char* argsv[]) {
 			performance_timer_average = (performance_timer_current_double - performance_timer_start_double) / (double)iteration;
 
 			plotParticles(iteration);
-			LOG4CXX_INFO(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Avg.: " << performance_timer_average << " sec./Iter.");
+			LOG4CXX_DEBUG(molsimlog, "Iteration " << iteration << " of " << count_iterations << " finished. Avg: " << performance_timer_average << " sec./Iter.");
 			//LOG4CXX_DEBUG(molsimlog, "Size ot Particles : " << particleContainer->size() );
 			//LOG4CXX_DEBUG(molsimlog,"beta"<<beta);
 		}
@@ -254,7 +257,7 @@ int main(int argc, char* argsv[]) {
 
 	LOG4CXX_INFO(molsimlog,"Starting PhaseSpaceOutput...");
 	PSO *pso = new PSO();
-	pso->openFile();
+	pso->openFile(particleContainer->size());
 	particleContainer->iterate(pso);
 	pso->closeFile();
 	LOG4CXX_INFO(molsimlog,"PhaseSpaceOutput finished.");
@@ -324,6 +327,9 @@ void calculateV(Particle& p) {
 
 
 void plotParticles(int iteration) {
+	if (sim->out_name.empty())
+		return;
+
 	VTKOutput vtko;
 	vtko.setOutput(sim->out_name, iteration, particleContainer);
 }

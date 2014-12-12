@@ -3,7 +3,7 @@
   <outputbasename>MD_vtk</outputbasename>
   <writefreq>150</writefreq>
   <timestep>0.0005</timestep>
-  <endtime>15</endtime>
+  <endtime>40</endtime>
   <gravity>-12.44</gravity>
    <domain>
   	<size x="303" y="180" z="0"/>
@@ -22,17 +22,20 @@
   	<starttime>0</starttime>
   	<targettemp>5.0</targettemp>
   	<tempdiff>0.0</tempdiff>
-  	<interval>1000</interval>
+  	<interval>0</interval>
   </thermostat>
   <objectlist>
-  	<cuboid>
-  		<location x="1.5" y="2.0" z="0"/>
+  	<sphere>
+  		<location x="150" y="150" z="0"/>
   		<velocity x="0.0" y="0.0" z="0.0"/>
-  		<numparticles x="250" y="50" z="1"/>
+  		<numparticles>20</numparticles>
   		<mass>1.0</mass>
 		<type>0</type>
   		<meshwidth>1.2</meshwidth>
-  	</cuboid>
+  	</sphere>
+  	<inputfiles>
+  		<particles>PhaseSpaceOutput.txt</particles>
+  	</inputfiles>
   </objectlist>
   <particleTypes>
 	<type id ="0" sigma = "1.2" epsilon="1.0" />

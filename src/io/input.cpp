@@ -43,7 +43,7 @@
 namespace input
 {
   // decimalvector
-  // 
+  //
 
   const decimalvector::x_type& decimalvector::
   x () const
@@ -101,7 +101,7 @@ namespace input
 
 
   // integervector
-  // 
+  //
 
   const integervector::x_type& integervector::
   x () const
@@ -159,7 +159,7 @@ namespace input
 
 
   // boundarytype
-  // 
+  //
 
   boundarytype::
   boundarytype (value v)
@@ -196,7 +196,7 @@ namespace input
   boundarytype& boundarytype::
   operator= (value v)
   {
-    static_cast< ::xml_schema::string& > (*this) = 
+    static_cast< ::xml_schema::string& > (*this) =
     ::xml_schema::string (_xsd_boundarytype_literals_[v]);
 
     return *this;
@@ -204,7 +204,7 @@ namespace input
 
 
   // molsimdata
-  // 
+  //
 
   const molsimdata::outputbasename_type& molsimdata::
   outputbasename () const
@@ -406,7 +406,7 @@ namespace input
 
 
   // domain
-  // 
+  //
 
   const domain::size_type& domain::
   size () const
@@ -476,7 +476,7 @@ namespace input
 
 
   // thermostat
-  // 
+  //
 
   const thermostat::brownian_optional& thermostat::
   brownian () const
@@ -594,7 +594,7 @@ namespace input
 
 
   // objectlist
-  // 
+  //
 
   const objectlist::cuboid_sequence& objectlist::
   cuboid () const
@@ -650,9 +650,39 @@ namespace input
     this->particle_ = s;
   }
 
+  const objectlist::inputfiles_optional& objectlist::
+  inputfiles () const
+  {
+    return this->inputfiles_;
+  }
+
+  objectlist::inputfiles_optional& objectlist::
+  inputfiles ()
+  {
+    return this->inputfiles_;
+  }
+
+  void objectlist::
+  inputfiles (const inputfiles_type& x)
+  {
+    this->inputfiles_.set (x);
+  }
+
+  void objectlist::
+  inputfiles (const inputfiles_optional& x)
+  {
+    this->inputfiles_ = x;
+  }
+
+  void objectlist::
+  inputfiles (::std::auto_ptr< inputfiles_type > x)
+  {
+    this->inputfiles_.set (x);
+  }
+
 
   // particleTypes
-  // 
+  //
 
   const particleTypes::type_sequence& particleTypes::
   type () const
@@ -674,7 +704,7 @@ namespace input
 
 
   // boundaries
-  // 
+  //
 
   const boundaries::front_type& boundaries::
   front () const
@@ -822,7 +852,7 @@ namespace input
 
 
   // cuboid
-  // 
+  //
 
   const cuboid::location_type& cuboid::
   location () const
@@ -958,7 +988,7 @@ namespace input
 
 
   // sphere
-  // 
+  //
 
   const sphere::location_type& sphere::
   location () const
@@ -1088,7 +1118,7 @@ namespace input
 
 
   // particle
-  // 
+  //
 
   const particle::location_type& particle::
   location () const
@@ -1181,8 +1211,30 @@ namespace input
   }
 
 
+  // inputfiles
+  //
+
+  const inputfiles::particles_sequence& inputfiles::
+  particles () const
+  {
+    return this->particles_;
+  }
+
+  inputfiles::particles_sequence& inputfiles::
+  particles ()
+  {
+    return this->particles_;
+  }
+
+  void inputfiles::
+  particles (const particles_sequence& s)
+  {
+    this->particles_ = s;
+  }
+
+
   // type
-  // 
+  //
 
   const type::id_type& type::
   id () const
@@ -2209,7 +2261,8 @@ namespace input
   : ::xml_schema::type (),
     cuboid_ (this),
     sphere_ (this),
-    particle_ (this)
+    particle_ (this),
+    inputfiles_ (this)
   {
   }
 
@@ -2220,7 +2273,8 @@ namespace input
   : ::xml_schema::type (x, f, c),
     cuboid_ (x.cuboid_, f, this),
     sphere_ (x.sphere_, f, this),
-    particle_ (x.particle_, f, this)
+    particle_ (x.particle_, f, this),
+    inputfiles_ (x.inputfiles_, f, this)
   {
   }
 
@@ -2231,7 +2285,8 @@ namespace input
   : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
     cuboid_ (this),
     sphere_ (this),
-    particle_ (this)
+    particle_ (this),
+    inputfiles_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -2283,6 +2338,20 @@ namespace input
         continue;
       }
 
+      // inputfiles
+      //
+      if (n.name () == "inputfiles" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< inputfiles_type > r (
+          inputfiles_traits::create (i, f, this));
+
+        if (!this->inputfiles_)
+        {
+          this->inputfiles_.set (r);
+          continue;
+        }
+      }
+
       break;
     }
   }
@@ -2303,6 +2372,7 @@ namespace input
       this->cuboid_ = x.cuboid_;
       this->sphere_ = x.sphere_;
       this->particle_ = x.particle_;
+      this->inputfiles_ = x.inputfiles_;
     }
 
     return *this;
@@ -3221,6 +3291,88 @@ namespace input
 
   particle::
   ~particle ()
+  {
+  }
+
+  // inputfiles
+  //
+
+  inputfiles::
+  inputfiles ()
+  : ::xml_schema::type (),
+    particles_ (this)
+  {
+  }
+
+  inputfiles::
+  inputfiles (const inputfiles& x,
+              ::xml_schema::flags f,
+              ::xml_schema::container* c)
+  : ::xml_schema::type (x, f, c),
+    particles_ (x.particles_, f, this)
+  {
+  }
+
+  inputfiles::
+  inputfiles (const ::xercesc::DOMElement& e,
+              ::xml_schema::flags f,
+              ::xml_schema::container* c)
+  : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
+    particles_ (this)
+  {
+    if ((f & ::xml_schema::flags::base) == 0)
+    {
+      ::xsd::cxx::xml::dom::parser< char > p (e, true, false, false);
+      this->parse (p, f);
+    }
+  }
+
+  void inputfiles::
+  parse (::xsd::cxx::xml::dom::parser< char >& p,
+         ::xml_schema::flags f)
+  {
+    for (; p.more_content (); p.next_content (false))
+    {
+      const ::xercesc::DOMElement& i (p.cur_element ());
+      const ::xsd::cxx::xml::qualified_name< char > n (
+        ::xsd::cxx::xml::dom::name< char > (i));
+
+      // particles
+      //
+      if (n.name () == "particles" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< particles_type > r (
+          particles_traits::create (i, f, this));
+
+        this->particles_.push_back (r);
+        continue;
+      }
+
+      break;
+    }
+  }
+
+  inputfiles* inputfiles::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class inputfiles (*this, f, c);
+  }
+
+  inputfiles& inputfiles::
+  operator= (const inputfiles& x)
+  {
+    if (this != &x)
+    {
+      static_cast< ::xml_schema::type& > (*this) = x;
+      this->particles_ = x.particles_;
+    }
+
+    return *this;
+  }
+
+  inputfiles::
+  ~inputfiles ()
   {
   }
 

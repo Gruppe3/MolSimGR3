@@ -43,7 +43,7 @@ public:
 		gravity = -9.807;
 		//epsilon21=epsilon12;
 		//boltzmannConst=1.3806488E-23;
-		boltzmannConst = 1.5;
+		boltzmannConst = 1.0;
 		boundaries = new BoundaryConds;
 	}
 

@@ -28,7 +28,10 @@ FileReader::~FileReader() {
 void FileReader::readFile(ParticleContainer* particleContainer, char* filename) {
 	double x[] = {0,0,0};
 	double v[] = {1,1,1};
+	double f_old[] = {0,0,0};
+	double f[] = {0,0,0};
 	double m = 1;
+	int t = 0;
     int num_particles = 0;
 
     std::ifstream input_file(filename);
@@ -64,12 +67,24 @@ void FileReader::readFile(ParticleContainer* particleContainer, char* filename) 
     			LOG4CXX_FATAL(iolog, "Error reading file: eof reached unexpectedly reading from line " << i);
     			exit(-1);
     		}
+
+    		for (int j = 0; j < 3; j++) {
+				datastream >> f[j];
+			}
+    		for (int j = 0; j < 3; j++) {
+				datastream >> f_old[j];
+			}
+
     		datastream >> m;
-    		Particle p(x, v, m);
+    		datastream >> t;
+
+    		Particle p(x, v, m, t);
+    		p.getOldF() = f_old;
+    		p.getF() = f;
     		particleContainer->add(p);
 
     		getline(input_file, tmp_string);
-    		LOG4CXX_DEBUG(iolog, "Read line: " << tmp_string);
+    		LOG4CXX_TRACE(iolog, "Read line: " << tmp_string);
     	}
     } else {
     	LOG4CXX_FATAL(iolog, "Error: could not open file " << filename);

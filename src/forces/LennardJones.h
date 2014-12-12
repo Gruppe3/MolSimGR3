@@ -44,9 +44,9 @@ protected:
 class LennardJonesLC : public LennardJones {
 public:
 	/** constructor */
-	LennardJonesLC() {};
+	LennardJonesLC();
 	/** constructor */
-	LennardJonesLC(Simulation * sim);
+	LennardJonesLC(Simulation *sim);
 
 
 	/** destructor */

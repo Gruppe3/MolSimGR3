@@ -69,7 +69,7 @@ void ParticleContainerLCTest::testReflection() {
 	LOG4CXX_INFO(testlog, "container size start:" << pc->size());
 	CPPUNIT_ASSERT(pc->size() == 2);
 
-	ForceHandler* forceType = new LennardJonesLC(sim);
+	ForceHandler* forceType = new LennardJonesLC();
 	CalcX *xcalc = new CalcX(sim);
 	CalcV *vcalc = new CalcV(sim);
 
@@ -107,7 +107,7 @@ void ParticleContainerLCTest::testPeriodicBoundary() {
 	LOG4CXX_INFO(testlog, "container size start:" << pc->size());
 	CPPUNIT_ASSERT(pc->size() == 2);
 
-	ForceHandler* forceType = new LennardJonesLC(sim);
+	ForceHandler* forceType = new LennardJonesLC();
 	CalcX *xcalc = new CalcX(sim);
 	CalcV *vcalc = new CalcV(sim);
 

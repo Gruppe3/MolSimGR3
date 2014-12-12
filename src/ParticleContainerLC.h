@@ -84,7 +84,7 @@ private:
 	int allCellNums[DIM];
 
 	/** size of cell per dimension */
-	double cellSize[DIM];
+	double cellsSize[DIM];
 
 	/**number of all halo cells*/
 	int haloAllCellNums;

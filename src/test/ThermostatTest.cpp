@@ -42,7 +42,7 @@ void ThermostatTest::tearDown() {
 	delete p;
 }
 
-void ThermostatTest::testT() {
+void ThermostatTest::testBeta() {
 	CalcV *vcalc = new CalcV(sim);
 	CalcT *tcalc = new CalcT(sim);
 
@@ -54,3 +54,12 @@ void ThermostatTest::testT() {
 	CPPUNIT_ASSERT(Beta == 1.0);
 }
 
+void ThermostatTest::testConstTemp() {
+	CalcV *vcalc = new CalcV(sim);
+	CalcT *tcalc = new CalcT(sim);
+	pc->iterate(tcalc);
+	Beta =tcalc->calcBeta(10.0,pc->size());
+	utils::Vector<double, 3> v_old= p->getV();
+	pc->iterate(vcalc);
+	CPPUNIT_ASSERT(p->getV()==v_old);
+}

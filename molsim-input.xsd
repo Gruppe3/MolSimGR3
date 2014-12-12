@@ -105,6 +105,15 @@
     							</xs:all>
     						</xs:complexType>
     					</xs:element>
+    					
+    					<xs:element name="inputfiles" minOccurs="0">
+    						<xs:complexType>
+    							<xs:sequence>
+    							<!-- contains path to simple files which directly store particles -->
+    								<xs:element name="particles" type="xs:string" maxOccurs="unbounded"></xs:element>
+    							</xs:sequence>
+    						</xs:complexType>
+    					</xs:element>
     				</xs:sequence>
     			</xs:complexType>
     		</xs:element>
