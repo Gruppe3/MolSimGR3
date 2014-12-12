@@ -67,7 +67,7 @@ void LennardJones::setSimulation(Simulation *s) {
 
 
 LennardJonesLC::LennardJonesLC() {
-	LennardJones::LennardJones();
+	LennardJones();
 }
 
 LennardJonesLC::LennardJonesLC(Simulation *s) {
