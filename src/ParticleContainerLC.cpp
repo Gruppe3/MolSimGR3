@@ -9,6 +9,10 @@
 #include "Simulation.h"
 #include "Logger.h"
 
+#ifdef _OPENMP
+	#include <omp.h>
+#endif
+
 const LoggerPtr particlelog(Logger::getLogger("molsim.particle"));
 
 ParticleContainerLC::ParticleContainerLC() {
@@ -332,6 +336,9 @@ void ParticleContainerLC::iterate(PCApply *fnc) {
 
 void ParticleContainerLC::iteratePair(PCApply *fnc) {
 	//LOG4CXX_DEBUG(particlelog, "iterate pair");
+#ifdef _OPENMP
+	#pragma omp parallel for
+#endif
 	for (int i = 0; i < numcell(cellNums); i++) {
 		//LOG4CXX_DEBUG(particlelog, "cell " << i << " of " << numcell(cellNums));
 		ParticleList *pl = cells[i].root;

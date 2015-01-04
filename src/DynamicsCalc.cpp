@@ -34,8 +34,8 @@ void CalcV::setBeta(double beta_tag) {
 }
 
 void CalcT::iterateFunc(Particle& p) {
-	double vnorm = p.getV().L2Norm();
-	energy = energy + p.getM() * vnorm*vnorm;
+	double vnorm = p.getV().L2NormSquared();
+	energy = energy + p.getM() * vnorm;
 }
 
 double CalcT::calcBeta(double tD, int numParticles){

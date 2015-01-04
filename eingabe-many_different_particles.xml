@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <molsimdata xmlns="http://www.example.org/input" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/input molsim-input.xsd">
-<outputbasename>MD_vtk</outputbasename>
+<outputbasename>output/MD_vtk</outputbasename>
 <writefreq>40</writefreq>
 <timestep>0.0005</timestep>
 <endtime>50</endtime>
@@ -9,7 +9,6 @@
 <size x="300" y="54" z="0"/>
 <cutoff>3.0</cutoff>
 <boundaries>
-<<<<<<< HEAD
 	<front>outflow</front>
 	<back>outflow</back>
 	<left>periodic</left>

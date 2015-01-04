@@ -106,6 +106,14 @@ public:
 		return sqrt(square_sum);
 	}
 
+	double L2NormSquared() const {
+		double square_sum = 0;
+		for (int i = 0; i < length; i++) {
+			square_sum += (this->content[i] * this->content[i]);
+		}
+		return square_sum;
+	}
+
 	bool equals(const Vector& rhs) const {
 		for (int i = 0; i < length; i++) {
 			if (rhs.content[i] != this->content[i]) {
