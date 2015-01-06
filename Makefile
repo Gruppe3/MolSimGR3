@@ -11,7 +11,7 @@ include files.mk
 
 # Compiler flags
 # -------------------------------------------------------------------------
-CFLAGS=-g -O3
+CFLAGS=-g -O3 -fopenmp
 
 # Linker flags
 # ------------

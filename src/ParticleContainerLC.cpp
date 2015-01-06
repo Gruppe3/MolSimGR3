@@ -9,9 +9,7 @@
 #include "Simulation.h"
 #include "Logger.h"
 
-#ifdef _OPENMP
-	#include <omp.h>
-#endif
+#include <omp.h>
 
 const LoggerPtr particlelog(Logger::getLogger("molsim.particle"));
 
@@ -337,25 +335,32 @@ void ParticleContainerLC::iterate(PCApply *fnc) {
 void ParticleContainerLC::iteratePair(PCApply *fnc) {
 	//LOG4CXX_DEBUG(particlelog, "iterate pair");
 #ifdef _OPENMP
-	#pragma omp parallel for
+	omp_set_num_threads(4);
 #endif
+	#pragma omp parallel for schedule(dynamic, 100)
 	for (int i = 0; i < numcell(cellNums); i++) {
 		//LOG4CXX_DEBUG(particlelog, "cell " << i << " of " << numcell(cellNums));
 		ParticleList *pl = cells[i].root;
 		int idx[DIM];
 		numToIndex(i, idx, cellNums);
 		//LOG4CXX_DEBUG(particlelog, "idx: " << idx[0] << "," << idx[1] << "," << idx[2]);
-		selectCell(idx);
+
+		// set start neighbor cell
+		//selectCell(idx);
+		int neighborCellIndex[DIM];
+		for (int j = 0 ; j < DIM; j++) {
+			neighborCellIndex[j] = idx[j] > 0 ? idx[j]: 0; // incl. additional +1 for allCells instead of cells (beginningOtherCellIndex in allCells coords.)
+		}
 		while (pl != NULL) {
 			Particle& p1 = *pl->p;
 			utils::Vector<double, 3>& x1 = p1.getX();
 			int tmp[DIM];
-			for (tmp[0] = otherCellIndex[0]; tmp[0] < idx[0]+3; tmp[0]++)	// incl. +1 for centralCellIndex to allCells coords.
+			for (tmp[0] = neighborCellIndex[0]; tmp[0] < idx[0]+3; tmp[0]++)	// incl. +1 for centralCellIndex to allCells coords.
 #if 1<DIM
-				for (tmp[1] = otherCellIndex[1]; tmp[1] < idx[1]+3; tmp[1]++)
+				for (tmp[1] = neighborCellIndex[1]; tmp[1] < idx[1]+3; tmp[1]++)
 #endif
 #if 3==DIM
-					for (tmp[2] = otherCellIndex[2]; tmp[2] < idx[2]+3; tmp[2]++)
+					for (tmp[2] = neighborCellIndex[2]; tmp[2] < idx[2]+3; tmp[2]++)
 #endif
 					{
 						ParticleList *pl2 = allCells[calcIndex(tmp, allCellNums)]->root;

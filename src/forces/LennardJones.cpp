@@ -27,15 +27,16 @@ LennardJones::~LennardJones() {
 
 void LennardJones::calc(Particle& p1, Particle& p2) {
 	double sigma, epsilon;
-	if ((p1.getType() == 0) && (p2.getType() == 0)) {
+	int t1 = p1.getType(), t2 = p2.getType();
+	if ((t1 == 0) && (t2 == 0)) {
 		sigma = sigma11;
 		epsilon = epsilon11;
 	}
-	else if ((p1.getType() == 1) && (p2.getType() == 1)) {
+	else if ((t1 == 1) && (t2 == 1)) {
 		sigma = sigma22;
 		epsilon = epsilon22;
 	}
-	else if (p1.getType() != p2.getType()) {
+	else {
 		sigma = sigma12;
 		epsilon = epsilon12;
 	}
@@ -78,15 +79,16 @@ LennardJonesLC::~LennardJonesLC() {
 
 void LennardJonesLC::calc(Particle& p1, Particle& p2) {
 	double sigma, epsilon;
-	if ((p1.getType() == 0) && (p2.getType() == 0)) {
+	int t1 = p1.getType(), t2 = p2.getType();
+	if ((t1 == 0) && (t2 == 0)) {
 		sigma = sigma11;
 		epsilon = epsilon11;
 	}
-	else if ((p1.getType() == 1) && (p2.getType() == 1)) {
+	else if ((t1 == 1) && (t2 == 1)) {
 		sigma = sigma22;
 		epsilon = epsilon22;
 	}
-	else if (p1.getType() != p2.getType()) {
+	else {
 		sigma = sigma12;
 		epsilon = epsilon12;
 	}
