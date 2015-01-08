@@ -131,6 +131,13 @@ int main(int argc, char* argsv[]) {
 		forceType = new LennardJonesLC;
 		#endif
 	}
+	else if (strcmp(argsv[1], "-m") == 0) {	// xml file according to molsim-input.xsd + calculation as in the task "Simulation of a membrane"
+		inputhandler = new XMLInput;
+		(*sim).membrane = true;
+		#ifdef LC
+		forceType = new LennardJonesLC;
+		#endif
+	}
 	else {
 		error();
 		return 1;

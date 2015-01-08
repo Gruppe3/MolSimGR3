@@ -114,7 +114,10 @@ void ParticleGenerator::createParticles(ParticleContainer* pc) {
 
 void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector<int, 3>& n,
 		utils::Vector<double, 3>& v, double h, double m, double meanv, ParticleContainer* pc, Simulation * sim, int particleType) {
+
 	int dim = n[2] <= 1 ? 2 : 3;
+	Particle* cP;															//current Particle; just an aid that points to the Particle that the neighbour-assigning routine further below for the membrane is currently working on.
+	Particle* membraneBuffer [n[0]] [n[1]];										//matrix of particle pointers that the neighbour-assigning routine for the membrane works on.
 
 	for (int i = 0; i < n[0]; i++) {	// X dimension
 		for (int j = 0; j < n[1]; j++) {	// Y dimension
@@ -131,7 +134,28 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 				}
 				//cout<<"meanV     "<<meanv<<endl;
 				MaxwellBoltzmannDistribution(p, meanv, dim);
+				if ((*sim).membrane && k == 0) {
+					membraneBuffer [i] [j] = &p;								//fills up the membraneBuffer during particle generation, only if the Simulation is for a membrane of course.
+				}
 				pc->add(p);
+			}
+		}
+	}
+	
+	if ((*sim).membrane) {													//the neighbour-assigning routine for the membrane.
+		for (int i = 0; i < n[0]; i++) {	// X dimension
+			for (int j = 0; j < n[1]; j++) {	// Y dimension
+				cP = membraneBuffer [i] [j];
+
+				if (i != 0) {(*cP).Neighbour[1] = membraneBuffer [i - 1] [j];}							//these four assign the left, right, bottom and top neighbours to the current Particle cP in this order.
+				if (i != n[0] - 1) {(*cP).Neighbour[5] = membraneBuffer [i + 1] [j];}
+				if (j != 0) {(*cP).Neighbour[7] = membraneBuffer [i] [j - 1];}
+				if (j != n[1] - 1) {(*cP).Neighbour[3] = membraneBuffer [i] [j + 1];}
+
+				if (i != 0 && j != 0) {(*cP).Neighbour[0] = membraneBuffer [i - 1] [j - 1];}				//these four assign the diagonal neighbours: bottom left, top left, bottom right, top right. In this order.
+				if (i != 0 && j != n[1] - 1) {(*cP).Neighbour[2] = membraneBuffer [i - 1] [j + 1];}
+				if (i != n[0] - 1 && j != 0) {(*cP).Neighbour[6] = membraneBuffer [i + 1] [j - 1];}
+				if (i != n[0] - 1 && j != n[1] - 1) {(*cP).Neighbour[4] = membraneBuffer [i + 1] [j + 1];}
 			}
 		}
 	}
@@ -145,7 +169,7 @@ void ParticleGenerator::createSphere(utils::Vector<double, 3>& x, int n,
 			for (int k = -n; k <= n; k++) {	// Z dimension
 				utils::Vector<double, 3> xn;
 
-				if (sqrt(i * i + j * j + k * k) <= n) {		//checks if proposed particle position is within the radius
+				if (sqrt(i * i + j * j + k * k) <= n) {								//checks if proposed particle position is within the radius
 					// calculate position
 					xn[0] = x[0] + i * h;
 					xn[1] = x[1] + j * h;

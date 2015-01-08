@@ -45,6 +45,7 @@ public:
 		//boltzmannConst=1.3806488E-23;
 		boltzmannConst = 1.0;
 		boundaries = new BoundaryConds;
+		membrane = false;
 	}
 
 	/** destructor */
@@ -113,6 +114,9 @@ public:
 
 	/** stores boundary conditions for LC algo */
 	BoundaryConds *boundaries;
+
+	/** Indicates whether the simulation uses neighbouring particles,  harmonic potential, and truncated LJ-potential as in the task "Simulation of a membrane".*/
+	bool membrane;
 };
 
 
