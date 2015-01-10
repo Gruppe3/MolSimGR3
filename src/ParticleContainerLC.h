@@ -175,7 +175,7 @@ private:
 	 * @param idx 1D index
 	 * @param arr DIM dimensional array to store calculated coords.
 	 * @param size Size of each dimension of arr */
-	void numToIndex(int idx, int arr[], int size[]);
+	static void numToIndex(int idx, int arr[], int size[]);
 
 public:
 	/** constructor */

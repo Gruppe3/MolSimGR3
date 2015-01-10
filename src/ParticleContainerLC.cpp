@@ -305,7 +305,18 @@ void ParticleContainerLC::emptyHalo() {
 	//resetHaloIterator();
 	for (int i = 0; i < haloAllCellNums; i++) {
 		//LOG4CXX_DEBUG(particlelog, "empty halo i" << i << " of " << haloAllCellNums);
+		ParticleList* pl = haloCells[i].root;
+		if (pl == NULL)	// root element must not be deleted/freed
+			continue;
+		pl = pl->next;
 		haloCells[i].root = NULL;
+		while (pl != NULL) {
+			delete pl->p;
+			ParticleList* pl_cpy = pl;
+			ParticleList* pl_n = pl->next;
+			delete pl_cpy;
+			pl = pl_n;
+		}
 	}
 }
 
@@ -337,39 +348,49 @@ void ParticleContainerLC::iterate(PCApply *fnc) {
 void ParticleContainerLC::iteratePair(PCApply *fnc) {
 	//LOG4CXX_DEBUG(particlelog, "iterate pair");
 #ifdef _OPENMP
-	#pragma omp parallel for
+	omp_set_num_threads(4);
 #endif
+	#pragma omp parallel for schedule(dynamic, 100)
 	for (int i = 0; i < numcell(cellNums); i++) {
 		//LOG4CXX_DEBUG(particlelog, "cell " << i << " of " << numcell(cellNums));
 		ParticleList *pl = cells[i].root;
 		int idx[DIM];
 		numToIndex(i, idx, cellNums);
 		//LOG4CXX_DEBUG(particlelog, "idx: " << idx[0] << "," << idx[1] << "," << idx[2]);
-		selectCell(idx);
+		//selectCell(idx);
+
+		// set start neighbor cell
+		int neighborCellIndex[DIM];
+		for (int j = 0; j < DIM; j++) {
+			neighborCellIndex[j] = idx[j] > 0 ? idx[j] : 0;// incl. additional +1 for allCells instead of cells (beginningOtherCellIndex in allCells coords.)
+		}
 		while (pl != NULL) {
 			Particle& p1 = *pl->p;
 			utils::Vector<double, 3>& x1 = p1.getX();
 			int tmp[DIM];
-			for (tmp[0] = otherCellIndex[0]; tmp[0] < idx[0]+3; tmp[0]++)	// incl. +1 for centralCellIndex to allCells coords.
+			for (tmp[0] = neighborCellIndex[0]; tmp[0] < idx[0]+3; tmp[0]++)	// incl. +1 for centralCellIndex to allCells coords.
 #if 1<DIM
-				for (tmp[1] = otherCellIndex[1]; tmp[1] < idx[1]+3; tmp[1]++)
+				for (tmp[1] = neighborCellIndex[1]; tmp[1] < idx[1]+3; tmp[1]++)
 #endif
 #if 3==DIM
-					for (tmp[2] = otherCellIndex[2]; tmp[2] < idx[2]+3; tmp[2]++)
+					for (tmp[2] = neighborCellIndex[2]; tmp[2] < idx[2]+3; tmp[2]++)
 #endif
 					{
 						ParticleList *pl2 = allCells[calcIndex(tmp, allCellNums)]->root;
 						while (pl2 != NULL) {
 							if (pl != pl2) {
 								Particle p2 = *pl2->p;
-								utils::Vector<double, 3>& x2 = p2.getX();
-								// correct position of halo particles for periodic boundaries
-								for (int d = 0; d < DIM; d++) {
-									if (x2[d] - x1[d] > cellsSize[d]+cellsSize[d])
-										x2[d] -= domainSize[d];
-									else if (x1[d] - x2[d] > cellsSize[d]+cellsSize[d])
-										x2[d] += domainSize[d];
-								}
+								/*if (tmp[0] == 0 || tmp[1] == 0 || tmp[2] == 0
+										|| tmp[0] == cellNums[0] || tmp[1] == cellNums[1] || tmp[2] == cellNums[2]) {
+									utils::Vector<double, 3>& x2 = p2.getX();
+									// correct position of halo particles for periodic boundaries
+									for (int d = 0; d < DIM; d++) {
+										if (x2[d] - x1[d] > cellsSize[d]+cellsSize[d])
+											x2[d] -= domainSize[d];
+										else if (x1[d] - x2[d] > cellsSize[d]+cellsSize[d])
+											x2[d] += domainSize[d];
+									}
+								}*/
 
 								fnc->iteratePairFunc(p1, p2);
 								//LOG4CXX_DEBUG(particlelog, "f after:" << p1.getF().toString());
@@ -528,6 +549,7 @@ void ParticleContainerLC::bindOppositeWalls(int fixedDim, int fixedVal) {
 			int oppositeIndex = calcIndex(idx_n, allCellNums);
 
 			while (pl != NULL) {	// iterate over all particles in the cell
+				// update p for move to opposite boundary
 				Particle& p = *pl->p;
 				utils::Vector<double, 3>& x = p.getX();
 				ParticleList *cpy = pl->next;
@@ -543,18 +565,21 @@ void ParticleContainerLC::bindOppositeWalls(int fixedDim, int fixedVal) {
 					//LOG4CXX_DEBUG(particlelog, "x after (fixedVal=cellNums)  " << p.getX().toString());
 				}
 
+				// insert p into opposite boundary
 				insertList(&allCells[oppositeIndex]->root, pl);
 				pl = cpy;
 			}
 
 			// set own content to copy of opposite boundary cell's content
-			allCells[index]->root = allCells[oppositeIndex]->root;
+			//allCells[index]->root = allCells[oppositeIndex]->root;
 
 			//LOG4CXX_DEBUG(particlelog, "cell finished");
 			//LOG4CXX_DEBUG(particlelog, "index:" << idx[0] << "," << idx[1] << "," << idx[2]);
 			//LOG4CXX_DEBUG(particlelog, "index_n:" << idx_n[0] << "," << idx_n[1] << "," << idx_n[2]);
 
-			/*// should also work, but quite memory consuming
+
+			// should also work, but quite memory consuming
+			allCells[index]->root = NULL;	// remove existing ParticleList
 			ParticleList *pl2 = allCells[oppositeIndex]->root;
 			while (pl2 != NULL) {
 				Particle& p = *pl2->p;
@@ -562,15 +587,15 @@ void ParticleContainerLC::bindOppositeWalls(int fixedDim, int fixedVal) {
 				utils::Vector<double, 3>& x = ghost->getX();
 				x = p.getX();
 				if (fixedVal == 0)
-					x[fixedDim] -= radius*cellNums[fixedDim];
+					x[fixedDim] -= domainSize[fixedDim];
 				else
-					x[fixedDim] += radius*cellNums[fixedDim];
+					x[fixedDim] += domainSize[fixedDim];
 				ParticleList *pl_n = new ParticleList;
 				pl_n->next = NULL;
 				pl_n->p = ghost;
 				insertList(&allCells[index]->root, pl_n);
 				pl2 = pl2->next;
-			}*/
+			}
 		}
 	//LOG4CXX_DEBUG(particlelog, "end periodic");
 }

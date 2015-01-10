@@ -191,7 +191,9 @@ int main(int argc, char* argsv[]) {
 		//LOG4CXX_DEBUG(molsimlog, "after x");
 		#ifdef LC
 		((ParticleContainerLC*)particleContainer)->moveParticles();
+		//LOG4CXX_DEBUG(molsimlog, "after move");
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
+		//LOG4CXX_DEBUG(molsimlog, "after periodic");
 		#endif
 
 		// copies F to oldF of particles and sets F to 0
@@ -199,10 +201,12 @@ int main(int argc, char* argsv[]) {
 		// calculate new f
 		particleContainer->iteratePair(forceType);
 		particleContainer->iterate(gravity);
+		//LOG4CXX_DEBUG(molsimlog, "after forces");
 
 		#ifdef LC
 		// add reflecting force to boundary particles according to sim->domainBoundaries[]
 		((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::REFLECTING, forceType);
+		//LOG4CXX_DEBUG(molsimlog, "after reflecting");
 		#endif
 
 		if (sim->tempFreq > 0) {
@@ -229,6 +233,7 @@ int main(int argc, char* argsv[]) {
 
 		// calculate new v
 		particleContainer->iterate(vcalc);
+		//LOG4CXX_DEBUG(molsimlog, "after v");
 
 		iteration++;
 		if (iteration % sim->writeFreq == 0) {

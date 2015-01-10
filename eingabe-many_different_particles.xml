@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <molsimdata xmlns="http://www.example.org/input" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/input molsim-input.xsd">
 <outputbasename>output/MD_vtk</outputbasename>
-<writefreq>40</writefreq>
+<writefreq>100</writefreq>
 <timestep>0.0005</timestep>
 <endtime>50</endtime>
 <gravity>-12.44</gravity>

@@ -78,15 +78,16 @@ LennardJonesLC::~LennardJonesLC() {
 
 void LennardJonesLC::calc(Particle& p1, Particle& p2) {
 	double sigma, epsilon;
-	if ((p1.getType() == 0) && (p2.getType() == 0)) {
+	int t1 = p1.getType(), t2 = p2.getType();
+	if ((t1 == 0) && (t2 == 0)) {
 		sigma = sigma11;
 		epsilon = epsilon11;
 	}
-	else if ((p1.getType() == 1) && (p2.getType() == 1)) {
+	else if ((t1 == 1) && (t2 == 1)) {
 		sigma = sigma22;
 		epsilon = epsilon22;
 	}
-	else if (p1.getType() != p2.getType()) {
+	else {
 		sigma = sigma12;
 		epsilon = epsilon12;
 	}
@@ -97,7 +98,7 @@ void LennardJonesLC::calc(Particle& p1, Particle& p2) {
 	utils::Vector<double, 3> diff = p2.getX() - p1.getX();
 	double norm_inverse = 1 / diff.L2NormSquared();
 	double field_pow = pow(sigma, 6) * pow(norm_inverse, 3);	// (sigma / norm)^6
-	utils::Vector<double, 3> f = 24 * epsilon * norm_inverse * field_pow * (1 - 2*field_pow) * diff;
+	//utils::Vector<double, 3> f = 24 * epsilon * norm_inverse * field_pow * (1 - 2*field_pow) * diff;
 
-	f1 = f1 + f;
+	f1 = f1 + 24 * epsilon * norm_inverse * field_pow * (1 - 2*field_pow) * diff;
 }
