@@ -394,7 +394,7 @@ void ParticleContainerLC::iterateDirectNeighbours(PCApply *fnc) {
 		while (pl != NULL) {
 			Particle& p1 = *pl->p;
 			for (int j=0; j < 8; j++){
-				Particle& p2 = (p1.Neighbour[j]);
+				Particle& p2 = *(p1.Neighbour[j]);
 				if(p1.Neighbour[j]!=NULL)
 				LOG4CXX_DEBUG(particlelog, "p1.Neighbour: "<<p1.Neighbour[j]->toString());
 				fnc->iteratePairFunc(p1,p2);
