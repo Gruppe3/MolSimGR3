@@ -2,6 +2,7 @@
 #include <forces/ForceHandler.h>
 #include <forces/Gravitation.h>
 #include <forces/LennardJones.h>
+#include <forces/HarmonicPotential.h>
 #include <ParticleContainerLC.h>
 #include "PhaseSpaceOutput.h"
 #include "forces/EarthGravitation.h"
@@ -37,6 +38,7 @@ using namespace std;
 
 // undefine LC to use ParticleContainer without LC algo
 #define LC
+
 
 /**** forward declaration of the calculation functions ****/
 
@@ -78,6 +80,9 @@ ParticleContainer* particleContainer;
 /** stores simulation parameters */
 Simulation *sim;
 
+
+//particle generator should work, but there is Speicherabzugfehler in iterateDirectNeighbours in ParticleContainerLC
+
 int main(int argc, char* argsv[]) {
 	PropertyConfigurator::configure("log4cxx.conf");
 	LOG4CXX_INFO(molsimlog, "Hello from MolSim for PSE!");
@@ -113,11 +118,13 @@ int main(int argc, char* argsv[]) {
 	particleContainer = new ParticleContainer;
 	//Gravitation forceType;
 	ForceHandler* forceType = new LennardJones();
+
 	CalcX *xcalc = new CalcX(sim);
 	CalcV *vcalc = new CalcV(sim);
-
 	CalcT *tcalc = new CalcT(sim);
 	EarthGravitation* gravity=new EarthGravitation(sim);
+	HarmonicPotential* hpotential = new HarmonicPotential(sim);
+
 	InputHandler* inputhandler;
 	if (strcmp(argsv[1], "-c") == 0) {	// cuboids
 		inputhandler = new ParticleGenerator;
@@ -152,11 +159,18 @@ int main(int argc, char* argsv[]) {
 		LOG4CXX_DEBUG(molsimlog, "init ParticleContainerLC");
 		#endif
 	}
+	if (strcmp(argsv[1], "-m") == 0) {
+			#ifdef LC
+			particleContainer = new ParticleContainerLC(particleContainer, sim);
+			LOG4CXX_DEBUG(molsimlog, "init ParticleContainerLC");
+			#endif
+	}
 
 	forceType->setSimulation(sim);
+	hpotential->setSimulation(sim);
+
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 
-	forceType->setSimulation(sim);
 	// the forces are needed to calculate x, but are not given in the input file.
 	// copies F to oldF of particles and sets F to 0
 	particleContainer->iterate(forceType);
@@ -164,6 +178,9 @@ int main(int argc, char* argsv[]) {
 	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
 	// calculates new F
 	particleContainer->iteratePair(forceType);
+	if(sim->membrane){
+		particleContainer->iterateDirectNeighbours(hpotential);
+	}
 	particleContainer->iterate(gravity);
 	#ifdef LC
 	// add reflecting force to boundary particles according to domainBoundaries[]
@@ -205,6 +222,9 @@ int main(int argc, char* argsv[]) {
 		particleContainer->iterate(forceType);
 		// calculate new f
 		particleContainer->iteratePair(forceType);
+		if(sim->membrane){
+			//particleContainer->iterateDirectNeighbours(hpotential);
+		}
 		particleContainer->iterate(gravity);
 
 		#ifdef LC

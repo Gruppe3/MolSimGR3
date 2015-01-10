@@ -12,8 +12,6 @@
 
 class EarthGravitation: public ForceHandler {
 
-private:
-	double earthGravity;
 public:
 	EarthGravitation(Simulation* sim);
 	virtual ~EarthGravitation();

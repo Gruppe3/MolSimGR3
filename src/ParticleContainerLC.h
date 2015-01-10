@@ -224,6 +224,10 @@ public:
 	 * @param fnc Pointer to a PCApply deriving object implementing the iteratePairFunc method */
 	virtual void iteratePair(PCApply *fnc);
 
+	/** applies fnc->iteratePairFunc on the particle pairs, that are direct neighbours at the beginning
+	* @param fnc Pointer to a PCApply deriving object implementing the iteratePairFunc method */
+	virtual void iterateDirectNeighbours(PCApply *fnc);
+
 	/** applies fnc->iterateFunc on boundary particles in the domain according to the given boundary type
 	 * @param bd Only domain sides of this boundary type are affected
 	 * @param fnc Pointer to a PCApply deriving object implementing the iterateFunc method */

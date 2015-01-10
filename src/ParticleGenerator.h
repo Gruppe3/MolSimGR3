@@ -14,6 +14,7 @@
 #include "io/InputHandler.h"
 #include "Simulation.h"
 #include "DynamicsCalc.h"
+#include <stdlib.h>
 
 /** Generates particle containers from cuboid data */
 class ParticleGenerator : public InputHandler {

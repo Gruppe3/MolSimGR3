@@ -20,6 +20,7 @@ src/forces/ForceHandler.cpp\
 src/forces/Gravitation.cpp\
 src/forces/EarthGravitation.cpp\
 src/forces/LennardJones.cpp\
+src/forces/HarmonicPotential.cpp\
 src/MaxwellBoltzmannDistribution.cpp\
 src/ParticleGenerator.cpp\
 src/PhaseSpaceOutput.cpp\

@@ -94,12 +94,14 @@ void LennardJonesLC::calc(Particle& p1, Particle& p2) {
 	}
 
 	//LOG4CXX_DEBUG(forcelog, "force calc LC");
-	utils::Vector<double, 3>& f1 = p1.getF();
 
-	utils::Vector<double, 3> diff = p2.getX() - p1.getX();
-	double norm_inverse = 1 / diff.L2NormSquared();
-	double field_pow = pow(sigma, 6) * pow(norm_inverse, 3);	// (sigma / norm)^6
-	utils::Vector<double, 3> f = 24 * epsilon * norm_inverse * field_pow * (1 - 2*field_pow) * diff;
+	if(!sim->membrane||sim->cutoff<pow(2,1/6)){ //if we simulate membrane we need only the repulsive part
+		utils::Vector<double, 3>& f1 = p1.getF();
+		utils::Vector<double, 3> diff = p2.getX() - p1.getX();
+		double norm_inverse = 1 / diff.L2NormSquared();
+		double field_pow = pow(sigma, 6) * pow(norm_inverse, 3);	// (sigma / norm)^6
+		utils::Vector<double, 3> f = 24 * epsilon * norm_inverse * field_pow * (1 - 2*field_pow) * diff;
 
-	f1 = f1 + f;
+		f1 = f1 + f;
+	}
 }

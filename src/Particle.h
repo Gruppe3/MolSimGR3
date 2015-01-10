@@ -10,6 +10,7 @@
 
 #include "utils/Vector.h"
 
+
 /** A single particle */
 class Particle {
 
@@ -67,7 +68,7 @@ public:
 
 	std::string toString();
 
-	Particle* Neighbour [8];
+	Particle** Neighbour;
 };
 
 std::ostream& operator<<(std::ostream& stream, Particle& p);
