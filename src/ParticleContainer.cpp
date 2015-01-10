@@ -5,9 +5,6 @@
  *      Author: christiansturm
  */
 
-
-
-
 #include "ParticleContainer.h"
 #include "Logger.h"
 
@@ -42,7 +39,7 @@ void ParticleContainer::add(Particle& p) {
 	resetIterator();
 }
 
-int ParticleContainer::size () {
+int ParticleContainer::size() {
 	return particles.size();
 }
 
@@ -74,20 +71,33 @@ void ParticleContainer::resetIterator() {
 	othersIterator = tmp;
 }
 
-void ParticleContainer::iterate (PCApply *fnc) {
-	for (iterator = particles.begin(); iterator != particles.end(); iterator++) {
+void ParticleContainer::iterate(PCApply *fnc) {
+	for (iterator = particles.begin(); iterator != particles.end();
+			iterator++) {
 		Particle& p = *iterator;
 		fnc->iterateFunc(p);
 	}
 }
 
-void ParticleContainer::iteratePair (PCApply *fnc) {
+void ParticleContainer::iteratePair(PCApply *fnc) {
 	for (iterator = particles.begin(); iterator != particles.end(); iterator++) {
 		Particle& p1 = *iterator;
 		othersIterator = iterator;
 		for (++othersIterator; othersIterator != particles.end(); othersIterator++) {
 			Particle& p2 = *othersIterator;
 			fnc->iteratePairFunc(p1, p2);
+		}
+	}
+}
+
+void ParticleContainer::iterateDirectNeighbours(PCApply *fnc) {
+	for (iterator = particles.begin(); iterator != particles.end(); iterator++) {
+		Particle& p1 = *iterator;
+		for (int j = 0; j < 8; j++) {
+			Particle& p2 = *(p1.Neighbour[j]);
+			if (&p2 != NULL) {
+				fnc->iteratePairFunc(p1, p2);
+			}
 		}
 	}
 }

@@ -10,6 +10,7 @@
 
 #include "utils/Vector.h"
 
+
 /** A single particle */
 class Particle {
 
@@ -66,6 +67,8 @@ public:
 	bool operator==(Particle& other);
 
 	std::string toString();
+
+	Particle** Neighbour;
 };
 
 std::ostream& operator<<(std::ostream& stream, Particle& p);

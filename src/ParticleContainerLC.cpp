@@ -9,9 +9,7 @@
 #include "Simulation.h"
 #include "Logger.h"
 
-#ifdef _OPENMP
-	#include <omp.h>
-#endif
+#include <omp.h>
 
 const LoggerPtr particlelog(Logger::getLogger("molsim.particle"));
 
@@ -40,6 +38,7 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc, Simulation *sim)
 		int expansion = domainSize[d] / radius;
 		cellNums[d] = expansion > 0 ? expansion : 1;	// expansion in dimension d must be at least 1 for correct numcell()
 		cellsSize[d] = domainSize[d] / cellNums[d];
+		sim->cellsSize[d] = cellsSize[d];
 		allCellNums[d] = cellNums[d] + 2;
 	}
 
@@ -357,7 +356,6 @@ void ParticleContainerLC::iteratePair(PCApply *fnc) {
 		int idx[DIM];
 		numToIndex(i, idx, cellNums);
 		//LOG4CXX_DEBUG(particlelog, "idx: " << idx[0] << "," << idx[1] << "," << idx[2]);
-		//selectCell(idx);
 
 		// set start neighbor cell
 		int neighborCellIndex[DIM];
@@ -398,6 +396,22 @@ void ParticleContainerLC::iteratePair(PCApply *fnc) {
 							pl2 = pl2->next;
 						}
 					}
+			pl = pl->next;
+		}
+	}
+}
+
+void ParticleContainerLC::iterateDirectNeighbours(PCApply *fnc) {
+	for (int i = 0; i < numcell(cellNums); i++) {
+		ParticleList *pl = cells[i].root;
+		while (pl != NULL) {
+			Particle& p1 = *pl->p;
+			for (int j=0; j < 8; j++){
+				Particle& p2 = *(p1.Neighbour[j]);
+				if(p1.Neighbour[j]!=NULL)
+				LOG4CXX_DEBUG(particlelog, "p1.Neighbour: "<<p1.Neighbour[j]->toString());
+				fnc->iteratePairFunc(p1,p2);
+				}
 			pl = pl->next;
 		}
 	}

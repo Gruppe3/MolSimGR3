@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<molsimdata xmlns="http://www.example.org/input" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/input molsim-input.xsd">
+<outputbasename>MD_vtk</outputbasename>
+<writefreq>10</writefreq>
+<timestep>0.01</timestep>
+<endtime>500</endtime>
+<gravity>-0.001</gravity>
+<domain>
+<size x="148" y="148" z="148"/>
+<cutoff>4.0</cutoff>
+<boundaries>
+	<front>outflow</front>
+	<back>reflecting</back>
+	<left>outflow</left>
+	<right>outflow</right>
+	<top>outflow</top>
+	<bottom>outflow</bottom>
+</boundaries>
+</domain>
+<thermostat>
+  	<inittemp>40.0</inittemp>
+  	<starttime>0</starttime>
+  	<targettemp>40.0</targettemp>
+  	<tempdiff>0.0</tempdiff>
+  	<interval>50000</interval>
+ </thermostat>
+<objectlist>
+<cuboid>
+	<location x="15.0" y="15.0" z="1.5"/>
+	<velocity x="0.0" y="0.0" z="0.0"/>
+	<numparticles x="50" y="50" z="1"/>
+	<mass>1.0</mass>
+	<type>0</type>
+	<meshwidth>2.2</meshwidth>
+</cuboid>
+</objectlist>
+<particleTypes>
+	<type id="0" sigma="1.0" epsilon="1.0" />
+</particleTypes>
+</molsimdata>

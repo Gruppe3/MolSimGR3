@@ -95,6 +95,8 @@ public:
 	virtual void iterate(PCApply *fnc);
 	/** Applies function on all particle pairs */
 	virtual void iteratePair(PCApply *fnc);
+	/** Applies fnc->iteratePairFunc on direct neighbours */
+	virtual void iterateDirectNeighbours(PCApply *fnc);
 };
 
 #endif /* SRC_PARTICLECONTAINER_H_ */
