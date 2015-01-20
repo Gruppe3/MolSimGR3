@@ -42,7 +42,7 @@ void XAxisProfile::openFile(int iteration) {
 			<< (iteration < 10 ?
 					"000" :
 					(iteration < 100 ? "00" : (iteration < 1000 ? "0" : "")))
-			<< iteration << ".txt";
+			<< iteration << ".csv";
 	file.open(strstr.str().c_str());
 	file
 			<< "# in each line there are number of bins times density and velocity for each iteration \n";
