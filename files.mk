@@ -24,6 +24,7 @@ src/forces/HarmonicPotential.cpp\
 src/MaxwellBoltzmannDistribution.cpp\
 src/ParticleGenerator.cpp\
 src/PhaseSpaceOutput.cpp\
+src/XAxisProfileOutput.cpp\
 src/test/ParticleContainerTest.cpp\
 src/test/ParticleContainerLCTest.cpp\
 src/test/LennardJonesTest.cpp\

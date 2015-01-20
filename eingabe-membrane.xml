@@ -16,6 +16,11 @@
 	<top>outflow</top>
 	<bottom>outflow</bottom>
 </boundaries>
+<membrane>
+	<stiffnessConstant>300.0</stiffnessConstant>
+	<harmonicR0>2.2</harmonicR0>
+	<gravityUpwards>0.8</gravityUpwards>
+</membrane>
 </domain>
 <thermostat>
   	<inittemp>40.0</inittemp>
@@ -23,7 +28,7 @@
   	<targettemp>40.0</targettemp>
   	<tempdiff>0.0</tempdiff>
   	<interval>50000</interval>
- </thermostat>
+</thermostat>
 <objectlist>
 <cuboid>
 	<location x="15.0" y="15.0" z="1.5"/>

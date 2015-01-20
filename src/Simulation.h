@@ -39,6 +39,11 @@ public:
 		sigmas[0] = 1.0;
 		epsilons = new double[1];
 		epsilons[0] = 5.0;
+		states = new string[1];
+		states[0] = "none";
+		typeflag = false;
+
+		numOfBins = 1;
 		cutoff = 2.5 * sigmas[0];
 		//sigma21=sigma12;
 		gravity = -9.807;
@@ -56,6 +61,9 @@ public:
 		pulledUpParticles[0] = 17; pulledUpParticles[1] = 24; pulledUpParticles[2] = 17; pulledUpParticles[3] = 25;
 		pulledUpParticles[4] = 18; pulledUpParticles[5] = 24; pulledUpParticles[6] = 18; pulledUpParticles[7] = 25;
 		cellsSize[0] = 0; cellsSize[1] = 0; cellsSize[2] = 0;
+		flowKineticEnergy = 0;
+		numParticles = 0;
+		writeFreqFlowSim = 10000;
 	}
 
 	/** destructor */
@@ -111,6 +119,15 @@ public:
 	/** number of particle types */
 	int typesNum;
 
+	/** state of matter for the particles according to their type */
+	string *states;
+
+	/** typeflag is set if state of matter has to be taken into account */
+	bool typeflag;
+
+	/** x axis is subdivided in N equal bins that content density- and velocity-profile of its particles */
+	int numOfBins;
+
 	/**1 - initialize temperature for thermostat problem, 0 - initialize temperature only with Maxwell-Boltzmann*/
 	int meanVelocityTypeFlag;
 
@@ -147,6 +164,18 @@ public:
 	/** defines size of the cells in each dimention, used in EarthGravitation to define indices of the cells
 	 * and check if particles should be pulled up*/
 	double cellsSize[3];
+
+	/** average kinetic energy at Y coordinate */
+	double flowKineticEnergy;
+
+	/** if set, mean velocity has to be divided by numParticles */
+	bool meanVelocityCalculated;
+
+	/** current number of particles */
+	int numParticles;
+
+	/** number of iterations before file is written (for density and velocity profile along x axis for flow simulation) */
+	int writeFreqFlowSim;
 };
 
 

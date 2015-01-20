@@ -13,10 +13,17 @@
  */
 static double GaussDeviate();
 
-void MaxwellBoltzmannDistribution(Particle& p, double meanVelocity, int dimensions) {
+void MaxwellBoltzmannDistribution(Particle& p, double meanVelocity, int dimensions,bool typeflag, std::string particleState) {
 	utils::Vector<double, 3>& v = p.getV();
-	for (int i = 0; i < dimensions; i++) {
-		v[i] = v[i] + meanVelocity * GaussDeviate();
+	if (typeflag){
+		if(particleState=="liquid"){
+			v[0] = v[0] + meanVelocity * GaussDeviate();
+			v[2] = v[2] + meanVelocity * GaussDeviate();
+		}
+	}else {
+		for (int i = 0; i < dimensions; i++) {
+			v[i] = v[i] + meanVelocity * GaussDeviate();
+		}
 	}
 }
 

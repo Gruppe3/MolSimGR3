@@ -227,12 +227,14 @@ namespace input
   class decimalvector;
   class integervector;
   class boundarytype;
+  class stateofmatter;
   class molsimdata;
   class domain;
   class thermostat;
   class objectlist;
   class particleTypes;
   class boundaries;
+  class membrane;
   class cuboid;
   class sphere;
   class particle;
@@ -477,6 +479,62 @@ namespace input
     static const value _xsd_boundarytype_indexes_[3];
   };
 
+  class stateofmatter: public ::xml_schema::string
+  {
+    public:
+    enum value
+    {
+      liquid,
+      solid
+    };
+
+    stateofmatter (value v);
+
+    stateofmatter (const char* v);
+
+    stateofmatter (const ::std::string& v);
+
+    stateofmatter (const ::xml_schema::string& v);
+
+    stateofmatter (const ::xercesc::DOMElement& e,
+                   ::xml_schema::flags f = 0,
+                   ::xml_schema::container* c = 0);
+
+    stateofmatter (const ::xercesc::DOMAttr& a,
+                   ::xml_schema::flags f = 0,
+                   ::xml_schema::container* c = 0);
+
+    stateofmatter (const ::std::string& s,
+                   const ::xercesc::DOMElement* e,
+                   ::xml_schema::flags f = 0,
+                   ::xml_schema::container* c = 0);
+
+    stateofmatter (const stateofmatter& x,
+                   ::xml_schema::flags f = 0,
+                   ::xml_schema::container* c = 0);
+
+    virtual stateofmatter*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    stateofmatter&
+    operator= (value v);
+
+    virtual
+    operator value () const
+    {
+      return _xsd_stateofmatter_convert ();
+    }
+
+    protected:
+    value
+    _xsd_stateofmatter_convert () const;
+
+    public:
+    static const char* const _xsd_stateofmatter_literals_[2];
+    static const value _xsd_stateofmatter_indexes_[2];
+  };
+
   class molsimdata: public ::xml_schema::type
   {
     public:
@@ -716,6 +774,24 @@ namespace input
     void
     cutoff (const cutoff_type& x);
 
+    // bins
+    //
+    typedef ::xml_schema::unsigned_int bins_type;
+    typedef ::xsd::cxx::tree::optional< bins_type > bins_optional;
+    typedef ::xsd::cxx::tree::traits< bins_type, char > bins_traits;
+
+    const bins_optional&
+    bins () const;
+
+    bins_optional&
+    bins ();
+
+    void
+    bins (const bins_type& x);
+
+    void
+    bins (const bins_optional& x);
+
     // boundaries
     //
     typedef ::input::boundaries boundaries_type;
@@ -732,6 +808,27 @@ namespace input
 
     void
     boundaries (::std::auto_ptr< boundaries_type > p);
+
+    // membrane
+    //
+    typedef ::input::membrane membrane_type;
+    typedef ::xsd::cxx::tree::optional< membrane_type > membrane_optional;
+    typedef ::xsd::cxx::tree::traits< membrane_type, char > membrane_traits;
+
+    const membrane_optional&
+    membrane () const;
+
+    membrane_optional&
+    membrane ();
+
+    void
+    membrane (const membrane_type& x);
+
+    void
+    membrane (const membrane_optional& x);
+
+    void
+    membrane (::std::auto_ptr< membrane_type > p);
 
     // Constructors.
     //
@@ -771,7 +868,9 @@ namespace input
     protected:
     ::xsd::cxx::tree::one< size_type > size_;
     ::xsd::cxx::tree::one< cutoff_type > cutoff_;
+    bins_optional bins_;
     ::xsd::cxx::tree::one< boundaries_type > boundaries_;
+    membrane_optional membrane_;
   };
 
   class thermostat: public ::xml_schema::type
@@ -1219,6 +1318,88 @@ namespace input
     ::xsd::cxx::tree::one< bottom_type > bottom_;
   };
 
+  class membrane: public ::xml_schema::type
+  {
+    public:
+    // stiffnessConstant
+    //
+    typedef ::xml_schema::double_ stiffnessConstant_type;
+    typedef ::xsd::cxx::tree::traits< stiffnessConstant_type, char, ::xsd::cxx::tree::schema_type::double_ > stiffnessConstant_traits;
+
+    const stiffnessConstant_type&
+    stiffnessConstant () const;
+
+    stiffnessConstant_type&
+    stiffnessConstant ();
+
+    void
+    stiffnessConstant (const stiffnessConstant_type& x);
+
+    // harmonicR0
+    //
+    typedef ::xml_schema::double_ harmonicR0_type;
+    typedef ::xsd::cxx::tree::traits< harmonicR0_type, char, ::xsd::cxx::tree::schema_type::double_ > harmonicR0_traits;
+
+    const harmonicR0_type&
+    harmonicR0 () const;
+
+    harmonicR0_type&
+    harmonicR0 ();
+
+    void
+    harmonicR0 (const harmonicR0_type& x);
+
+    // gravityUpwards
+    //
+    typedef ::xml_schema::double_ gravityUpwards_type;
+    typedef ::xsd::cxx::tree::traits< gravityUpwards_type, char, ::xsd::cxx::tree::schema_type::double_ > gravityUpwards_traits;
+
+    const gravityUpwards_type&
+    gravityUpwards () const;
+
+    gravityUpwards_type&
+    gravityUpwards ();
+
+    void
+    gravityUpwards (const gravityUpwards_type& x);
+
+    // Constructors.
+    //
+    membrane (const stiffnessConstant_type&,
+              const harmonicR0_type&,
+              const gravityUpwards_type&);
+
+    membrane (const ::xercesc::DOMElement& e,
+              ::xml_schema::flags f = 0,
+              ::xml_schema::container* c = 0);
+
+    membrane (const membrane& x,
+              ::xml_schema::flags f = 0,
+              ::xml_schema::container* c = 0);
+
+    virtual membrane*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    membrane&
+    operator= (const membrane& x);
+
+    virtual 
+    ~membrane ();
+
+    // Implementation.
+    //
+    protected:
+    void
+    parse (::xsd::cxx::xml::dom::parser< char >&,
+           ::xml_schema::flags);
+
+    protected:
+    ::xsd::cxx::tree::one< stiffnessConstant_type > stiffnessConstant_;
+    ::xsd::cxx::tree::one< harmonicR0_type > harmonicR0_;
+    ::xsd::cxx::tree::one< gravityUpwards_type > gravityUpwards_;
+  };
+
   class cuboid: public ::xml_schema::type
   {
     public:
@@ -1662,7 +1843,7 @@ namespace input
     inputfiles&
     operator= (const inputfiles& x);
 
-    virtual
+    virtual 
     ~inputfiles ();
 
     // Implementation.
@@ -1721,6 +1902,27 @@ namespace input
     void
     epsilon (const epsilon_type& x);
 
+    // state
+    //
+    typedef ::input::stateofmatter state_type;
+    typedef ::xsd::cxx::tree::optional< state_type > state_optional;
+    typedef ::xsd::cxx::tree::traits< state_type, char > state_traits;
+
+    const state_optional&
+    state () const;
+
+    state_optional&
+    state ();
+
+    void
+    state (const state_type& x);
+
+    void
+    state (const state_optional& x);
+
+    void
+    state (::std::auto_ptr< state_type > p);
+
     // Constructors.
     //
     type (const id_type&,
@@ -1756,6 +1958,7 @@ namespace input
     ::xsd::cxx::tree::one< id_type > id_;
     ::xsd::cxx::tree::one< sigma_type > sigma_;
     ::xsd::cxx::tree::one< epsilon_type > epsilon_;
+    state_optional state_;
   };
 }
 

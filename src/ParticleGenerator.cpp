@@ -105,7 +105,7 @@ void ParticleGenerator::createParticles(ParticleContainer* pc) {
 				x[1] = X[1] + j * H;
 				x[2] = X[2] + k * H;
 				Particle p(x, V, M, 0);
-				MaxwellBoltzmannDistribution(p, meanV, dim);
+				MaxwellBoltzmannDistribution(p, meanV, dim );
 				pc->add(p);
 			}
 		}
@@ -138,7 +138,8 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 				if(sim->meanVelocityTypeFlag==1){
 					CalcT::initializeV(&meanv,sim->initTemp,pPtr->getM());
 				}
-				MaxwellBoltzmannDistribution(*pPtr, meanv, dim);
+				int type = pPtr->getType();
+				MaxwellBoltzmannDistribution(*pPtr, meanv, dim, sim->typeflag, sim->states[type]);
 				if ((*sim).membrane && k == 0) {
 					//alocates memory for poiters to the neighbour cells and sets them to null
 					pPtr->Neighbour = new Particle*[8];
@@ -218,7 +219,7 @@ void ParticleGenerator::createSphere(utils::Vector<double, 3>& x, int n,
 						CalcT::initializeV(&meanv,sim->initTemp,p.getM());
 					}
 					//cout<<"meanV     "<<meanv<<endl;
-					MaxwellBoltzmannDistribution(p, meanv, brownDim);
+					MaxwellBoltzmannDistribution(p, meanv, brownDim );
 					pc->add(p);
 				}
 			}

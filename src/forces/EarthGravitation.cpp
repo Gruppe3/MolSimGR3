@@ -21,9 +21,7 @@ EarthGravitation::~EarthGravitation() {
 void EarthGravitation::iterateFunc(Particle& p) {
 	int idx[] = { p.getX()[0] / sim->cellsSize[0], p.getX()[1] / sim->cellsSize[1], p.getX()[2] / sim->cellsSize[2] };
 	utils::Vector<double, 3>& f = p.getF();
-	if (!sim->membrane) {
-		f[1] = f[1] + sim->gravity * p.getM();
-	} else {
+	if (sim->membrane){
 		//LOG4CXX_DEBUG(forcelog, "idx for gravity:  "<<idx[0]<<"  "<<idx[1]<<"   "<<idx[2]);
 		f[2] = f[2] + sim->gravity * p.getM();
 		int i = 0; int j = 1;
@@ -34,6 +32,12 @@ void EarthGravitation::iterateFunc(Particle& p) {
 			}
 			i += 2;	j += 2;
 		}
+	} else if (sim->typeflag){
+		if (sim->states[p.getType()]=="liquid"){
+			f[1] = f[1] + sim->gravity * p.getM();
+		}
+	} else {
+		f[1] = f[1] + sim->gravity * p.getM();
 	}
 }
 void EarthGravitation::calc(Particle& p1, Particle& p2) {

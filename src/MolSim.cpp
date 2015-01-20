@@ -5,6 +5,7 @@
 #include <forces/HarmonicPotential.h>
 #include <ParticleContainerLC.h>
 #include "PhaseSpaceOutput.h"
+#include "XAxisProfileOutput.h"
 #include "forces/EarthGravitation.h"
 #include "MaxwellBoltzmannDistribution.h"
 #include "ParticleContainer.h"
@@ -125,6 +126,7 @@ int main(int argc, char* argsv[]) {
 	EarthGravitation* gravity=new EarthGravitation(sim);
 	HarmonicPotential* hpotential = new HarmonicPotential(sim);
 
+	XAxisProfile* xprofile = new XAxisProfile();
 	InputHandler* inputhandler;
 	if (strcmp(argsv[1], "-c") == 0) {	// cuboids
 		inputhandler = new ParticleGenerator;
@@ -153,21 +155,16 @@ int main(int argc, char* argsv[]) {
 	inputhandler->getFileInput(argsv[2], particleContainer, sim);
 	//delete inputhandler;
 
-	if (strcmp(argsv[1], "-xml") == 0) {
+	if ((strcmp(argsv[1], "-xml") == 0)|| strcmp(argsv[1], "-m") == 0) {
 		#ifdef LC
 		particleContainer = new ParticleContainerLC(particleContainer, sim);
 		LOG4CXX_DEBUG(molsimlog, "init ParticleContainerLC");
 		#endif
 	}
-	if (strcmp(argsv[1], "-m") == 0) {
-			#ifdef LC
-			particleContainer = new ParticleContainerLC(particleContainer, sim);
-			LOG4CXX_DEBUG(molsimlog, "init ParticleContainerLC");
-			#endif
-	}
 
 	forceType->setSimulation(sim);
 	hpotential->setSimulation(sim);
+	xprofile->setValues(sim->numOfBins,sim->domainSize);
 
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 
@@ -225,7 +222,7 @@ int main(int argc, char* argsv[]) {
 		// calculate new f
 		particleContainer->iteratePair(forceType);
 		if(sim->membrane){
-			//particleContainer->iterateDirectNeighbours(hpotential);
+			particleContainer->iterateDirectNeighbours(hpotential);
 		}
 		particleContainer->iterate(gravity);
 		//LOG4CXX_DEBUG(molsimlog, "after forces");
@@ -238,6 +235,7 @@ int main(int argc, char* argsv[]) {
 
 		if (sim->tempFreq > 0) {
 			vcalc->setBeta(1.0);
+			tcalc->resetEnergy();
 			if ((iteration > sim->thermostatStart) && (iteration % sim->tempFreq == 0)){
 				tcalc->resetEnergy();
 				//calculates sum to get T
@@ -285,7 +283,24 @@ int main(int argc, char* argsv[]) {
 #endif
 
 		current_time += sim->delta_t;
+
+		//writes mean velocity and density of bins in XAxisProfileOutput files
+		if (sim->typeflag){
+			if((iteration-1)%sim->writeFreqFlowSim==0){
+				xprofile->openFile(iteration);
+				//xprofile->setValues(sim->numOfBins,sim->domainSize);
+			}
+
+			particleContainer->iterate(xprofile);
+			//xprofile->setValues(sim->numOfBins,sim->domainSize);
+			xprofile->writeInFile();
+			if(iteration%sim->writeFreqFlowSim==0){
+				xprofile->closeFile();
+			}
+		}
 	}
+	//makes sure file is closed even if iterations were interrupted
+	xprofile->closeFile();
 
 	LOG4CXX_INFO(molsimlog,"Starting PhaseSpaceOutput...");
 	PSO *pso = new PSO();
@@ -293,6 +308,7 @@ int main(int argc, char* argsv[]) {
 	particleContainer->iterate(pso);
 	pso->closeFile();
 	LOG4CXX_INFO(molsimlog,"PhaseSpaceOutput finished.");
+
 
 
 	LOG4CXX_INFO(molsimlog, "Output written. Terminating...");

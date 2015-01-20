@@ -43,7 +43,7 @@
 namespace input
 {
   // decimalvector
-  //
+  // 
 
   const decimalvector::x_type& decimalvector::
   x () const
@@ -101,7 +101,7 @@ namespace input
 
 
   // integervector
-  //
+  // 
 
   const integervector::x_type& integervector::
   x () const
@@ -159,7 +159,7 @@ namespace input
 
 
   // boundarytype
-  //
+  // 
 
   boundarytype::
   boundarytype (value v)
@@ -196,15 +196,60 @@ namespace input
   boundarytype& boundarytype::
   operator= (value v)
   {
-    static_cast< ::xml_schema::string& > (*this) =
+    static_cast< ::xml_schema::string& > (*this) = 
     ::xml_schema::string (_xsd_boundarytype_literals_[v]);
 
     return *this;
   }
 
 
+  // stateofmatter
+  // 
+
+  stateofmatter::
+  stateofmatter (value v)
+  : ::xml_schema::string (_xsd_stateofmatter_literals_[v])
+  {
+  }
+
+  stateofmatter::
+  stateofmatter (const char* v)
+  : ::xml_schema::string (v)
+  {
+  }
+
+  stateofmatter::
+  stateofmatter (const ::std::string& v)
+  : ::xml_schema::string (v)
+  {
+  }
+
+  stateofmatter::
+  stateofmatter (const ::xml_schema::string& v)
+  : ::xml_schema::string (v)
+  {
+  }
+
+  stateofmatter::
+  stateofmatter (const stateofmatter& v,
+                 ::xml_schema::flags f,
+                 ::xml_schema::container* c)
+  : ::xml_schema::string (v, f, c)
+  {
+  }
+
+  stateofmatter& stateofmatter::
+  operator= (value v)
+  {
+    static_cast< ::xml_schema::string& > (*this) = 
+    ::xml_schema::string (_xsd_stateofmatter_literals_[v]);
+
+    return *this;
+  }
+
+
   // molsimdata
-  //
+  // 
 
   const molsimdata::outputbasename_type& molsimdata::
   outputbasename () const
@@ -406,7 +451,7 @@ namespace input
 
 
   // domain
-  //
+  // 
 
   const domain::size_type& domain::
   size () const
@@ -450,6 +495,30 @@ namespace input
     this->cutoff_.set (x);
   }
 
+  const domain::bins_optional& domain::
+  bins () const
+  {
+    return this->bins_;
+  }
+
+  domain::bins_optional& domain::
+  bins ()
+  {
+    return this->bins_;
+  }
+
+  void domain::
+  bins (const bins_type& x)
+  {
+    this->bins_.set (x);
+  }
+
+  void domain::
+  bins (const bins_optional& x)
+  {
+    this->bins_ = x;
+  }
+
   const domain::boundaries_type& domain::
   boundaries () const
   {
@@ -474,9 +543,39 @@ namespace input
     this->boundaries_.set (x);
   }
 
+  const domain::membrane_optional& domain::
+  membrane () const
+  {
+    return this->membrane_;
+  }
+
+  domain::membrane_optional& domain::
+  membrane ()
+  {
+    return this->membrane_;
+  }
+
+  void domain::
+  membrane (const membrane_type& x)
+  {
+    this->membrane_.set (x);
+  }
+
+  void domain::
+  membrane (const membrane_optional& x)
+  {
+    this->membrane_ = x;
+  }
+
+  void domain::
+  membrane (::std::auto_ptr< membrane_type > x)
+  {
+    this->membrane_.set (x);
+  }
+
 
   // thermostat
-  //
+  // 
 
   const thermostat::brownian_optional& thermostat::
   brownian () const
@@ -594,7 +693,7 @@ namespace input
 
 
   // objectlist
-  //
+  // 
 
   const objectlist::cuboid_sequence& objectlist::
   cuboid () const
@@ -682,7 +781,7 @@ namespace input
 
 
   // particleTypes
-  //
+  // 
 
   const particleTypes::type_sequence& particleTypes::
   type () const
@@ -704,7 +803,7 @@ namespace input
 
 
   // boundaries
-  //
+  // 
 
   const boundaries::front_type& boundaries::
   front () const
@@ -851,8 +950,66 @@ namespace input
   }
 
 
+  // membrane
+  // 
+
+  const membrane::stiffnessConstant_type& membrane::
+  stiffnessConstant () const
+  {
+    return this->stiffnessConstant_.get ();
+  }
+
+  membrane::stiffnessConstant_type& membrane::
+  stiffnessConstant ()
+  {
+    return this->stiffnessConstant_.get ();
+  }
+
+  void membrane::
+  stiffnessConstant (const stiffnessConstant_type& x)
+  {
+    this->stiffnessConstant_.set (x);
+  }
+
+  const membrane::harmonicR0_type& membrane::
+  harmonicR0 () const
+  {
+    return this->harmonicR0_.get ();
+  }
+
+  membrane::harmonicR0_type& membrane::
+  harmonicR0 ()
+  {
+    return this->harmonicR0_.get ();
+  }
+
+  void membrane::
+  harmonicR0 (const harmonicR0_type& x)
+  {
+    this->harmonicR0_.set (x);
+  }
+
+  const membrane::gravityUpwards_type& membrane::
+  gravityUpwards () const
+  {
+    return this->gravityUpwards_.get ();
+  }
+
+  membrane::gravityUpwards_type& membrane::
+  gravityUpwards ()
+  {
+    return this->gravityUpwards_.get ();
+  }
+
+  void membrane::
+  gravityUpwards (const gravityUpwards_type& x)
+  {
+    this->gravityUpwards_.set (x);
+  }
+
+
   // cuboid
-  //
+  // 
 
   const cuboid::location_type& cuboid::
   location () const
@@ -988,7 +1145,7 @@ namespace input
 
 
   // sphere
-  //
+  // 
 
   const sphere::location_type& sphere::
   location () const
@@ -1118,7 +1275,7 @@ namespace input
 
 
   // particle
-  //
+  // 
 
   const particle::location_type& particle::
   location () const
@@ -1212,7 +1369,7 @@ namespace input
 
 
   // inputfiles
-  //
+  // 
 
   const inputfiles::particles_sequence& inputfiles::
   particles () const
@@ -1234,7 +1391,7 @@ namespace input
 
 
   // type
-  //
+  // 
 
   const type::id_type& type::
   id () const
@@ -1288,6 +1445,36 @@ namespace input
   epsilon (const epsilon_type& x)
   {
     this->epsilon_.set (x);
+  }
+
+  const type::state_optional& type::
+  state () const
+  {
+    return this->state_;
+  }
+
+  type::state_optional& type::
+  state ()
+  {
+    return this->state_;
+  }
+
+  void type::
+  state (const state_type& x)
+  {
+    this->state_.set (x);
+  }
+
+  void type::
+  state (const state_optional& x)
+  {
+    this->state_ = x;
+  }
+
+  void type::
+  state (::std::auto_ptr< state_type > x)
+  {
+    this->state_.set (x);
   }
 }
 
@@ -1603,6 +1790,76 @@ namespace input
     ::input::boundarytype::reflecting
   };
 
+  // stateofmatter
+  //
+
+  stateofmatter::
+  stateofmatter (const ::xercesc::DOMElement& e,
+                 ::xml_schema::flags f,
+                 ::xml_schema::container* c)
+  : ::xml_schema::string (e, f, c)
+  {
+    _xsd_stateofmatter_convert ();
+  }
+
+  stateofmatter::
+  stateofmatter (const ::xercesc::DOMAttr& a,
+                 ::xml_schema::flags f,
+                 ::xml_schema::container* c)
+  : ::xml_schema::string (a, f, c)
+  {
+    _xsd_stateofmatter_convert ();
+  }
+
+  stateofmatter::
+  stateofmatter (const ::std::string& s,
+                 const ::xercesc::DOMElement* e,
+                 ::xml_schema::flags f,
+                 ::xml_schema::container* c)
+  : ::xml_schema::string (s, e, f, c)
+  {
+    _xsd_stateofmatter_convert ();
+  }
+
+  stateofmatter* stateofmatter::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class stateofmatter (*this, f, c);
+  }
+
+  stateofmatter::value stateofmatter::
+  _xsd_stateofmatter_convert () const
+  {
+    ::xsd::cxx::tree::enum_comparator< char > c (_xsd_stateofmatter_literals_);
+    const value* i (::std::lower_bound (
+                      _xsd_stateofmatter_indexes_,
+                      _xsd_stateofmatter_indexes_ + 2,
+                      *this,
+                      c));
+
+    if (i == _xsd_stateofmatter_indexes_ + 2 || _xsd_stateofmatter_literals_[*i] != *this)
+    {
+      throw ::xsd::cxx::tree::unexpected_enumerator < char > (*this);
+    }
+
+    return *i;
+  }
+
+  const char* const stateofmatter::
+  _xsd_stateofmatter_literals_[2] =
+  {
+    "liquid",
+    "solid"
+  };
+
+  const stateofmatter::value stateofmatter::
+  _xsd_stateofmatter_indexes_[2] =
+  {
+    ::input::stateofmatter::liquid,
+    ::input::stateofmatter::solid
+  };
+
   // molsimdata
   //
 
@@ -1915,7 +2172,9 @@ namespace input
   : ::xml_schema::type (),
     size_ (size, this),
     cutoff_ (cutoff, this),
-    boundaries_ (boundaries, this)
+    bins_ (this),
+    boundaries_ (boundaries, this),
+    membrane_ (this)
   {
   }
 
@@ -1926,7 +2185,9 @@ namespace input
   : ::xml_schema::type (),
     size_ (size, this),
     cutoff_ (cutoff, this),
-    boundaries_ (boundaries, this)
+    bins_ (this),
+    boundaries_ (boundaries, this),
+    membrane_ (this)
   {
   }
 
@@ -1937,7 +2198,9 @@ namespace input
   : ::xml_schema::type (x, f, c),
     size_ (x.size_, f, this),
     cutoff_ (x.cutoff_, f, this),
-    boundaries_ (x.boundaries_, f, this)
+    bins_ (x.bins_, f, this),
+    boundaries_ (x.boundaries_, f, this),
+    membrane_ (x.membrane_, f, this)
   {
   }
 
@@ -1948,7 +2211,9 @@ namespace input
   : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
     size_ (this),
     cutoff_ (this),
-    boundaries_ (this)
+    bins_ (this),
+    boundaries_ (this),
+    membrane_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -1992,6 +2257,17 @@ namespace input
         }
       }
 
+      // bins
+      //
+      if (n.name () == "bins" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!this->bins_)
+        {
+          this->bins_.set (bins_traits::create (i, f, this));
+          continue;
+        }
+      }
+
       // boundaries
       //
       if (n.name () == "boundaries" && n.namespace_ () == "http://www.example.org/input")
@@ -2002,6 +2278,20 @@ namespace input
         if (!boundaries_.present ())
         {
           this->boundaries_.set (r);
+          continue;
+        }
+      }
+
+      // membrane
+      //
+      if (n.name () == "membrane" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< membrane_type > r (
+          membrane_traits::create (i, f, this));
+
+        if (!this->membrane_)
+        {
+          this->membrane_.set (r);
           continue;
         }
       }
@@ -2046,7 +2336,9 @@ namespace input
       static_cast< ::xml_schema::type& > (*this) = x;
       this->size_ = x.size_;
       this->cutoff_ = x.cutoff_;
+      this->bins_ = x.bins_;
       this->boundaries_ = x.boundaries_;
+      this->membrane_ = x.membrane_;
     }
 
     return *this;
@@ -2684,6 +2976,141 @@ namespace input
 
   boundaries::
   ~boundaries ()
+  {
+  }
+
+  // membrane
+  //
+
+  membrane::
+  membrane (const stiffnessConstant_type& stiffnessConstant,
+            const harmonicR0_type& harmonicR0,
+            const gravityUpwards_type& gravityUpwards)
+  : ::xml_schema::type (),
+    stiffnessConstant_ (stiffnessConstant, this),
+    harmonicR0_ (harmonicR0, this),
+    gravityUpwards_ (gravityUpwards, this)
+  {
+  }
+
+  membrane::
+  membrane (const membrane& x,
+            ::xml_schema::flags f,
+            ::xml_schema::container* c)
+  : ::xml_schema::type (x, f, c),
+    stiffnessConstant_ (x.stiffnessConstant_, f, this),
+    harmonicR0_ (x.harmonicR0_, f, this),
+    gravityUpwards_ (x.gravityUpwards_, f, this)
+  {
+  }
+
+  membrane::
+  membrane (const ::xercesc::DOMElement& e,
+            ::xml_schema::flags f,
+            ::xml_schema::container* c)
+  : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
+    stiffnessConstant_ (this),
+    harmonicR0_ (this),
+    gravityUpwards_ (this)
+  {
+    if ((f & ::xml_schema::flags::base) == 0)
+    {
+      ::xsd::cxx::xml::dom::parser< char > p (e, true, false, false);
+      this->parse (p, f);
+    }
+  }
+
+  void membrane::
+  parse (::xsd::cxx::xml::dom::parser< char >& p,
+         ::xml_schema::flags f)
+  {
+    for (; p.more_content (); p.next_content (false))
+    {
+      const ::xercesc::DOMElement& i (p.cur_element ());
+      const ::xsd::cxx::xml::qualified_name< char > n (
+        ::xsd::cxx::xml::dom::name< char > (i));
+
+      // stiffnessConstant
+      //
+      if (n.name () == "stiffnessConstant" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!stiffnessConstant_.present ())
+        {
+          this->stiffnessConstant_.set (stiffnessConstant_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // harmonicR0
+      //
+      if (n.name () == "harmonicR0" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!harmonicR0_.present ())
+        {
+          this->harmonicR0_.set (harmonicR0_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // gravityUpwards
+      //
+      if (n.name () == "gravityUpwards" && n.namespace_ () == "http://www.example.org/input")
+      {
+        if (!gravityUpwards_.present ())
+        {
+          this->gravityUpwards_.set (gravityUpwards_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (!stiffnessConstant_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "stiffnessConstant",
+        "http://www.example.org/input");
+    }
+
+    if (!harmonicR0_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "harmonicR0",
+        "http://www.example.org/input");
+    }
+
+    if (!gravityUpwards_.present ())
+    {
+      throw ::xsd::cxx::tree::expected_element< char > (
+        "gravityUpwards",
+        "http://www.example.org/input");
+    }
+  }
+
+  membrane* membrane::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class membrane (*this, f, c);
+  }
+
+  membrane& membrane::
+  operator= (const membrane& x)
+  {
+    if (this != &x)
+    {
+      static_cast< ::xml_schema::type& > (*this) = x;
+      this->stiffnessConstant_ = x.stiffnessConstant_;
+      this->harmonicR0_ = x.harmonicR0_;
+      this->gravityUpwards_ = x.gravityUpwards_;
+    }
+
+    return *this;
+  }
+
+  membrane::
+  ~membrane ()
   {
   }
 
@@ -3386,7 +3813,8 @@ namespace input
   : ::xml_schema::type (),
     id_ (id, this),
     sigma_ (sigma, this),
-    epsilon_ (epsilon, this)
+    epsilon_ (epsilon, this),
+    state_ (this)
   {
   }
 
@@ -3397,7 +3825,8 @@ namespace input
   : ::xml_schema::type (x, f, c),
     id_ (x.id_, f, this),
     sigma_ (x.sigma_, f, this),
-    epsilon_ (x.epsilon_, f, this)
+    epsilon_ (x.epsilon_, f, this),
+    state_ (x.state_, f, this)
   {
   }
 
@@ -3408,7 +3837,8 @@ namespace input
   : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
     id_ (this),
     sigma_ (this),
-    epsilon_ (this)
+    epsilon_ (this),
+    state_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -3442,6 +3872,12 @@ namespace input
       if (n.name () == "epsilon" && n.namespace_ ().empty ())
       {
         this->epsilon_.set (epsilon_traits::create (i, f, this));
+        continue;
+      }
+
+      if (n.name () == "state" && n.namespace_ ().empty ())
+      {
+        this->state_.set (state_traits::create (i, f, this));
         continue;
       }
     }
@@ -3484,6 +3920,7 @@ namespace input
       this->id_ = x.id_;
       this->sigma_ = x.sigma_;
       this->epsilon_ = x.epsilon_;
+      this->state_ = x.state_;
     }
 
     return *this;

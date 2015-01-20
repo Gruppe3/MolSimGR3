@@ -19,6 +19,13 @@
 			<xs:enumeration value="periodic"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+	<xs:simpleType name="stateofmatter">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="liquid"/>
+			<xs:enumeration value="solid"/>
+		</xs:restriction>
+	</xs:simpleType>
 	
     <xs:element name="molsimdata">
     	<xs:complexType>
@@ -33,6 +40,7 @@
     				<xs:all>
     					<xs:element name="size" type="tns:decimalvector"></xs:element>
     					<xs:element name="cutoff" type="xs:double"></xs:element>
+					<xs:element name="bins" type="xs:unsignedInt" minOccurs="0"></xs:element>
     					<xs:element name="boundaries">
     						<xs:complexType>
     							<xs:all>
@@ -45,6 +53,15 @@
     							<!-- top and bottom are parallel to the xz plane -->
     								<xs:element name="top" type="tns:boundarytype"></xs:element>
     								<xs:element name="bottom" type="tns:boundarytype"></xs:element>
+    							</xs:all>
+    						</xs:complexType>
+    					</xs:element>
+					<xs:element name="membrane" minOccurs="0" maxOccurs="1">
+    						<xs:complexType>
+    							<xs:all>
+    								<xs:element name="stiffnessConstant" type="xs:double"></xs:element>
+								<xs:element name="harmonicR0" type="xs:double"></xs:element>
+								<xs:element name="gravityUpwards" type="xs:double"></xs:element>
     							</xs:all>
     						</xs:complexType>
     					</xs:element>
@@ -126,6 +143,7 @@
     							<xs:attribute name="id" type="xs:unsignedInt" use="required"></xs:attribute>
     							<xs:attribute name="sigma" type="xs:double" use="required"></xs:attribute>
     							<xs:attribute name="epsilon" type="xs:double" use="required"></xs:attribute>
+							<xs:attribute name="state" type="tns:stateofmatter"></xs:attribute>
     						</xs:complexType>
     					</xs:element>
     				</xs:sequence>
