@@ -172,7 +172,9 @@ int main(int argc, char* argsv[]) {
 	// copies F to oldF of particles and sets F to 0
 	particleContainer->iterate(forceType);
 
+	#ifdef LC
 	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
+	#endif
 	// calculates new F
 	particleContainer->iteratePair(forceType);
 	if (sim->membrane) {

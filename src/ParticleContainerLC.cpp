@@ -9,7 +9,9 @@
 #include "Simulation.h"
 #include "Logger.h"
 
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 
 const LoggerPtr particlelog(Logger::getLogger("molsim.particle"));
 
@@ -307,8 +309,11 @@ void ParticleContainerLC::emptyHalo() {
 		ParticleList* pl = haloCells[i].root;
 		if (pl == NULL)	// root element must not be deleted/freed
 			continue;
+		ParticleList* pl_c = pl;
 		pl = pl->next;
 		haloCells[i].root = NULL;
+		delete pl_c->p;
+		delete pl_c;
 		while (pl != NULL) {
 			delete pl->p;
 			ParticleList* pl_cpy = pl;
@@ -347,7 +352,8 @@ void ParticleContainerLC::iterate(PCApply *fnc) {
 void ParticleContainerLC::iteratePair(PCApply *fnc) {
 	//LOG4CXX_DEBUG(particlelog, "iterate pair");
 #ifdef _OPENMP
-	omp_set_num_threads(4);
+	if (omp_get_max_threads() == 1)
+		omp_set_num_threads(8);
 #endif
 	#pragma omp parallel for schedule(dynamic, 100)
 	for (int i = 0; i < numcell(cellNums); i++) {
