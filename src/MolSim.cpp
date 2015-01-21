@@ -123,7 +123,7 @@ int main(int argc, char* argsv[]) {
 	CalcX *xcalc = new CalcX(sim);
 	CalcV *vcalc = new CalcV(sim);
 	CalcT *tcalc = new CalcT(sim);
-	EarthGravitation* gravity=new EarthGravitation(sim);
+	EarthGravitation* gravity = new EarthGravitation(sim);
 	HarmonicPotential* hpotential = new HarmonicPotential(sim);
 
 	XAxisProfile* xprofile = new XAxisProfile();
@@ -164,13 +164,14 @@ int main(int argc, char* argsv[]) {
 
 	forceType->setSimulation(sim);
 	hpotential->setSimulation(sim);
-	xprofile->setValues(sim->numOfBins,sim->domainSize);
+	xprofile->setValues(sim->numOfBins, sim->domainSize);
 
 	LOG4CXX_INFO(molsimlog, "Starting calculation...");
 
 	// the forces are needed to calculate x, but are not given in the input file.
 	// copies F to oldF of particles and sets F to 0
 	particleContainer->iterate(forceType);
+	//LOG4CXX_DEBUG(molsimlog, "after f to 0");
 
 	#ifdef LC
 	((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::PERIODIC, forceType);
@@ -178,8 +179,10 @@ int main(int argc, char* argsv[]) {
 	// calculates new F
 	particleContainer->iteratePair(forceType);
 	if (sim->membrane) {
-		particleContainer->iterateDirectNeighbours(hpotential);
+		((ParticleContainerLC*)particleContainer)->iterateDirectNeighbours(hpotential);
+		//LOG4CXX_DEBUG(molsimlog, "after neighbors");
 	}
+	//LOG4CXX_DEBUG(molsimlog, "before gravity");
 	particleContainer->iterate(gravity);
 	#ifdef LC
 	// add reflecting force to boundary particles according to domainBoundaries[]
@@ -281,6 +284,7 @@ int main(int argc, char* argsv[]) {
 #ifdef LC
 		// remove halo particles
 		((ParticleContainerLC*)particleContainer)->emptyHalo();
+		//LOG4CXX_DEBUG(molsimlog, "after empty");
 		//((ParticleContainerLC*)particleContainer)->applyBoundaryConds(BoundaryConds::OUTFLOW, forceType);
 #endif
 

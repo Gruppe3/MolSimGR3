@@ -309,11 +309,11 @@ void ParticleContainerLC::emptyHalo() {
 		ParticleList* pl = haloCells[i].root;
 		if (pl == NULL)	// root element must not be deleted/freed
 			continue;
-		ParticleList* pl_c = pl;
+		//ParticleList* pl_c = pl;
 		pl = pl->next;
 		haloCells[i].root = NULL;
-		delete pl_c->p;
-		delete pl_c;
+		//delete pl_c->p;
+		//delete pl_c;
 		while (pl != NULL) {
 			delete pl->p;
 			ParticleList* pl_cpy = pl;
@@ -412,12 +412,15 @@ void ParticleContainerLC::iterateDirectNeighbours(PCApply *fnc) {
 		ParticleList *pl = cells[i].root;
 		while (pl != NULL) {
 			Particle& p1 = *pl->p;
-			for (int j=0; j < 8; j++){
-				Particle& p2 = *(p1.Neighbour[j]);
-				if(p1.Neighbour[j]!=NULL)
-				LOG4CXX_DEBUG(particlelog, "p1.Neighbour: "<<p1.Neighbour[j]->toString());
-				fnc->iteratePairFunc(p1,p2);
+			for (int j = 0; j < 8; j++) {
+				//LOG4CXX_DEBUG(particlelog, "in loop");
+				if (p1.Neighbour[j] != NULL) {
+					//LOG4CXX_DEBUG(particlelog, "neigbor found");
+					Particle& p2 = *(p1.Neighbour[j]);
+					//LOG4CXX_DEBUG(particlelog, "p1.Neighbour: "<<p1.Neighbour[j]->toString());
+					fnc->iteratePairFunc(p1, p2);
 				}
+			}
 			pl = pl->next;
 		}
 	}

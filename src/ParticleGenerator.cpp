@@ -135,20 +135,20 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 
 				//Particle p = Particle(x, v, m, particleType);
 				Particle* pPtr = new Particle(x, v, m, particleType);
-				if(sim->meanVelocityTypeFlag==1){
-					CalcT::initializeV(&meanv,sim->initTemp,pPtr->getM());
+				if (sim->meanVelocityTypeFlag == 1) {
+					CalcT::initializeV(&meanv, sim->initTemp, pPtr->getM());
 				}
 				int type = pPtr->getType();
 				MaxwellBoltzmannDistribution(*pPtr, meanv, dim, sim->typeflag, sim->states[type]);
-				if ((*sim).membrane && k == 0) {
+				if (sim->membrane && k == 0) {
 					//alocates memory for poiters to the neighbour cells and sets them to null
 					pPtr->Neighbour = new Particle*[8];
-					for (int d=0;d<8;d++){
+					for (int d = 0; d < 8 ; d++){
 						pPtr->Neighbour[d] = NULL;
 					}
 					//membraneBuffer [i] [j] = &p;	//fills up the membraneBuffer during particle generation, only if the Simulation is for a membrane of course.
 					//LOG4CXX_DEBUG(iolog, "membraneBuffer[i][j]: "<<membraneBuffer[i][j]->toString()<<" i: "<<i<<" j: "<<j);
-					membraneBuffer1D [idx] = pPtr;
+					membraneBuffer1D[idx] = pPtr;
 					//LOG4CXX_DEBUG(iolog, "membraneBuffer[i]: "<<membraneBuffer1D[idx]->toString()<<" idx: "<<idx);
 					idx++;
 				}
@@ -157,22 +157,22 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 		}
 	}
 	
-	if ((*sim).membrane) {											//the neighbour-assigning routine for the membrane.
+	if (sim->membrane) {											//the neighbour-assigning routine for the membrane.
 		for (int i = 0; i < n[0]; i++) {	// X dimension
 			for (int j = 0; j < n[1]; j++) {	// Y dimension
-				cP = membraneBuffer1D[i*n[1]+j];
+				cP = membraneBuffer1D[i * n[1] + j];
 				//LOG4CXX_DEBUG(iolog, "membraneBuffer1D[i,j]: "<<membraneBuffer1D[i*n[1]+j]->toString()<<" i: "<<i<<" j: "<<j);
 				//these four assign the left, right, bottom and top neighbours to the current Particle cP in this order.
-				if (i != 0) {(*cP).Neighbour[1] = membraneBuffer1D [(i - 1)*n[1]+j];}
-				if (i != n[0] - 1) {(*cP).Neighbour[5] = membraneBuffer1D [(i + 1)*n[1]+j];}
-				if (j != 0) {(*cP).Neighbour[7] = membraneBuffer1D [i*n[1] +j - 1];}
-				if (j != n[1] - 1) {(*cP).Neighbour[3] = membraneBuffer1D [i*n[1] + j + 1];}
+				if (i != 0) {cP->Neighbour[1] = membraneBuffer1D[(i - 1) * n[1] + j];}
+				if (i != n[0]-1) {cP->Neighbour[5] = membraneBuffer1D [(i + 1) * n[1] + j];}
+				if (j != 0) {cP->Neighbour[7] = membraneBuffer1D [i * n[1] + j - 1];}
+				if (j != n[1]-1) {cP->Neighbour[3] = membraneBuffer1D [i * n[1] + j + 1];}
 
 				//these four assign the diagonal neighbours: bottom left, top left, bottom right, top right. In this order.
 				if (i != 0 && j != 0) {cP->Neighbour[0] = membraneBuffer1D [(i - 1)*n[1] + j - 1];}
-				if (i != 0 && j != n[1] - 1) {(*cP).Neighbour[2] = membraneBuffer1D [(i - 1)*n[1] + j + 1];}
-				if (i != n[0] - 1 && j != 0) {(*cP).Neighbour[6] = membraneBuffer1D [(i + 1)*n[1] + j - 1];}
-				if (i != n[0] - 1 && j != n[1] - 1) {(*cP).Neighbour[4] = membraneBuffer1D [(i + 1)*n[1] + j + 1];}
+				if (i != 0 && j != n[1] - 1) {cP->Neighbour[2] = membraneBuffer1D [(i - 1)*n[1] + j + 1];}
+				if (i != n[0]-1 && j != 0) {cP->Neighbour[6] = membraneBuffer1D [(i + 1)*n[1] + j - 1];}
+				if (i != n[0]-1 && j != n[1]-1) {cP->Neighbour[4] = membraneBuffer1D [(i + 1)*n[1] + j + 1];}
 
 				/*cP = membraneBuffer [i] [j];
 				LOG4CXX_DEBUG(iolog, "membraneBuffer[i][j]: "<<membraneBuffer[i][j]->toString()<<" i: "<<i<<" j: "<<j);

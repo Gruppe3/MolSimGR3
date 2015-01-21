@@ -94,8 +94,14 @@ void LennardJonesLC::calc(Particle& p1, Particle& p2) {
 	}
 
 	//LOG4CXX_DEBUG(forcelog, "force calc LC");
+	bool repulsive = false;
+	if (sim->membrane) {
+		double dx = (p1.getX() - p2.getX()).L2NormSquared();	// avoid square root calculation
+		if (dx < pow(2, 1/3)*sigma*sigma) // square of 2^1/6 * sigma
+			repulsive = true;
+	}
 
-	if(!sim->membrane || sim->cutoff < pow(2, 1/6)){ //if we simulate membrane we need only the repulsive part
+	if(!sim->membrane || repulsive) { //if we simulate membrane we need only the repulsive part
 		utils::Vector<double, 3>& f1 = p1.getF();
 		utils::Vector<double, 3> diff = p2.getX() - p1.getX();
 		double norm_inverse = 1 / diff.L2NormSquared();
