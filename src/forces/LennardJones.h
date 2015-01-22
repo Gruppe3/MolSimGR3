@@ -61,4 +61,22 @@ public:
 	}
 };
 
+class LennardJonesLCSmoothed : public LennardJones {
+public:
+	/** constructor */
+	LennardJonesLCSmoothed();
+	/** constructor */
+	LennardJonesLCSmoothed(Simulation *sim);
+	/** destructor */
+	virtual ~LennardJonesLCSmoothed();
+
+	/** calculates the smoothed LJ force between the particles and adds it to their total forces
+	 * @param p1,p2 Particles for LJ force */
+	virtual void calc(Particle& p1, Particle& p2);
+
+	virtual void iteratePairFunc(Particle& p1, Particle& p2) {
+		calc(p1, p2);
+	}
+};
+
 #endif /* SRC_FORCES_LENNARDJONES_H_ */

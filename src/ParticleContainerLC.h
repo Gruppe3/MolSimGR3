@@ -122,6 +122,8 @@ private:
 	//help-variable, helps calculating conditions in hasNextOther()
 	int neighborCells;
 
+	Simulation* sim;
+
 	/**resets cell
 	 * @param cellNum index of the cell in array*/
 	void selectCell(int cellNum[]);

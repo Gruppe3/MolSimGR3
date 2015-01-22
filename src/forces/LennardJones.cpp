@@ -111,3 +111,61 @@ void LennardJonesLC::calc(Particle& p1, Particle& p2) {
 		f1 = f1 + f;
 	}
 }
+
+
+LennardJonesLCSmoothed::LennardJonesLCSmoothed() {
+	LennardJones();
+}
+
+LennardJonesLCSmoothed::LennardJonesLCSmoothed(Simulation *s) {
+	setSimulation(s);
+}
+
+LennardJonesLCSmoothed::~LennardJonesLCSmoothed() {
+
+}
+
+void LennardJonesLCSmoothed::calc(Particle& p1, Particle& p2) {
+	double sigma, epsilon;
+	int t1 = p1.getType(), t2 = p2.getType();
+	if ((t1 == 0) && (t2 == 0)) {
+		sigma = sigma11;
+		epsilon = epsilon11;
+	}
+	else if ((t1 == 1) && (t2 == 1)) {
+		sigma = sigma22;
+		epsilon = epsilon22;
+	}
+	else {
+		sigma = sigma12;
+		epsilon = epsilon12;
+	}
+
+	// F = dU/dx * S + U * dS/dx
+	utils::Vector<double, 3>& f1 = p1.getF();
+	utils::Vector<double, 3> diff = p2.getX() - p1.getX();
+	double squaredNorm = diff.L2NormSquared();
+	double norm = sqrt(squaredNorm);
+	double squaredNorm_inv = 1 / squaredNorm;
+	double field_pow = pow(sigma, 6) * pow(squaredNorm_inv, 3);	// (sigma / norm)^6
+
+	// LJ potential U
+	double U = 4 * epsilon * field_pow *(field_pow - 1);
+
+	// force dU/dx
+	double dU = 24 * epsilon * squaredNorm_inv * field_pow * (1 - 2*field_pow);
+
+	// smoothing factor S and dS/dx
+	double S, dS = 0.0;
+	if (norm <= sim->rl)
+		S = 1.0;
+	else if (sim->cutoff <= norm)
+		S = 0.0;
+	else {
+		S = 1 - (norm - sim->rl)*(norm - sim->rl) *
+			(3*sim->cutoff - sim->rl - 2*norm) / pow(sim->cutoff-sim->rl, 3);
+		dS = 6 * (norm-sim->cutoff) * (norm-sim->rl) / pow(sim->cutoff-sim->rl, 3);
+	}
+
+	f1 = f1 + (dU * S + U * dS) * (1/norm)*diff;
+}

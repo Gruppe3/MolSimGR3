@@ -228,6 +228,7 @@ namespace input
   class integervector;
   class boundarytype;
   class stateofmatter;
+  class forcetype;
   class molsimdata;
   class domain;
   class thermostat;
@@ -535,6 +536,63 @@ namespace input
     static const value _xsd_stateofmatter_indexes_[2];
   };
 
+  class forcetype: public ::xml_schema::string
+  {
+    public:
+    enum value
+    {
+      LennardJones,
+      smoothedLennardJones,
+      gravitation
+    };
+
+    forcetype (value v);
+
+    forcetype (const char* v);
+
+    forcetype (const ::std::string& v);
+
+    forcetype (const ::xml_schema::string& v);
+
+    forcetype (const ::xercesc::DOMElement& e,
+               ::xml_schema::flags f = 0,
+               ::xml_schema::container* c = 0);
+
+    forcetype (const ::xercesc::DOMAttr& a,
+               ::xml_schema::flags f = 0,
+               ::xml_schema::container* c = 0);
+
+    forcetype (const ::std::string& s,
+               const ::xercesc::DOMElement* e,
+               ::xml_schema::flags f = 0,
+               ::xml_schema::container* c = 0);
+
+    forcetype (const forcetype& x,
+               ::xml_schema::flags f = 0,
+               ::xml_schema::container* c = 0);
+
+    virtual forcetype*
+    _clone (::xml_schema::flags f = 0,
+            ::xml_schema::container* c = 0) const;
+
+    forcetype&
+    operator= (value v);
+
+    virtual
+    operator value () const
+    {
+      return _xsd_forcetype_convert ();
+    }
+
+    protected:
+    value
+    _xsd_forcetype_convert () const;
+
+    public:
+    static const char* const _xsd_forcetype_literals_[3];
+    static const value _xsd_forcetype_indexes_[3];
+  };
+
   class molsimdata: public ::xml_schema::type
   {
     public:
@@ -596,6 +654,27 @@ namespace input
 
     void
     endtime (const endtime_type& x);
+
+    // force
+    //
+    typedef ::input::forcetype force_type;
+    typedef ::xsd::cxx::tree::optional< force_type > force_optional;
+    typedef ::xsd::cxx::tree::traits< force_type, char > force_traits;
+
+    const force_optional&
+    force () const;
+
+    force_optional&
+    force ();
+
+    void
+    force (const force_type& x);
+
+    void
+    force (const force_optional& x);
+
+    void
+    force (::std::auto_ptr< force_type > p);
 
     // gravity
     //
@@ -733,6 +812,7 @@ namespace input
     ::xsd::cxx::tree::one< writefreq_type > writefreq_;
     ::xsd::cxx::tree::one< timestep_type > timestep_;
     ::xsd::cxx::tree::one< endtime_type > endtime_;
+    force_optional force_;
     ::xsd::cxx::tree::one< gravity_type > gravity_;
     domain_optional domain_;
     ::xsd::cxx::tree::one< thermostat_type > thermostat_;
@@ -1349,25 +1429,25 @@ namespace input
     void
     harmonicR0 (const harmonicR0_type& x);
 
-    // gravityUpwards
+    // constForceUpwards
     //
-    typedef ::xml_schema::double_ gravityUpwards_type;
-    typedef ::xsd::cxx::tree::traits< gravityUpwards_type, char, ::xsd::cxx::tree::schema_type::double_ > gravityUpwards_traits;
+    typedef ::xml_schema::double_ constForceUpwards_type;
+    typedef ::xsd::cxx::tree::traits< constForceUpwards_type, char, ::xsd::cxx::tree::schema_type::double_ > constForceUpwards_traits;
 
-    const gravityUpwards_type&
-    gravityUpwards () const;
+    const constForceUpwards_type&
+    constForceUpwards () const;
 
-    gravityUpwards_type&
-    gravityUpwards ();
+    constForceUpwards_type&
+    constForceUpwards ();
 
     void
-    gravityUpwards (const gravityUpwards_type& x);
+    constForceUpwards (const constForceUpwards_type& x);
 
     // Constructors.
     //
     membrane (const stiffnessConstant_type&,
               const harmonicR0_type&,
-              const gravityUpwards_type&);
+              const constForceUpwards_type&);
 
     membrane (const ::xercesc::DOMElement& e,
               ::xml_schema::flags f = 0,
@@ -1397,7 +1477,7 @@ namespace input
     protected:
     ::xsd::cxx::tree::one< stiffnessConstant_type > stiffnessConstant_;
     ::xsd::cxx::tree::one< harmonicR0_type > harmonicR0_;
-    ::xsd::cxx::tree::one< gravityUpwards_type > gravityUpwards_;
+    ::xsd::cxx::tree::one< constForceUpwards_type > constForceUpwards_;
   };
 
   class cuboid: public ::xml_schema::type

@@ -32,6 +32,7 @@ ParticleContainerLC::ParticleContainerLC(ParticleContainer* pc, Simulation *sim)
 	}
 	radius = sim->cutoff;
 	distance = sim->meshWidth;
+	this->sim = sim;
 	for (int i = 0; i < 6; i++) {
 		domainBoundary[i] = sim->boundaries->getBoundary((BoundaryConds::Side)i);
 	}
@@ -309,11 +310,11 @@ void ParticleContainerLC::emptyHalo() {
 		ParticleList* pl = haloCells[i].root;
 		if (pl == NULL)	// root element must not be deleted/freed
 			continue;
-		//ParticleList* pl_c = pl;
+		ParticleList* pl_c = pl;
 		pl = pl->next;
 		haloCells[i].root = NULL;
-		//delete pl_c->p;
-		//delete pl_c;
+		delete pl_c->p;
+		delete pl_c;
 		while (pl != NULL) {
 			delete pl->p;
 			ParticleList* pl_cpy = pl;
@@ -353,9 +354,13 @@ void ParticleContainerLC::iteratePair(PCApply *fnc) {
 	//LOG4CXX_DEBUG(particlelog, "iterate pair");
 #ifdef _OPENMP
 	if (omp_get_max_threads() == 1)
-		omp_set_num_threads(8);
+		omp_set_num_threads(4);
+	int chunk = numcell(cellNums) / omp_get_max_threads();
+	chunk = chunk > 100 ? 100 : chunk/2;
+	if (chunk == 0)
+		chunk = 1;
 #endif
-	#pragma omp parallel for schedule(dynamic, 100)
+	#pragma omp parallel for schedule(dynamic, chunk)
 	for (int i = 0; i < numcell(cellNums); i++) {
 		//LOG4CXX_DEBUG(particlelog, "cell " << i << " of " << numcell(cellNums));
 		ParticleList *pl = cells[i].root;
@@ -521,14 +526,14 @@ void ParticleContainerLC::applyToBoundaryWall(int fixedDim, int fixedVal, PCAppl
 				Particle& p = *pl->p;
 				utils::Vector<double, 3>& x = p.getX();
 				if (fixedVal == 0) {
-					if (x[fixedDim] < distance) {
+					if (x[fixedDim] < sim->sigmas[p.getType()]*pow(2, 1/6)/*distance*/) {
 						Particle ghost = p;
 						utils::Vector<double, 3>& x2 = ghost.getX();
 						x2[fixedDim] = 0.0;
 						fnc->iteratePairFunc(p, ghost);
 					}
 				}
-				else if (domainSize[fixedDim]/*radius*cellNums[fixedDim]*/ - x[fixedDim] < distance) {
+				else if (domainSize[fixedDim]/*radius*cellNums[fixedDim]*/ - x[fixedDim] < sim->sigmas[p.getType()]*pow(2, 1/6)/*distance*/) {
 					Particle ghost = p;
 					utils::Vector<double, 3>& x2 = ghost.getX();
 					x2[fixedDim] = /*radius*cellNums[fixedDim];*/domainSize[fixedDim];

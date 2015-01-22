@@ -27,6 +27,14 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
+	<xs:simpleType name="forcetype">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LennardJones"/>
+			<xs:enumeration value="smoothedLennardJones"/>
+			<xs:enumeration value="gravitation"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
     <xs:element name="molsimdata">
     	<xs:complexType>
     		<xs:all>
@@ -34,7 +42,8 @@
     		<xs:element name="writefreq" type="xs:unsignedInt"></xs:element>
     		<xs:element name="timestep" type="xs:double"></xs:element>
     		<xs:element name="endtime" type="xs:double"></xs:element>
-		<xs:element name="gravity" type="xs:double"></xs:element>
+    		<xs:element name="force" type="tns:forcetype" minOccurs="0"></xs:element>
+			<xs:element name="gravity" type="xs:double"></xs:element>
     		<xs:element name="domain" minOccurs="0" maxOccurs="1">
     			<xs:complexType>
     				<xs:all>
@@ -60,8 +69,8 @@
     						<xs:complexType>
     							<xs:all>
     								<xs:element name="stiffnessConstant" type="xs:double"></xs:element>
-								<xs:element name="harmonicR0" type="xs:double"></xs:element>
-								<xs:element name="gravityUpwards" type="xs:double"></xs:element>
+									<xs:element name="harmonicR0" type="xs:double"></xs:element>
+									<xs:element name="constForceUpwards" type="xs:double"></xs:element>
     							</xs:all>
     						</xs:complexType>
     					</xs:element>
@@ -143,7 +152,7 @@
     							<xs:attribute name="id" type="xs:unsignedInt" use="required"></xs:attribute>
     							<xs:attribute name="sigma" type="xs:double" use="required"></xs:attribute>
     							<xs:attribute name="epsilon" type="xs:double" use="required"></xs:attribute>
-							<xs:attribute name="state" type="tns:stateofmatter"></xs:attribute>
+								<xs:attribute name="state" type="tns:stateofmatter"></xs:attribute>
     						</xs:complexType>
     					</xs:element>
     				</xs:sequence>

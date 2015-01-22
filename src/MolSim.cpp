@@ -137,14 +137,14 @@ int main(int argc, char* argsv[]) {
 	else if (strcmp(argsv[1], "-xml") == 0) {	// xml file according to molsim-input.xsd
 		inputhandler = new XMLInput;
 		#ifdef LC
-		forceType = new LennardJonesLC;
+		//forceType = new LennardJonesLC;
 		#endif
 	}
 	else if (strcmp(argsv[1], "-m") == 0) {	// xml file according to molsim-input.xsd + calculation as in the task "Simulation of a membrane"
 		inputhandler = new XMLInput;
 		(*sim).membrane = true;
 		#ifdef LC
-		forceType = new LennardJonesLC;
+		//forceType = new LennardJonesLC;
 		#endif
 	}
 	else {
@@ -153,6 +153,7 @@ int main(int argc, char* argsv[]) {
 	}
 
 	inputhandler->getFileInput(argsv[2], particleContainer, sim);
+	//LOG4CXX_INFO(molsimlog, "after input");
 	//delete inputhandler;
 
 	if ((strcmp(argsv[1], "-xml") == 0)|| strcmp(argsv[1], "-m") == 0) {
@@ -160,6 +161,12 @@ int main(int argc, char* argsv[]) {
 		particleContainer = new ParticleContainerLC(particleContainer, sim);
 		LOG4CXX_DEBUG(molsimlog, "init ParticleContainerLC");
 		#endif
+		if (sim->forceType.compare("LennardJones") == 0)
+			forceType = new LennardJonesLC;
+		else if (sim->forceType.compare("smoothedLennardJones") == 0)
+			forceType = new LennardJonesLCSmoothed;
+		else if (sim->forceType.compare("gravitation") == 0)
+			forceType = new EarthGravitation(sim);
 	}
 
 	forceType->setSimulation(sim);
@@ -226,7 +233,7 @@ int main(int argc, char* argsv[]) {
 		particleContainer->iterate(forceType);
 		// calculate new f
 		particleContainer->iteratePair(forceType);
-		if(sim->membrane){
+		if (sim->membrane) {
 			particleContainer->iterateDirectNeighbours(hpotential);
 		}
 		particleContainer->iterate(gravity);

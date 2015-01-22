@@ -19,7 +19,7 @@
 <membrane>
 	<stiffnessConstant>300.0</stiffnessConstant>
 	<harmonicR0>2.2</harmonicR0>
-	<gravityUpwards>0.8</gravityUpwards>
+	<constForceUpwards>0.8</constForceUpwards>
 </membrane>
 </domain>
 <thermostat>

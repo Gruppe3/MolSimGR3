@@ -20,7 +20,7 @@ HarmonicPotential::~HarmonicPotential() {
 
 void HarmonicPotential::calc(Particle& p1, Particle& p2) {
 	int idx = 0;
-	while (&p2 != p1.Neighbour[idx]){
+	while (&p2 != p1.Neighbour[idx]) {
 		idx++;
 	}
 	//if (sim->cutoff > pow(2, 1/6)){

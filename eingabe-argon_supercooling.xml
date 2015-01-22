@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<molsimdata xmlns="http://www.example.org/input" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/input molsim-input.xsd">
+<outputbasename>output/MD_vtk</outputbasename>
+<writefreq>1000</writefreq>
+<timestep>0.001</timestep>
+<endtime>100</endtime>
+<force>smoothedLennardJones</force>
+<gravity>0</gravity>
+<domain>
+<size x="9.2" y="9.2" z="9.2"/>
+<cutoff>2.3</cutoff>
+<boundaries>
+	<front>periodic</front>
+	<back>periodic</back>
+	<left>periodic</left>
+	<right>periodic</right>
+	<top>periodic</top>
+	<bottom>periodic</bottom>
+</boundaries>
+</domain>
+<thermostat>
+  	<inittemp>3.0</inittemp>
+  	<starttime>25</starttime>
+  	<targettemp>0.02</targettemp>
+  	<tempdiff>2.5e-3</tempdiff>
+  	<interval>25</interval>
+  </thermostat>
+<objectlist>
+	<inputfiles>
+  		<particles>argon_equilibrated.txt</particles>
+  	</inputfiles>
+</objectlist>
+<particleTypes>
+	<type id="0" sigma="1.0" epsilon="1.0" />
+</particleTypes>
+</molsimdata>

@@ -47,13 +47,15 @@ public:
 		cutoff = 2.5 * sigmas[0];
 		//sigma21=sigma12;
 		gravity = -9.807;
+		forceType = string("LennardJones");
+		rl = 1.9;
 		//epsilon21=epsilon12;
 		//boltzmannConst=1.3806488E-23;
 		boltzmannConst = 1.0;
 		boundaries = new BoundaryConds;
 		membrane = false;
 		stiffnessConstant = 300.0;
-		gravityUpwards = 0.8;
+		forceUpwards = 0.8;
 		harmonicR0 = 2.2;
 		gravityUpwardsEnd = 15000;
 		pulledUpParticlesLength = 8;
@@ -134,8 +136,14 @@ public:
 	/** time steps between thermostat applications */
 	int tempFreq;
 
-	/** gravitation force,that is applied to particles additionally*/
+	/** gravitation force, that is applied to particles additionally*/
 	double gravity;
+
+	/** defines force type to use */
+	string forceType;
+
+	/** for smoothed LJ force calculation */
+	double rl;
 
 	/** stores boundary conditions for LC algo */
 	BoundaryConds *boundaries;
@@ -147,7 +155,7 @@ public:
 	double  stiffnessConstant;
 
 	/** gravitation force,that is applied to some particles upwards at z axis if membrane is set to true */
-	double gravityUpwards;
+	double forceUpwards;
 
 	/** defines till which iteration gravityUpwards to be called */
 	int gravityUpwardsEnd;

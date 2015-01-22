@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<molsimdata xmlns="http://www.example.org/input" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/input molsim-input.xsd">
+<outputbasename></outputbasename>
+<writefreq>1000</writefreq>
+<timestep>0.001</timestep>
+<endtime>150</endtime>
+<force>smoothedLennardJones</force>
+<gravity>0</gravity>
+<domain>
+<size x="9.2" y="9.2" z="9.2"/>
+<cutoff>2.3</cutoff>
+<boundaries>
+	<front>periodic</front>
+	<back>periodic</back>
+	<left>periodic</left>
+	<right>periodic</right>
+	<top>periodic</top>
+	<bottom>periodic</bottom>
+</boundaries>
+</domain>
+<thermostat>
+  	<inittemp>0.01</inittemp>
+  	<starttime>40</starttime>
+  	<targettemp>3.0</targettemp>
+  	<tempdiff>0.001</tempdiff>
+  	<interval>40</interval>
+  </thermostat>
+<objectlist>
+<cuboid>
+	<location x="0.575" y="0.575" z="0.575"/>
+	<velocity x="0.0" y="0.0" z="0.0"/>
+	<numparticles x="8" y="8" z="8"/>
+	<mass>1.0</mass>
+	<type>0</type>
+	<meshwidth>1.15</meshwidth>
+</cuboid>
+</objectlist>
+<particleTypes>
+	<type id="0" sigma="1.0" epsilon="1.0" />
+</particleTypes>
+</molsimdata>

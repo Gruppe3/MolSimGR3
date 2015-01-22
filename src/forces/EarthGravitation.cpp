@@ -31,7 +31,8 @@ void EarthGravitation::iterateFunc(Particle& p) {
 			//LOG4CXX_DEBUG(forcelog, "gravity upwards    i:   "<<i<<"   j:   "<<j);
 			if ((sim->pulledUpParticles[i] == idx[0]) && (sim->pulledUpParticles[j] == idx[1])) {
 				//LOG4CXX_DEBUG(forcelog, "gravity upwards    i:   "<<i<<"   j:   "<<j);
-				f[2] = f[2] + sim->gravityUpwards;
+				f[2] = f[2] + sim->forceUpwards;
+				//LOG4CXX_DEBUG(forcelog, "f[2]: "<< f[2]);
 			}
 			i += 2;	j += 2;
 		}

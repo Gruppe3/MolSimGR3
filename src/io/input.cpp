@@ -248,6 +248,51 @@ namespace input
   }
 
 
+  // forcetype
+  //
+
+  forcetype::
+  forcetype (value v)
+  : ::xml_schema::string (_xsd_forcetype_literals_[v])
+  {
+  }
+
+  forcetype::
+  forcetype (const char* v)
+  : ::xml_schema::string (v)
+  {
+  }
+
+  forcetype::
+  forcetype (const ::std::string& v)
+  : ::xml_schema::string (v)
+  {
+  }
+
+  forcetype::
+  forcetype (const ::xml_schema::string& v)
+  : ::xml_schema::string (v)
+  {
+  }
+
+  forcetype::
+  forcetype (const forcetype& v,
+             ::xml_schema::flags f,
+             ::xml_schema::container* c)
+  : ::xml_schema::string (v, f, c)
+  {
+  }
+
+  forcetype& forcetype::
+  operator= (value v)
+  {
+    static_cast< ::xml_schema::string& > (*this) =
+    ::xml_schema::string (_xsd_forcetype_literals_[v]);
+
+    return *this;
+  }
+
+
   // molsimdata
   // 
 
@@ -327,6 +372,36 @@ namespace input
   endtime (const endtime_type& x)
   {
     this->endtime_.set (x);
+  }
+
+  const molsimdata::force_optional& molsimdata::
+  force () const
+  {
+    return this->force_;
+  }
+
+  molsimdata::force_optional& molsimdata::
+  force ()
+  {
+    return this->force_;
+  }
+
+  void molsimdata::
+  force (const force_type& x)
+  {
+    this->force_.set (x);
+  }
+
+  void molsimdata::
+  force (const force_optional& x)
+  {
+    this->force_ = x;
+  }
+
+  void molsimdata::
+  force (::std::auto_ptr< force_type > x)
+  {
+    this->force_.set (x);
   }
 
   const molsimdata::gravity_type& molsimdata::
@@ -989,22 +1064,22 @@ namespace input
     this->harmonicR0_.set (x);
   }
 
-  const membrane::gravityUpwards_type& membrane::
-  gravityUpwards () const
+  const membrane::constForceUpwards_type& membrane::
+  constForceUpwards () const
   {
-    return this->gravityUpwards_.get ();
+    return this->constForceUpwards_.get ();
   }
 
-  membrane::gravityUpwards_type& membrane::
-  gravityUpwards ()
+  membrane::constForceUpwards_type& membrane::
+  constForceUpwards ()
   {
-    return this->gravityUpwards_.get ();
+    return this->constForceUpwards_.get ();
   }
 
   void membrane::
-  gravityUpwards (const gravityUpwards_type& x)
+  constForceUpwards (const constForceUpwards_type& x)
   {
-    this->gravityUpwards_.set (x);
+    this->constForceUpwards_.set (x);
   }
 
 
@@ -1860,6 +1935,78 @@ namespace input
     ::input::stateofmatter::solid
   };
 
+  // forcetype
+  //
+
+  forcetype::
+  forcetype (const ::xercesc::DOMElement& e,
+             ::xml_schema::flags f,
+             ::xml_schema::container* c)
+  : ::xml_schema::string (e, f, c)
+  {
+    _xsd_forcetype_convert ();
+  }
+
+  forcetype::
+  forcetype (const ::xercesc::DOMAttr& a,
+             ::xml_schema::flags f,
+             ::xml_schema::container* c)
+  : ::xml_schema::string (a, f, c)
+  {
+    _xsd_forcetype_convert ();
+  }
+
+  forcetype::
+  forcetype (const ::std::string& s,
+             const ::xercesc::DOMElement* e,
+             ::xml_schema::flags f,
+             ::xml_schema::container* c)
+  : ::xml_schema::string (s, e, f, c)
+  {
+    _xsd_forcetype_convert ();
+  }
+
+  forcetype* forcetype::
+  _clone (::xml_schema::flags f,
+          ::xml_schema::container* c) const
+  {
+    return new class forcetype (*this, f, c);
+  }
+
+  forcetype::value forcetype::
+  _xsd_forcetype_convert () const
+  {
+    ::xsd::cxx::tree::enum_comparator< char > c (_xsd_forcetype_literals_);
+    const value* i (::std::lower_bound (
+                      _xsd_forcetype_indexes_,
+                      _xsd_forcetype_indexes_ + 3,
+                      *this,
+                      c));
+
+    if (i == _xsd_forcetype_indexes_ + 3 || _xsd_forcetype_literals_[*i] != *this)
+    {
+      throw ::xsd::cxx::tree::unexpected_enumerator < char > (*this);
+    }
+
+    return *i;
+  }
+
+  const char* const forcetype::
+  _xsd_forcetype_literals_[3] =
+  {
+    "LennardJones",
+    "smoothedLennardJones",
+    "gravitation"
+  };
+
+  const forcetype::value forcetype::
+  _xsd_forcetype_indexes_[3] =
+  {
+    ::input::forcetype::LennardJones,
+    ::input::forcetype::gravitation,
+    ::input::forcetype::smoothedLennardJones
+  };
+
   // molsimdata
   //
 
@@ -1877,6 +2024,7 @@ namespace input
     writefreq_ (writefreq, this),
     timestep_ (timestep, this),
     endtime_ (endtime, this),
+    force_ (this),
     gravity_ (gravity, this),
     domain_ (this),
     thermostat_ (thermostat, this),
@@ -1899,6 +2047,7 @@ namespace input
     writefreq_ (writefreq, this),
     timestep_ (timestep, this),
     endtime_ (endtime, this),
+    force_ (this),
     gravity_ (gravity, this),
     domain_ (this),
     thermostat_ (thermostat, this),
@@ -1916,6 +2065,7 @@ namespace input
     writefreq_ (x.writefreq_, f, this),
     timestep_ (x.timestep_, f, this),
     endtime_ (x.endtime_, f, this),
+    force_ (x.force_, f, this),
     gravity_ (x.gravity_, f, this),
     domain_ (x.domain_, f, this),
     thermostat_ (x.thermostat_, f, this),
@@ -1933,6 +2083,7 @@ namespace input
     writefreq_ (this),
     timestep_ (this),
     endtime_ (this),
+    force_ (this),
     gravity_ (this),
     domain_ (this),
     thermostat_ (this),
@@ -1999,6 +2150,20 @@ namespace input
         if (!endtime_.present ())
         {
           this->endtime_.set (endtime_traits::create (i, f, this));
+          continue;
+        }
+      }
+
+      // force
+      //
+      if (n.name () == "force" && n.namespace_ () == "http://www.example.org/input")
+      {
+        ::std::auto_ptr< force_type > r (
+          force_traits::create (i, f, this));
+
+        if (!this->force_)
+        {
+          this->force_.set (r);
           continue;
         }
       }
@@ -2147,6 +2312,7 @@ namespace input
       this->writefreq_ = x.writefreq_;
       this->timestep_ = x.timestep_;
       this->endtime_ = x.endtime_;
+      this->force_ = x.force_;
       this->gravity_ = x.gravity_;
       this->domain_ = x.domain_;
       this->thermostat_ = x.thermostat_;
@@ -2985,11 +3151,11 @@ namespace input
   membrane::
   membrane (const stiffnessConstant_type& stiffnessConstant,
             const harmonicR0_type& harmonicR0,
-            const gravityUpwards_type& gravityUpwards)
+            const constForceUpwards_type& constForceUpwards)
   : ::xml_schema::type (),
     stiffnessConstant_ (stiffnessConstant, this),
     harmonicR0_ (harmonicR0, this),
-    gravityUpwards_ (gravityUpwards, this)
+    constForceUpwards_ (constForceUpwards, this)
   {
   }
 
@@ -3000,7 +3166,7 @@ namespace input
   : ::xml_schema::type (x, f, c),
     stiffnessConstant_ (x.stiffnessConstant_, f, this),
     harmonicR0_ (x.harmonicR0_, f, this),
-    gravityUpwards_ (x.gravityUpwards_, f, this)
+    constForceUpwards_ (x.constForceUpwards_, f, this)
   {
   }
 
@@ -3011,7 +3177,7 @@ namespace input
   : ::xml_schema::type (e, f | ::xml_schema::flags::base, c),
     stiffnessConstant_ (this),
     harmonicR0_ (this),
-    gravityUpwards_ (this)
+    constForceUpwards_ (this)
   {
     if ((f & ::xml_schema::flags::base) == 0)
     {
@@ -3052,13 +3218,13 @@ namespace input
         }
       }
 
-      // gravityUpwards
+      // constForceUpwards
       //
-      if (n.name () == "gravityUpwards" && n.namespace_ () == "http://www.example.org/input")
+      if (n.name () == "constForceUpwards" && n.namespace_ () == "http://www.example.org/input")
       {
-        if (!gravityUpwards_.present ())
+        if (!constForceUpwards_.present ())
         {
-          this->gravityUpwards_.set (gravityUpwards_traits::create (i, f, this));
+          this->constForceUpwards_.set (constForceUpwards_traits::create (i, f, this));
           continue;
         }
       }
@@ -3080,10 +3246,10 @@ namespace input
         "http://www.example.org/input");
     }
 
-    if (!gravityUpwards_.present ())
+    if (!constForceUpwards_.present ())
     {
       throw ::xsd::cxx::tree::expected_element< char > (
-        "gravityUpwards",
+        "constForceUpwards",
         "http://www.example.org/input");
     }
   }
@@ -3103,7 +3269,7 @@ namespace input
       static_cast< ::xml_schema::type& > (*this) = x;
       this->stiffnessConstant_ = x.stiffnessConstant_;
       this->harmonicR0_ = x.harmonicR0_;
-      this->gravityUpwards_ = x.gravityUpwards_;
+      this->constForceUpwards_ = x.constForceUpwards_;
     }
 
     return *this;

@@ -34,6 +34,8 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc,
 		sim->writeFreq = molsim->writefreq();
 		sim->delta_t = molsim->timestep();
 		sim->end_time = molsim->endtime();
+		if (molsim->force().present())
+			sim->forceType = molsim->force().get();
 		sim->gravity = molsim->gravity();
 		sim->domainSize[0] = molsim->domain()->size().x();
 		sim->domainSize[1] = molsim->domain()->size().y();
@@ -49,8 +51,8 @@ void XMLInput::getFileInput(char* fileName, ParticleContainer* pc,
 			sim->harmonicR0 = molsim->domain()->membrane()->harmonicR0();
 			sim->stiffnessConstant =
 					molsim->domain()->membrane()->stiffnessConstant();
-			sim->gravityUpwards =
-					molsim->domain()->membrane()->gravityUpwards();
+			sim->forceUpwards =
+					molsim->domain()->membrane()->constForceUpwards();
 		} else {
 			sim->membrane = false;
 		}
