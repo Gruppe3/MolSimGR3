@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <molsimdata xmlns="http://www.example.org/input" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/input molsim-input.xsd">
 <outputbasename>output/MD_vtk</outputbasename>
-<writefreq>10</writefreq>
+<writefreq>100</writefreq>
 <timestep>0.01</timestep>
 <endtime>500</endtime>
 <gravity>-0.001</gravity>
@@ -9,12 +9,12 @@
 <size x="148" y="148" z="148"/>
 <cutoff>4.0</cutoff>
 <boundaries>
-	<front>outflow</front>
+	<front>reflecting</front>
 	<back>reflecting</back>
-	<left>outflow</left>
-	<right>outflow</right>
-	<top>outflow</top>
-	<bottom>outflow</bottom>
+	<left>reflecting</left>
+	<right>reflecting</right>
+	<top>reflecting</top>
+	<bottom>reflecting</bottom>
 </boundaries>
 <membrane>
 	<stiffnessConstant>300.0</stiffnessConstant>

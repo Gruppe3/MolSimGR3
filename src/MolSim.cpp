@@ -273,6 +273,7 @@ int main(int argc, char* argsv[]) {
 		//LOG4CXX_DEBUG(molsimlog, "after v");
 
 		iteration++;
+		sim->current_timestep = iteration;
 		if (iteration % sim->writeFreq == 0) {
 			/**
  			* Get the elapsed time by subtracting the start time from the current time. Then, divide it by the number of elapsed iterations.

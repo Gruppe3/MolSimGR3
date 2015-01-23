@@ -118,7 +118,7 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 	int dim = n[2] <= 1 ? 2 : 3;
 	Particle* cP;															//current Particle; just an aid that points to the Particle that the neighbour-assigning routine further below for the membrane is currently working on.
 	//Particle* membraneBuffer [n[0]] [n[1]];										//matrix of particle pointers that the neighbour-assigning routine for the membrane works on.
-	int length = n[0]*n[1];
+	int length = n[0]*n[1]*n[2];
 	int idx=0;
 	//1 D array because of less pointers
 	Particle **membraneBuffer1D;
@@ -160,9 +160,9 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 	if (sim->membrane) {											//the neighbour-assigning routine for the membrane.
 		for (int i = 0; i < n[0]; i++) {	// X dimension
 			for (int j = 0; j < n[1]; j++) {	// Y dimension
-				cP = membraneBuffer1D[i * n[1] + j];
+				cP = membraneBuffer1D[i + j*n[0]];
 				//LOG4CXX_DEBUG(iolog, "membraneBuffer1D[i,j]: "<<membraneBuffer1D[i*n[1]+j]->toString()<<" i: "<<i<<" j: "<<j);
-				//these four assign the left, right, bottom and top neighbours to the current Particle cP in this order.
+				/*//these four assign the left, right, bottom and top neighbours to the current Particle cP in this order.
 				if (i != 0) {cP->Neighbour[1] = membraneBuffer1D[(i - 1) * n[1] + j];}
 				if (i != n[0]-1) {cP->Neighbour[5] = membraneBuffer1D [(i + 1) * n[1] + j];}
 				if (j != 0) {cP->Neighbour[7] = membraneBuffer1D [i * n[1] + j - 1];}
@@ -173,7 +173,59 @@ void ParticleGenerator::createCuboid(utils::Vector<double, 3>& xn, utils::Vector
 				if (i != 0 && j != n[1] - 1) {cP->Neighbour[2] = membraneBuffer1D [(i - 1)*n[1] + j + 1];}
 				if (i != n[0]-1 && j != 0) {cP->Neighbour[6] = membraneBuffer1D [(i + 1)*n[1] + j - 1];}
 				if (i != n[0]-1 && j != n[1]-1) {cP->Neighbour[4] = membraneBuffer1D [(i + 1)*n[1] + j + 1];}
+*/
 
+				//these four assign the left, right, bottom and top neighbours to the current Particle cP in this order.
+				std::list<Particle>::iterator it = pc->particles.begin();
+				if (i != 0) {
+					for (int pos = 0; pos < (i-1) + j * n[0]; pos++) it++;
+					cP->Neighbour[1] = &(*it);
+				}
+
+				if (i != n[0]-1) {
+					it = pc->particles.begin();
+					for (int pos = 0; pos < (i+1) + j * n[0]; pos++) it++;
+					cP->Neighbour[5] = &(*it);
+				}
+
+				if (j != 0) {
+					it = pc->particles.begin();
+					for (int pos = 0; pos < i + (j-1) * n[0]; pos++) it++;
+					cP->Neighbour[7] = &(*it);
+				}
+
+				if (j != n[1]-1) {
+					it = pc->particles.begin();
+					for (int pos = 0; pos < i + (j+1) * n[0]; pos++) it++;
+					cP->Neighbour[3] = &(*it);
+				}
+
+				//these four assign the diagonal neighbours: bottom left, top left, bottom right, top right. In this order.
+				if (i != 0 && j != 0) {
+					it = pc->particles.begin();
+					for (int pos = 0; pos < (i-1) + (j-1) * n[0]; pos++) it++;
+					cP->Neighbour[0] = &(*it);
+				}
+
+				if (i != 0 && j != n[1]-1) {
+					it = pc->particles.begin();
+					for (int pos = 0; pos < (i-1) + (j+1) * n[0]; pos++) it++;
+					cP->Neighbour[2] = &(*it);
+				}
+
+				if (i != n[0]-1 && j != 0) {
+					it = pc->particles.begin();
+					for (int pos = 0; pos < (i+1) + (j-1) * n[0]; pos++) it++;
+					cP->Neighbour[6] = &(*it);
+				}
+
+				if (i != n[0]-1 && j != n[1]-1) {
+					it = pc->particles.begin();
+					for (int pos = 0; pos < (i+1) + (j+1) * n[0]; pos++) it++;
+					cP->Neighbour[4] = &(*it);
+				}
+
+				//pc->add(*cP);
 				/*cP = membraneBuffer [i] [j];
 				LOG4CXX_DEBUG(iolog, "membraneBuffer[i][j]: "<<membraneBuffer[i][j]->toString()<<" i: "<<i<<" j: "<<j);
 				if (i != 0) {(*cP).Neighbour[1] = membraneBuffer [i - 1] [j];}

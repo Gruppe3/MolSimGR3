@@ -22,6 +22,7 @@ public:
 		start_time = 0;
 		end_time = 1000;
 		delta_t = 0.014;
+		current_timestep = 0;
 		out_name = string("MD_vtk");
 		writeFreq = 10;
 
@@ -57,7 +58,7 @@ public:
 		stiffnessConstant = 300.0;
 		forceUpwards = 0.8;
 		harmonicR0 = 2.2;
-		gravityUpwardsEnd = 15000;
+		forceUpwardsEnd = 15000;
 		pulledUpParticlesLength = 8;
 		pulledUpParticles = new int [pulledUpParticlesLength];
 		pulledUpParticles[0] = 17; pulledUpParticles[1] = 24; pulledUpParticles[2] = 17; pulledUpParticles[3] = 25;
@@ -82,6 +83,9 @@ public:
 
 	/** size of the time step */
 	double delta_t;
+
+	/**  current time step of simulation*/
+	int current_timestep;
 
 	/** common prefix for output files */
 	string out_name;
@@ -158,7 +162,7 @@ public:
 	double forceUpwards;
 
 	/** defines till which iteration gravityUpwards to be called */
-	int gravityUpwardsEnd;
+	int forceUpwardsEnd;
 
 	/** defines indices of the particles that will be pulled up with gravityUpwards*/
 	int *pulledUpParticles;

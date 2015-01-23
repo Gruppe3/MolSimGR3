@@ -310,6 +310,7 @@ void ParticleContainerLC::emptyHalo() {
 		ParticleList* pl = haloCells[i].root;
 		if (pl == NULL)	// root element must not be deleted/freed
 			continue;
+		//LOG4CXX_DEBUG(particlelog, "empty halo");
 		ParticleList* pl_c = pl;
 		pl = pl->next;
 		haloCells[i].root = NULL;
@@ -400,8 +401,22 @@ void ParticleContainerLC::iteratePair(PCApply *fnc) {
 											x2[d] += domainSize[d];
 									}
 								}*/
-
-								fnc->iteratePairFunc(p1, p2);
+								/*if (sim->membrane) {
+									// exclude direct neighbor particles
+									bool isNeighbor = false;
+									for (int n = 0; n < 8; n++) {
+										if (p1.Neighbour[n] != NULL && p1.Neighbour[n]->getX() == p2.getX()) {
+											isNeighbor = true;
+											//LOG4CXX_DEBUG(particlelog, "p1:" << p1.toString());
+											//LOG4CXX_DEBUG(particlelog, "p2:" << p2.toString());
+											break;
+										}
+									}
+									if (!isNeighbor)
+										fnc->iteratePairFunc(p1, p2);
+								}
+								else*/
+									fnc->iteratePairFunc(p1, p2);
 								//LOG4CXX_DEBUG(particlelog, "f after:" << p1.getF().toString());
 							}
 							pl2 = pl2->next;
